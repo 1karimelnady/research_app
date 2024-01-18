@@ -51,7 +51,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   ),
                   Text(
                     'Sign Up',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontFamily: 'Cairo',
+                        fontWeight: FontWeight.bold),
                   ),
                   Row(
                     children: [
@@ -68,9 +71,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: emailController,
                         keyboardType: TextInputType.emailAddress,
                         label: "Email ID",
-                        labelStyle: TextStyle(
-                          color: greyColor,
-                        ),
+                        labelStyle:
+                            TextStyle(color: greyColor, fontFamily: 'Cairo'),
                       ),
                     ],
                   ),
@@ -92,6 +94,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.text,
                         label: "First Name",
                         labelStyle: TextStyle(
+                          fontFamily: 'Cairo',
                           color: greyColor,
                         ),
                       ),
@@ -111,9 +114,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         controller: lastNameController,
                         keyboardType: TextInputType.text,
                         label: "Last Name",
-                        labelStyle: TextStyle(
-                          color: greyColor,
-                        ),
+                        labelStyle:
+                            TextStyle(color: greyColor, fontFamily: 'Cairo'),
                       ),
                     ],
                   ),
@@ -139,8 +141,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           size: 30,
                           color: greyColor,
                         ),
-                        labelStyle:
-                            TextStyle(color: Colors.grey.withOpacity(0.5)),
+                        labelStyle: TextStyle(
+                            fontFamily: 'Cairo',
+                            color: Colors.grey.withOpacity(0.5)),
                       ),
                     ],
                   ),
@@ -161,9 +164,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         keyboardType: TextInputType.phone,
                         controller: phoneController,
                         label: "Mobile",
-                        labelStyle: TextStyle(
-                          color: greyColor,
-                        ),
+                        labelStyle:
+                            TextStyle(color: greyColor, fontFamily: 'Cairo'),
                       ),
                     ],
                   ),
@@ -267,7 +269,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                     children: [
                       Text(
                         'Already have an account',
-                        style: TextStyle(fontWeight: FontWeight.bold),
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, fontFamily: 'Cairo'),
                       ),
                       SizedBox(
                         width: 5,
@@ -284,7 +287,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           child: Text(
                             'Login',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: mainColor),
+                                fontWeight: FontWeight.bold,
+                                color: mainColor,
+                                fontFamily: 'Cairo'),
                           ))
                     ],
                   )

@@ -49,9 +49,12 @@ class _LoginScreenState extends State<LoginScreen> {
                     image: AssetImage(
                         'assets/images/istockphoto-1281150061-612x612.jpg'),
                   ),
-                  Text(
+                  const Text(
                     'Login',
-                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                    style: TextStyle(
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                        fontFamily: 'Cairo'),
                   ),
                   Row(
                     children: [
@@ -106,7 +109,9 @@ class _LoginScreenState extends State<LoginScreen> {
                       alignment: Alignment.topRight,
                       child: Text('forget password',
                           style: TextStyle(
-                              color: mainColor, fontWeight: FontWeight.w700)),
+                              color: mainColor,
+                              fontFamily: 'Cairo',
+                              fontWeight: FontWeight.w700)),
                     ),
                   ),
                   // Container(
@@ -235,7 +240,10 @@ class _LoginScreenState extends State<LoginScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Don`t have an account?'),
+                      Text(
+                        'Don`t have an account?',
+                        style: TextStyle(fontFamily: 'Cairo'),
+                      ),
                       SizedBox(
                         width: 5,
                       ),
@@ -252,7 +260,9 @@ class _LoginScreenState extends State<LoginScreen> {
                           child: Text(
                             'Register',
                             style: TextStyle(
-                                fontWeight: FontWeight.bold, color: mainColor),
+                                fontFamily: 'Cairo',
+                                fontWeight: FontWeight.bold,
+                                color: mainColor),
                           ))
                     ],
                   )
