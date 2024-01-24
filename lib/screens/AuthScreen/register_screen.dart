@@ -97,26 +97,26 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       children: [
                         Image(
                           height: getSize(context: context).height * 0.25,
-                          image: AssetImage('assets/images/36.png'),
+                          image: const AssetImage('assets/images/36.png'),
                         ),
-                        Text(
+                        const Text(
                           'Sign Up',
                           style: TextStyle(
                               fontSize: 22,
                               fontFamily: 'Cairo',
                               fontWeight: FontWeight.bold),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.alternate_email_rounded,
                               size: 30,
                               color: greyColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             CreatTextField(
@@ -124,46 +124,46 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               controller: emailController,
                               keyboardType: TextInputType.emailAddress,
                               label: "Email or Mobile",
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                   color: greyColor, fontFamily: 'Cairo'),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.person,
                               size: 30,
                               color: greyColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             CreatTextField(
                               controller: nameController,
                               keyboardType: TextInputType.text,
                               label: "Name",
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                 fontFamily: 'Cairo',
                                 color: greyColor,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 5,
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.lock,
                               size: 30,
                               color: greyColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             CreatTextField(
@@ -187,34 +187,34 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.phone,
                               size: 30,
                               color: greyColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             CreatTextField(
                               keyboardType: TextInputType.phone,
                               controller: phoneController,
                               label: "Mobile",
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                   color: greyColor, fontFamily: 'Cairo'),
                             ),
                           ],
                         ),
                         CreatLargDropDown(authCubit: AuthCubit.get(context)),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         CreateDropDownSmall(authCubit: AuthCubit.get(context)),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         CreatTextField(
@@ -226,7 +226,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             onPressed: () {
                               _selectDate(context);
                             },
-                            icon: Icon(
+                            icon: const Icon(
                               Icons.calendar_today_outlined,
                               color: mainColor,
                             ),
@@ -259,27 +259,28 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             width: getSize(context: context).width * 0.9,
                             title: 'Register',
                           ),
-                          fallback: (BuildContext context) => CreatLoading(),
+                          fallback: (BuildContext context) =>
+                              const CreatLoading(),
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Already have an account',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   fontFamily: 'Cairo'),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             TextButton(
                                 style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
-                                    minimumSize: Size(50, 30),
+                                    minimumSize: const Size(50, 30),
                                     tapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     alignment: Alignment.centerLeft),
@@ -287,7 +288,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   RoutesManager.navigatorPush(
                                       context, LoginScreen());
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Login',
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,

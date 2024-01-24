@@ -17,7 +17,7 @@ import '../../utilities/text_style.dart';
 import '../home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
-  LoginScreen({super.key});
+  const LoginScreen({super.key});
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
@@ -40,7 +40,7 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is LoginSuccess) {
             CacheHelper.setData(key: "token", value: state.response['token']);
-            RoutesManager.navigatorAndRemove(context, HomeScreen());
+            RoutesManager.navigatorAndRemove(context, const HomeScreen());
           }
 
           if (state is LoginError) {
@@ -66,7 +66,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       children: [
                         Image(
                           height: getSize(context: context).height * 0.30,
-                          image: AssetImage(
+                          image: const AssetImage(
                               'assets/images/istockphoto-1281150061-612x612.jpg'),
                         ),
                         const Text(
@@ -78,35 +78,35 @@ class _LoginScreenState extends State<LoginScreen> {
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.alternate_email_rounded,
                               size: 30,
                               color: greyColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             CreatTextField(
                               // width: double.infinity,
                               controller: emailController,
                               label: "Email ID",
-                              labelStyle: TextStyle(
+                              labelStyle: const TextStyle(
                                 color: greyColor,
                               ),
                             ),
                           ],
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           children: [
-                            Icon(
+                            const Icon(
                               Icons.lock,
                               size: 30,
                               color: greyColor,
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 10,
                             ),
                             CreatTextField(
@@ -134,7 +134,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           onPressed: () {},
                           child: Container(
                             alignment: Alignment.topRight,
-                            child: Text('forget password',
+                            child: const Text('forget password',
                                 style: TextStyle(
                                     color: mainColor,
                                     fontFamily: 'Cairo',
@@ -142,7 +142,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ),
                         state is LoginLoading
-                            ? CreatLoading()
+                            ? const CreatLoading()
                             : CreateButton(
                                 onTap: () {
                                   FocusScope.of(context).unfocus();
@@ -157,34 +157,34 @@ class _LoginScreenState extends State<LoginScreen> {
                                 bottomMargin: 0,
                                 title: 'login',
                               ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           height: 10,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text(
+                            const Text(
                               'Don`t have an account?',
                               style: TextStyle(fontFamily: 'Cairo'),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 5,
                             ),
                             TextButton(
                                 style: TextButton.styleFrom(
                                     padding: EdgeInsets.zero,
-                                    minimumSize: Size(50, 30),
+                                    minimumSize: const Size(50, 30),
                                     tapTargetSize:
                                         MaterialTapTargetSize.shrinkWrap,
                                     alignment: Alignment.centerLeft),
                                 onPressed: () {
                                   RoutesManager.navigatorPush(
-                                      context, RegisterScreen());
+                                      context, const RegisterScreen());
                                 },
-                                child: Text(
+                                child: const Text(
                                   'Register',
                                   style: TextStyle(
                                       fontFamily: 'Cairo',
