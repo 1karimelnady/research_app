@@ -75,12 +75,12 @@ class AuthCubit extends Cubit<AuthStates> {
       if (e.response != null) {
         errorMessage = e.response!.data['message'] ?? 'An error occurred.';
       } else {
-        errorMessage = 'An error occurred.';
+        errorMessage = 'Check Network Connection';
       }
 
       emit(RegisterError(errorMessage));
     } catch (e) {
-      emit(RegisterError('An error occurred.'));
+      emit(RegisterError('Check Network Connection'));
     }
   }
 
@@ -114,12 +114,12 @@ class AuthCubit extends Cubit<AuthStates> {
       if (e.response != null) {
         errorMessage = e.response!.data['message'] ?? 'An error occurred.';
       } else {
-        errorMessage = 'An error occurred.';
+        errorMessage = 'Check Network Connection.';
       }
 
       emit(LoginError(errorMessage));
     } catch (e) {
-      emit(RegisterError('An error occurred.'));
+      emit(RegisterError('Check Network Connection.'));
     }
   }
 

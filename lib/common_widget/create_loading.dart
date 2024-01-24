@@ -19,7 +19,9 @@ class CreatLoading extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                CircularProgressIndicator(),
+                CircularProgressIndicator(
+                  color: mainColor,
+                ),
               ],
             )));
   }

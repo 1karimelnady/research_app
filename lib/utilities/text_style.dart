@@ -13,6 +13,17 @@ class BlackTitle {
   }
 }
 
+class RedLabel {
+  static TextStyle display5(BuildContext context) {
+    return Theme.of(context).textTheme.headline1!.copyWith(
+          fontSize: 12,
+          fontFamily: 'Cairo',
+          fontWeight: FontWeight.bold,
+          color: Colors.red,
+        );
+  }
+}
+
 class BlackLabel {
   static TextStyle display5(BuildContext context) {
     return Theme.of(context).textTheme.headline1!.copyWith(
