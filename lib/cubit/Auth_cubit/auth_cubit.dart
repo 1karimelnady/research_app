@@ -50,9 +50,6 @@ class AuthCubit extends Cubit<AuthStates> {
       var response = await dio.post(baseUrl + "/users/register", data: parms);
 
       user = UserModel.fromJson(response.data);
-      dio.options.headers = {
-        'Authorization': user?.token ?? '',
-      };
 
       if (response.statusCode! >= 200 && response.statusCode! < 300) {
         user = UserModel.fromJson(response.data);
@@ -100,9 +97,6 @@ class AuthCubit extends Cubit<AuthStates> {
       emit(LoginLoading());
       var response = await dio.post(baseUrl + "/users/login", data: params);
       user = UserModel.fromJson(response.data);
-      dio.options.headers = {
-        'Authorization': user?.token ?? '',
-      };
       if (response.statusCode == 200) {
         String token = response.data?['token'] ?? '';
         String value = response.data?['value'] ?? '';
@@ -112,6 +106,7 @@ class AuthCubit extends Cubit<AuthStates> {
         CacheHelper.setData(key: "value", value: value);
         CacheHelper.setData(key: "password", value: password);
         emit(LoginSuccess(response: response.data));
+        print(CacheHelper.getData(key: "value"));
       }
     } on DioException catch (e) {
       String errorMessage = "";
