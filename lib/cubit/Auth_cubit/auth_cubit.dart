@@ -1,3 +1,6 @@
+import 'dart:io';
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
@@ -5,23 +8,38 @@ import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/model/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:research_app/utilities/cache_helper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
   static AuthCubit get(context) => BlocProvider.of(context);
   Dio dio = Dio();
   UserModel? user;
-  String? userType;
-  void saveUserType({required String type}) {
-    userType = type;
-    emit(SavedType());
-  }
-
   String? userGender;
+
   void saveUserGender({required String gender}) {
     userGender = gender;
     emit(SavedGender());
+  }
+
+  bool isStudent = true;
+  bool isProfessor = false;
+  bool isResearcher = false;
+  String? userType;
+  changType() async {
+    if (isStudent) {
+      userType = 'student';
+      emit(ChangeStudentType(userType!));
+      print("ssssssssssssssss$userType");
+    } else if (isProfessor) {
+      userType = 'professor';
+      emit(ChangeStudentType(userType!));
+      print("ppppppppppppppppppppp$userType");
+    } else if (isResearcher) {
+      userType = 'researcher';
+      emit(ChangeStudentType(userType!));
+      print("rrrrrrrrrrrrrrrrrrrrr$userType");
+    } else {
+      throw Exception('No user type selected');
+    }
   }
 
   Future<void> register({
@@ -30,7 +48,8 @@ class AuthCubit extends Cubit<AuthStates> {
     required String mobile,
     required String password,
     required String birthDate,
-    String? token,
+    required String userGender,
+    required String userType,
   }) async {
     Map<String, dynamic> parms = {
       "name": name,
@@ -41,12 +60,8 @@ class AuthCubit extends Cubit<AuthStates> {
       "gender": userGender,
       "birthDate": birthDate,
     };
-
     try {
       emit(RegisterLoading());
-      String? userType = this.userType;
-      String? userGender = this.userGender;
-
       var response = await dio.post(baseUrl + "/users/register", data: parms);
 
       user = UserModel.fromJson(response.data);
@@ -66,8 +81,10 @@ class AuthCubit extends Cubit<AuthStates> {
         CacheHelper.setData(key: "mobile", value: mobile);
         CacheHelper.setData(key: "gender", value: gender);
         CacheHelper.setData(key: "token", value: token);
+        CacheHelper.setData(key: "type", value: userType);
         emit(RegisterSuccess(response: response.data));
         print(response.data['name']);
+        print(response.data['type']);
       }
     } on DioException catch (e) {
       String errorMessage = "";
@@ -75,12 +92,12 @@ class AuthCubit extends Cubit<AuthStates> {
       if (e.response != null) {
         errorMessage = e.response!.data['message'] ?? 'An error occurred.';
       } else {
-        errorMessage = 'An error occurred.';
+        errorMessage = 'error.';
       }
 
       emit(RegisterError(errorMessage));
     } catch (e) {
-      emit(RegisterError('An error occurred.'));
+      emit(RegisterError(e.toString()));
     }
   }
 

@@ -87,7 +87,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 10,
                             ),
                             CreatTextField(
-                              // width: double.infinity,
+                              validator: (value) {
+                                // if (value!.isEmpty) {
+                                //   return "Email or Mobile is required";
+                                // }
+                              },
                               controller: emailController,
                               label: "Email ID",
                               labelStyle: const TextStyle(
@@ -110,7 +114,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 10,
                             ),
                             CreatTextField(
-                              // width: double.infinity,
+                              validator: (value) {
+                                // if (value!.isEmpty) {
+                                //   return "Password";
+                                // }
+                              },
                               obSecureText: cubit.isPassword,
                               keyboardType: TextInputType.visiblePassword,
                               controller: passwordController,
@@ -146,9 +154,32 @@ class _LoginScreenState extends State<LoginScreen> {
                             : CreateButton(
                                 onTap: () {
                                   FocusScope.of(context).unfocus();
-                                  cubit.login(
-                                      value: emailController.text,
-                                      password: passwordController.text);
+                                  if (formKey.currentState!.validate()) {
+                                    if (emailController.text.isEmpty) {
+                                      CreatToast().showToast(
+                                        errorMessage:
+                                            "Email or Mobile is required",
+                                        context: context,
+                                      );
+                                    } else if (passwordController
+                                        .text.isEmpty) {
+                                      CreatToast().showToast(
+                                        errorMessage: "Password is required",
+                                        context: context,
+                                      );
+                                    } else if (passwordController.text.length <
+                                        8) {
+                                      CreatToast().showToast(
+                                        errorMessage:
+                                            "Password must not less than 8",
+                                        context: context,
+                                      );
+                                    } else {
+                                      cubit.login(
+                                          value: emailController.text,
+                                          password: passwordController.text);
+                                    }
+                                  }
                                 },
                                 elevation: 0,
                                 radius: 40,
