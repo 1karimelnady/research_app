@@ -1,6 +1,6 @@
 import 'dart:io';
-import 'dart:js';
 
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
@@ -8,6 +8,7 @@ import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/model/user_model.dart';
 import 'package:dio/dio.dart';
 import 'package:research_app/utilities/cache_helper.dart';
+
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
   static AuthCubit get(context) => BlocProvider.of(context);
@@ -108,6 +109,7 @@ class AuthCubit extends Cubit<AuthStates> {
     Map<String, dynamic> params = {
       "value": value,
       "password": password,
+      "firebaseToken": await FirebaseMessaging.instance.getToken(),
     };
 
     try {
@@ -115,13 +117,15 @@ class AuthCubit extends Cubit<AuthStates> {
       var response = await dio.post(baseUrl + "/users/login", data: params);
       user = UserModel.fromJson(response.data);
       if (response.statusCode == 200) {
-        String token = response.data?['token'] ?? '';
-        String value = response.data?['value'] ?? '';
-        String password = response.data?['password'] ?? '';
+        String token = response.data['token'];
+        String value = response.data['value'];
+        String password = response.data['password'];
+        String firebaseToken = response.data['firebaseToken'];
 
         CacheHelper.setData(key: "token", value: token);
         CacheHelper.setData(key: "value", value: value);
         CacheHelper.setData(key: "password", value: password);
+        CacheHelper.setData(key: "firebaseToken", value: firebaseToken);
         emit(LoginSuccess(response: response.data));
         print(CacheHelper.getData(key: "value"));
       }

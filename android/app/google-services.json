@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "644164481831",
+    "project_id": "educationalapp-77694",
+    "storage_bucket": "educationalapp-77694.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:644164481831:android:2b4e1408862842918a6f02",
+        "android_client_info": {
+          "package_name": "com.example.research_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCB_Cw4So5U4f1q-YXlEd4ltrIlB8aiMvk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

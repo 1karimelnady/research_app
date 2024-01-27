@@ -45,7 +45,11 @@ dependencies:
   conditional_builder_null_safety: ^0.0.6
   flutter_svg: ^2.0.9
   get: ^4.6.6
-
+  firebase_core: ^2.24.2
+  firebase_messaging: ^14.7.10
+  firebase_analytics: ^10.8.0
+  notification_permissions: ^0.6.1
+  permission_handler: ^11.0.1
 dev_dependencies:
   flutter_test:
     sdk: flutter
