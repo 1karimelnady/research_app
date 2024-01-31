@@ -128,6 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 physics: BouncingScrollPhysics(),
                 child: Form(
                   key: formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
                     child: Column(
@@ -228,6 +229,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                     cubit.login(
                                         value: emailController.text,
                                         password: passwordController.text);
+
                                     // if (emailController.text.isEmpty) {
                                     //   CreatToast().showToast(
                                     //     errorMessage:

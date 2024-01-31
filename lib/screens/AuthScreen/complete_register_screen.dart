@@ -94,6 +94,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                 physics: BouncingScrollPhysics(),
                 child: Form(
                   key: formKey,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
                     child: Column(
