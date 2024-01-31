@@ -99,7 +99,7 @@ class CreatTextField extends StatelessWidget {
           //       : TextDirection.rtl,
           Container(
             margin: EdgeInsets.only(top: title == null ? 0 : 5.0),
-            height: height ?? getSize(context: context).height * 0.05,
+            height: height ?? getSize(context: context).height * 0.06,
             width: width ?? getSize(context: context).width * 0.7,
             decoration: BoxDecoration(
               borderRadius: borderRadius ?? BorderRadius.circular(8),
@@ -138,7 +138,10 @@ class CreatTextField extends StatelessWidget {
                     TextStyle(
                         fontSize: 12, color: mainColor, fontFamily: "Cairo"),
                 errorStyle: errorStyle,
-                suffixIcon: suffixIcon,
+                suffixIcon: Padding(
+                  padding: const EdgeInsets.only(bottom: 10.0),
+                  child: suffixIcon,
+                ),
                 prefixIcon: prefixIcon,
                 // enabledBorder: OutlineInputBorder(
                 //     borderSide: BorderSide(

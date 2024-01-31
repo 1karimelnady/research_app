@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -8,6 +9,7 @@ import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/screens/AuthScreen/register_screen.dart';
 import 'package:research_app/utilities/cache_helper.dart';
+import 'package:toast/toast.dart';
 
 import '../../app_manager/routes_manager.dart';
 import '../../common_widget/create_text_field.dart';
@@ -30,6 +32,73 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var formKey = GlobalKey<FormState>();
   LanguageProvider? languageProvider;
+  // void requestspermission() async {
+  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  //   NotificationSettings notificationSettings =
+  //       await messaging.requestPermission(
+  //           alert: true,
+  //           announcement: true,
+  //           badge: true,
+  //           carPlay: true,
+  //           criticalAlert: true,
+  //           provisional: true,
+  //           sound: true);
+  //   if (notificationSettings.authorizationStatus ==
+  //       AuthorizationStatus.authorized) {
+  //     print('ok authorized');
+  //   } else if (notificationSettings.authorizationStatus ==
+  //       AuthorizationStatus.authorized) {
+  //     print('ok authorized');
+  //   } else {
+  //     print('user denied ');
+  //   }
+  // }
+
+  // void requestNotificationPermission() async {
+  //   // print('karim');
+  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
+  //   await messaging.requestPermission(
+  //     alert: true,
+  //     announcement: false,
+  //     badge: true,
+  //     carPlay: false,
+  //     criticalAlert: false,
+  //     provisional: false,
+  //     sound: true,
+  //   );
+  // }
+  //
+  // @override
+
+  // requestpermission() async {
+  //   await Permission.notification.isDenied.then((value) {
+  //     if (value) {
+  //       ToastContext().init(context);
+  //       Toast.show(
+  //         '${Permission.notification.request()}',
+  //         textStyle: TextStyle(fontSize: 18, color: Colors.white),
+  //         duration: Toast.lengthLong,
+  //         gravity: Toast.center,
+  //         backgroundRadius: 10,
+  //         backgroundColor: mainColor,
+  //       );
+  //
+  //       print("gggggggggggggggggggggggggggggggg$value");
+  //       print("kkkkkkkkkkkkkkkkkkkkkkkkkk");
+  //     }
+  //   });
+  // }
+  // Future<void> requestPermission() async {
+  //   final permission = Permission.accessNotificationPolicy;
+  //
+  //   if (await permission.isDenied) {
+  //     await permission.request();
+  //   }
+  // }
+
+  void initState() {
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -56,6 +125,7 @@ class _LoginScreenState extends State<LoginScreen> {
             // backgroundColor: mainColor.withOpacity(0.1),
             body: SafeArea(
               child: SingleChildScrollView(
+                physics: BouncingScrollPhysics(),
                 child: Form(
                   key: formKey,
                   child: Padding(
@@ -87,9 +157,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 10,
                             ),
                             CreatTextField(
-                              // width: double.infinity,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Email or Mobile is required";
+                                }
+                              },
                               controller: emailController,
-                              label: "Email ID",
+                              label: "Email or Mobile",
                               labelStyle: const TextStyle(
                                 color: greyColor,
                               ),
@@ -110,7 +184,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               width: 10,
                             ),
                             CreatTextField(
-                              // width: double.infinity,
+                              validator: (value) {
+                                if (value!.isEmpty) {
+                                  return "Password is required";
+                                }
+                              },
                               obSecureText: cubit.isPassword,
                               keyboardType: TextInputType.visiblePassword,
                               controller: passwordController,
@@ -130,25 +208,51 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                        TextButton(
-                          onPressed: () {},
-                          child: Container(
-                            alignment: Alignment.topRight,
-                            child: const Text('forget password',
-                                style: TextStyle(
-                                    color: mainColor,
-                                    fontFamily: 'Cairo',
-                                    fontWeight: FontWeight.w700)),
-                          ),
-                        ),
+                        // TextButton(
+                        //   onPressed: () {},
+                        //   child: Container(
+                        //     alignment: Alignment.topRight,
+                        //     child: const Text('forget password',
+                        //         style: TextStyle(
+                        //             color: mainColor,
+                        //             fontFamily: 'Cairo',
+                        //             fontWeight: FontWeight.w700)),
+                        //   ),
+                        // ),
                         state is LoginLoading
                             ? const CreatLoading()
                             : CreateButton(
                                 onTap: () {
                                   FocusScope.of(context).unfocus();
-                                  cubit.login(
-                                      value: emailController.text,
-                                      password: passwordController.text);
+                                  if (formKey.currentState!.validate()) {
+                                    cubit.login(
+                                        value: emailController.text,
+                                        password: passwordController.text);
+                                    // if (emailController.text.isEmpty) {
+                                    //   CreatToast().showToast(
+                                    //     errorMessage:
+                                    //         "Email or Mobile is required",
+                                    //     context: context,
+                                    //   );
+                                    // } else if (passwordController
+                                    //     .text.isEmpty) {
+                                    //   CreatToast().showToast(
+                                    //     errorMessage: "Password is required",
+                                    //     context: context,
+                                    //   );
+                                    // } else if (passwordController.text.length <
+                                    //     8) {
+                                    //   CreatToast().showToast(
+                                    //     errorMessage:
+                                    //         "Password must not less than 8",
+                                    //     context: context,
+                                    //   );
+                                    // } else {
+                                    //   cubit.login(
+                                    //       value: emailController.text,
+                                    //       password: passwordController.text);
+                                    // }
+                                  }
                                 },
                                 elevation: 0,
                                 radius: 40,

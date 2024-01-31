@@ -18,7 +18,7 @@ class CreatToast {
       duration: duration ?? Toast.lengthLong,
       gravity: gravity ?? Toast.center,
       backgroundRadius: 10,
-      backgroundColor: backgroundColor ?? mainColor,
+      backgroundColor: backgroundColor ?? Colors.red,
     );
   }
 

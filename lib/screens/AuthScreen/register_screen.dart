@@ -1,23 +1,18 @@
-import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/common_widget/create_button.dart';
-import 'package:research_app/common_widget/create_drob_down_button.dart';
-import 'package:research_app/common_widget/create_loading.dart';
 import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
-import 'package:research_app/screens/AuthScreen/login_screen.dart';
-
+import 'package:research_app/screens/AuthScreen/complete_register_screen.dart';
+import 'package:toast/toast.dart';
 import '../../app_manager/routes_manager.dart';
-import '../../common_widget/create_large_drop_down_button.dart';
-import '../../common_widget/create_text_field.dart';
 import '../../common_widget/create_toast.dart';
-import '../../providers/language_provider.dart';
 import '../../utilities/cache_helper.dart';
 import '../../utilities/text_style.dart';
+import 'package:research_app/screens/AuthScreen/login_screen.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -27,245 +22,189 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
-  TextEditingController dateController = TextEditingController();
-  var formKey = GlobalKey<FormState>();
-  LanguageProvider? languageProvider;
-
-  // List<String> registerUserType = ["professor", "student", "Researcher"];
-  // String userType = "student";
-
-  DateTime? _selectedDate;
-
-  Future<void> _selectDate(BuildContext context) async {
-    final DateTime? picked = await showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(1900),
-      lastDate: DateTime(2060),
-    );
-    if (picked != null && picked != _selectedDate) {
-      setState(() {
-        dateController.text =
-            DateFormat('yyyy-MM-ddTHH:mm:ss.SSS').format(picked);
-      });
-    }
+  @override
+  void initState() {
+    CacheHelper.registerClear();
+    super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    languageProvider = Provider.of<LanguageProvider>(context, listen: true);
     return BlocProvider(
       create: (context) => AuthCubit(),
       child: BlocConsumer<AuthCubit, AuthStates>(
-        listener: (context, state) {
-          print('AuthCubit State: $state');
-          if (state is RegisterSuccess) {
-            CreatToast().showToast(
-              errorMessage: "Register Successfully",
-              context: context,
-            );
-            CacheHelper.setData(key: "type", value: state.response['type']);
-            CacheHelper.setData(key: "token", value: state.response['token']);
-            if (state.response['type'] == 'student') {
-              RoutesManager.navigatorPush(context, LoginScreen());
-            } else {
-              RoutesManager.navigatorPush(context, LoginScreen());
-            }
-          } else if (state is RegisterError) {
-            CreatToast().showToast(
-              errorMessage: state.errormessage,
-              context: context,
-            );
-          }
-        },
+        listener: (context, state) {},
         builder: (context, state) {
           AuthCubit registerCubit = AuthCubit.get(context);
-          return Scaffold(
-            body: SafeArea(
-              child: SingleChildScrollView(
-                child: Form(
-                  key: formKey,
-                  child: Padding(
-                    padding: const EdgeInsets.all(32.0),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Image(
-                          height: getSize(context: context).height * 0.25,
-                          image: const AssetImage('assets/images/36.png'),
-                        ),
-                        const Text(
-                          'Sign Up',
-                          style: TextStyle(
-                              fontSize: 22,
-                              fontFamily: 'Cairo',
-                              fontWeight: FontWeight.bold),
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
+          return Center(
+            child: Scaffold(
+              body: SafeArea(
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('Choose your role and start  today!',
+                          style: BlackTitle.display5(context)
+                              .copyWith(fontSize: 20)),
+                      SizedBox(
+                        height: 30,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(0.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(
-                              Icons.alternate_email_rounded,
-                              size: 30,
-                              color: greyColor,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            CreatTextField(
-                              // width: double.infinity,
-                              controller: emailController,
-                              keyboardType: TextInputType.emailAddress,
-                              label: "Email or Mobile",
-                              labelStyle: const TextStyle(
-                                  color: greyColor, fontFamily: 'Cairo'),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.person,
-                              size: 30,
-                              color: greyColor,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            CreatTextField(
-                              controller: nameController,
-                              keyboardType: TextInputType.text,
-                              label: "Name",
-                              labelStyle: const TextStyle(
-                                fontFamily: 'Cairo',
-                                color: greyColor,
-                              ),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 5,
-                        ),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.lock,
-                              size: 30,
-                              color: greyColor,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            CreatTextField(
-                              // width: double.infinity,
-                              controller: passwordController,
-                              obSecureText: registerCubit.isPassword,
-                              label: "password",
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  registerCubit.changeVisibilty();
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.read<AuthCubit>().isStudent = true;
+                                  context.read<AuthCubit>().isProfessor = false;
+                                  context.read<AuthCubit>().isResearcher =
+                                      false;
+                                  context.read<AuthCubit>().changType();
+                                  print(context.read<AuthCubit>().userType);
                                 },
-                                icon: Icon(
-                                  registerCubit.visibleicon,
-                                  size: 30,
-                                  color: greyColor,
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadiusDirectional.circular(5.0),
+                                      color: registerCubit.isStudent
+                                          ? Colors.blue[300]
+                                          : Colors.grey[300]),
+                                  child: Column(
+                                    children: [
+                                      Image.asset(
+                                        'assets/images/Frame.png',
+                                        fit: BoxFit.contain,
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Text(
+                                        'Student',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12.0),
+                                      ),
+                                    ],
+                                  ),
                                 ),
                               ),
-                              labelStyle: TextStyle(
-                                  fontFamily: 'Cairo',
-                                  color: Colors.grey.withOpacity(0.5)),
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.read<AuthCubit>().isStudent = false;
+                                  context.read<AuthCubit>().isProfessor = false;
+                                  context.read<AuthCubit>().isResearcher = true;
+                                  context.read<AuthCubit>().changType();
+                                  print(context.read<AuthCubit>().userType);
+                                },
+                                child: Container(
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadiusDirectional.circular(5.0),
+                                      color: registerCubit.isResearcher
+                                          ? Colors.blue[300]
+                                          : Colors.grey[300]),
+                                  child: Column(
+                                    mainAxisSize: MainAxisSize.max,
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/noun-researcher-1923622.svg',
+                                        height:
+                                            getSize(context: context).height *
+                                                0.17,
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Text(
+                                        'Researcher',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+                            SizedBox(
+                              width: 3,
+                            ),
+                            Expanded(
+                              child: GestureDetector(
+                                onTap: () {
+                                  context.read<AuthCubit>().isStudent = false;
+                                  context.read<AuthCubit>().isProfessor = true;
+                                  context.read<AuthCubit>().isResearcher =
+                                      false;
+                                  context.read<AuthCubit>().changType();
+                                  print(context.read<AuthCubit>().userType);
+                                },
+                                child: Container(
+                                  width: double.infinity,
+                                  decoration: BoxDecoration(
+                                      borderRadius:
+                                          BorderRadiusDirectional.circular(5.0),
+                                      color: registerCubit.isProfessor
+                                          ? Colors.blue[300]
+                                          : Colors.grey[300]),
+                                  child: Column(
+                                    children: [
+                                      SvgPicture.asset(
+                                        'assets/images/Frame.svg',
+                                      ),
+                                      SizedBox(
+                                        height: 5.0,
+                                      ),
+                                      Text(
+                                        'Professor',
+                                        style: TextStyle(
+                                            fontWeight: FontWeight.w500,
+                                            fontSize: 12.0),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
-                          children: [
-                            const Icon(
-                              Icons.phone,
-                              size: 30,
-                              color: greyColor,
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            CreatTextField(
-                              keyboardType: TextInputType.phone,
-                              controller: phoneController,
-                              label: "Mobile",
-                              labelStyle: const TextStyle(
-                                  color: greyColor, fontFamily: 'Cairo'),
-                            ),
-                          ],
-                        ),
-                        CreatLargDropDown(authCubit: AuthCubit.get(context)),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CreateDropDownSmall(authCubit: AuthCubit.get(context)),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        CreatTextField(
-                          controller: dateController,
-                          onSubmit: (value) {
-                            setState(() {});
-                          },
-                          prefixIcon: IconButton(
-                            onPressed: () {
-                              _selectDate(context);
-                            },
-                            icon: const Icon(
-                              Icons.calendar_today_outlined,
-                              color: mainColor,
-                            ),
-                          ),
-                          label: 'Select Date',
-                          labelStyle: TextStyle(
-                              fontFamily: 'Cairo',
-                              color: Colors.grey.withOpacity(0.5)),
-                          keyboardType: TextInputType.datetime,
-                          onTap: () {
-                            _selectDate(context);
-                          },
-                        ),
-                        ConditionalBuilder(
-                          condition: state is! RegisterLoading,
-                          builder: (context) => CreateButton(
-                            onTap: () {
-                              registerCubit.register(
-                                name: nameController.text,
-                                email: emailController.text,
-                                mobile: phoneController.text,
-                                password: passwordController.text,
-                                birthDate: dateController.text,
-                              );
-                            },
-                            elevation: 0,
-                            radius: 40,
-                            bottomMargin: 0,
-                            height: getSize(context: context).height * 0.05,
-                            width: getSize(context: context).width * 0.9,
-                            title: 'Register',
-                          ),
-                          fallback: (BuildContext context) =>
-                              const CreatLoading(),
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Row(
+                      ),
+                      SizedBox(height: 30),
+                      CreateButton(
+                        onTap: () {
+                          if (context.read<AuthCubit>().userType == null) {
+                            CreatToast().showToast(
+                                errorMessage: "Choose your role",
+                                context: context,
+                                gravity: Toast.lengthLong);
+                          } else {
+                            RoutesManager.navigatorPush(
+                                context,
+                                CompleteRegisterScreen(
+                                    userType:
+                                        context.read<AuthCubit>().userType!));
+                          }
+                        },
+                        elevation: 0,
+                        radius: 40,
+                        bottomMargin: 0,
+                        height: getSize(context: context).height * 0.06,
+                        width: getSize(context: context).width * 0.9,
+                        title: 'Continue',
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8.0),
+                        child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             const Text(
@@ -286,7 +225,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     alignment: Alignment.centerLeft),
                                 onPressed: () {
                                   RoutesManager.navigatorPush(
-                                      context, LoginScreen());
+                                      context, const LoginScreen());
                                 },
                                 child: const Text(
                                   'Login',
@@ -297,8 +236,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ))
                           ],
                         ),
-                      ],
-                    ),
+                      ),
+                    ],
                   ),
                 ),
               ),
