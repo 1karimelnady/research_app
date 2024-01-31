@@ -13,10 +13,28 @@ class AuthCubit extends Cubit<AuthStates> {
   Dio dio = Dio();
   UserModel? user;
   String? userType;
-  void saveUserType({required String type}) {
-    userType = type;
-    emit(SavedType());
+  bool isStudent = false;
+  bool isProfessor = false;
+  bool isResearcher = false;
+  void changType() {
+    if (isStudent) {
+      userType = 'student';
+      emit(ChangeStudentType(userType!));
+    } else if (isProfessor) {
+      userType = 'professor';
+      emit(ChangeProfessorType(userType!));
+    } else if (isResearcher) {
+      userType = 'researcher';
+      emit(ChangeResearcherType(userType!));
+    } else {
+      throw Exception('No user type selected');
+    }
   }
+
+  // void saveUserType({required String type}) {
+  //   userType = type;
+  //   emit(SavedType());
+  // }
 
   String? userGender;
   void saveUserGender({required String gender}) {
@@ -31,6 +49,8 @@ class AuthCubit extends Cubit<AuthStates> {
     required String password,
     required String birthDate,
     String? token,
+    required String userType,
+    required String userGender,
   }) async {
     Map<String, dynamic> parms = {
       "name": name,

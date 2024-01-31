@@ -116,11 +116,15 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   child: Column(
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
-                                      SvgPicture.asset(
-                                        'assets/images/noun-researcher-1923622.svg',
-                                        height:
-                                            getSize(context: context).height *
-                                                0.17,
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 31.0),
+                                        child: SvgPicture.asset(
+                                          'assets/images/noun-researcher-1923622.svg',
+                                          height:
+                                              getSize(context: context).height *
+                                                  0.12,
+                                        ),
                                       ),
                                       SizedBox(
                                         height: 5.0,
