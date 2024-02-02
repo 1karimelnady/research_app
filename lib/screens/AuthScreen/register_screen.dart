@@ -118,7 +118,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 31.0),
+                                            vertical: 20.0),
                                         child: SvgPicture.asset(
                                           'assets/images/noun-researcher-1923622.svg',
                                           height:

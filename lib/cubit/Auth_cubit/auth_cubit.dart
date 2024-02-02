@@ -51,6 +51,7 @@ class AuthCubit extends Cubit<AuthStates> {
     String? token,
     required String userType,
     required String userGender,
+    List<String?>? answers,
   }) async {
     Map<String, dynamic> parms = {
       "name": name,
@@ -60,6 +61,13 @@ class AuthCubit extends Cubit<AuthStates> {
       "password": password,
       "gender": userGender,
       "birthDate": birthDate,
+      "hand": answers?[0],
+      "language": answers?[1],
+      "version": answers?[2],
+      "hearingNormal": answers?[3],
+      "origin": answers?[4],
+      "ADHD": answers?[5],
+      "musicalBackground": answers?[6],
     };
 
     try {
@@ -118,7 +126,7 @@ class AuthCubit extends Cubit<AuthStates> {
       var response = await dio.post(baseUrl + "/users/login", data: params);
       user = UserModel.fromJson(response.data);
       if (response.statusCode == 200) {
-        String token = response.data?['token'] ?? '';
+        String token = response.data['token'];
         String value = response.data?['value'] ?? '';
         String password = response.data?['password'] ?? '';
 

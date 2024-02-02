@@ -41,22 +41,19 @@ void main() async {
         ChangeNotifierProvider(create: (_) => LanguageProvider()),
         // Add other providers if needed
       ],
-      child: const MyApp(),
+      child: MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  MyApp({super.key});
 
   // This widget is the root of your application.
+  // String token = CacheHelper.getData(key: "token");
+
   @override
   Widget build(BuildContext context) {
-    //MultiBlocProvider(
-    // providers: [
-    //  BlocProvider<MainCubit>(
-    //       create: (context) => MainCubit()..requestNotificationPermission())
-    // ],
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',

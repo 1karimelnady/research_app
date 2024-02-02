@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:research_app/app_manager/local_data.dart';
@@ -73,9 +74,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
             CacheHelper.setData(key: "type", value: state.response['type']);
             CacheHelper.setData(key: "token", value: state.response['token']);
             String userType = CacheHelper.getData(key: "type") ?? "";
-            if (userType == "student") {
-              RoutesManager.navigatorAndRemove(context, QuestionScreen());
-            } else if (userType == "professor") {
+            if (userType == "professor") {
               RoutesManager.navigatorAndRemove(context, const HomeScreen());
             } else if (userType == "researcher") {
               RoutesManager.navigatorAndRemove(context, const HomeScreen());
@@ -348,84 +347,188 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                         const SizedBox(
                           height: 25,
                         ),
-                        ConditionalBuilder(
-                          condition: state is! RegisterLoading,
-                          builder: (context) => CreateButton(
-                              onTap: () {
-                                if (formKey.currentState!.validate()) {
-                                  registerCubit.register(
-                                    name: nameController.text,
-                                    email: emailController.text,
-                                    mobile: phoneController.text,
-                                    password: passwordController.text,
-                                    userGender: userGender,
-                                    birthDate: dateController.text,
-                                    userType: widget.userType,
-                                  );
+                        (widget.userType == "researcher" ||
+                                widget.userType == "professor")
+                            ? ConditionalBuilder(
+                                condition: state is! RegisterLoading,
+                                builder: (context) => CreateButton(
+                                    onTap: () {
+                                      if (formKey.currentState!.validate()) {
+                                        registerCubit.register(
+                                          name: nameController.text.trim(),
+                                          email: emailController.text.trim(),
+                                          mobile: phoneController.text,
+                                          password: passwordController.text,
+                                          userGender: userGender,
+                                          birthDate: dateController.text,
+                                          userType: widget.userType,
+                                        );
 
-                                  // if (nameController.text.isEmpty) {
-                                  //   CreatToast().showToast(
-                                  //     errorMessage: "Name is required",
-                                  //     context: context,
-                                  //   );
-                                  // }
-                                  // else if (emailController.text.isEmpty) {
-                                  //   CreatToast().showToast(
-                                  //     errorMessage: "Email is required",
-                                  //     context: context,
-                                  //   );
-                                  // }
-                                  // else if (passwordController.text.isEmpty) {
-                                  //   CreatToast().showToast(
-                                  //     errorMessage: "Password is required",
-                                  //     context: context,
-                                  //   );
-                                  // }
-                                  // else if (passwordController.text.length <
-                                  //     8) {
-                                  //   CreatToast().showToast(
-                                  //     errorMessage:
-                                  //         "Password must not less than 8",
-                                  //     context: context,
-                                  //   );
-                                  // }
-                                  // else if (phoneController.text.isEmpty) {
-                                  //   CreatToast().showToast(
-                                  //     errorMessage: "Mobile is required",
-                                  //     context: context,
-                                  //   );
-                                  // }
-                                  // else if (dateController.text.isEmpty) {
-                                  //   CreatToast().showToast(
-                                  //     errorMessage: "Birth date is required",
-                                  //     context: context,
-                                  //   );
-                                  // } else {
-                                  //   // print(
-                                  //   //     "User Type before registration: ${registerCubit.userType}");
-                                  //   registerCubit.register(
-                                  //     name: nameController.text,
-                                  //     email: emailController.text,
-                                  //     mobile: phoneController.text,
-                                  //     password: passwordController.text,
-                                  //     userGender: userGender,
-                                  //     birthDate: dateController.text,
-                                  //     userType: widget.userType,
-                                  //   );
-                                  //   // print(
-                                  //   //     "User Type after registration${registerCubit.userType}");
-                                  // }
-                                }
-                              },
-                              elevation: 0,
-                              radius: 40,
-                              bottomMargin: 0,
-                              height: getSize(context: context).height * 0.05,
-                              width: getSize(context: context).width * 0.9,
-                              title: "Register"),
-                          fallback: (BuildContext context) =>
-                              const CreatLoading(),
-                        ),
+                                        // if (nameController.text.isEmpty) {
+                                        //   CreatToast().showToast(
+                                        //     errorMessage: "Name is required",
+                                        //     context: context,
+                                        //   );
+                                        // }
+                                        // else if (emailController.text.isEmpty) {
+                                        //   CreatToast().showToast(
+                                        //     errorMessage: "Email is required",
+                                        //     context: context,
+                                        //   );
+                                        // }
+                                        // else if (passwordController.text.isEmpty) {
+                                        //   CreatToast().showToast(
+                                        //     errorMessage: "Password is required",
+                                        //     context: context,
+                                        //   );
+                                        // }
+                                        // else if (passwordController.text.length <
+                                        //     8) {
+                                        //   CreatToast().showToast(
+                                        //     errorMessage:
+                                        //         "Password must not less than 8",
+                                        //     context: context,
+                                        //   );
+                                        // }
+                                        // else if (phoneController.text.isEmpty) {
+                                        //   CreatToast().showToast(
+                                        //     errorMessage: "Mobile is required",
+                                        //     context: context,
+                                        //   );
+                                        // }
+                                        // else if (dateController.text.isEmpty) {
+                                        //   CreatToast().showToast(
+                                        //     errorMessage: "Birth date is required",
+                                        //     context: context,
+                                        //   );
+                                        // } else {
+                                        //   // print(
+                                        //   //     "User Type before registration: ${registerCubit.userType}");
+                                        //   registerCubit.register(
+                                        //     name: nameController.text,
+                                        //     email: emailController.text,
+                                        //     mobile: phoneController.text,
+                                        //     password: passwordController.text,
+                                        //     userGender: userGender,
+                                        //     birthDate: dateController.text,
+                                        //     userType: widget.userType,
+                                        //   );
+                                        //   // print(
+                                        //   //     "User Type after registration${registerCubit.userType}");
+                                        // }
+                                      }
+                                    },
+                                    elevation: 0,
+                                    radius: 40,
+                                    bottomMargin: 0,
+                                    height:
+                                        getSize(context: context).height * 0.05,
+                                    width:
+                                        getSize(context: context).width * 0.9,
+                                    title: "Register"),
+                                fallback: (BuildContext context) =>
+                                    const CreatLoading(),
+                              )
+                            : Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 0.3,
+                                            blurStyle: BlurStyle.outer,
+                                            spreadRadius: 2,
+                                            offset: Offset(3, 3),
+                                            color: mainColor)
+                                      ],
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        Navigator.pop(context);
+                                      },
+                                      icon: Padding(
+                                        padding:
+                                            const EdgeInsets.only(left: 10.0),
+                                        child: Icon(
+                                          Icons.arrow_back_ios,
+                                          color: mainColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  TextButton(
+                                      onPressed: () {
+                                        if (formKey.currentState!.validate()) {
+                                          RoutesManager.navigatorPush(
+                                              context,
+                                              QuestionScreen(
+                                                userName:
+                                                    nameController.text.trim(),
+                                                email:
+                                                    emailController.text.trim(),
+                                                password: passwordController
+                                                    .text
+                                                    .trim(),
+                                                mobile: phoneController.text,
+                                                userGender: userGender,
+                                                date: dateController.text,
+                                                userType: widget.userType,
+                                              ));
+                                        }
+                                      },
+                                      child: Text(
+                                        'Next',
+                                        style: TextStyle(
+                                            color: Colors.blue,
+                                            fontSize: 18,
+                                            fontWeight: FontWeight.bold),
+                                      )),
+                                  Container(
+                                    decoration: BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      boxShadow: [
+                                        BoxShadow(
+                                            blurRadius: 0.2,
+                                            blurStyle: BlurStyle.outer,
+                                            spreadRadius: 2,
+                                            offset: Offset(3, 3),
+                                            color: mainColor)
+                                      ],
+                                    ),
+                                    child: IconButton(
+                                      onPressed: () {
+                                        if (formKey.currentState!.validate()) {
+                                          RoutesManager.navigatorPush(
+                                              context,
+                                              QuestionScreen(
+                                                userName:
+                                                    nameController.text.trim(),
+                                                email:
+                                                    emailController.text.trim(),
+                                                password: passwordController
+                                                    .text
+                                                    .trim(),
+                                                mobile: phoneController.text,
+                                                userType: widget.userType,
+                                                userGender: userGender,
+                                                date: dateController.text,
+                                              ));
+                                        }
+                                      },
+                                      icon: Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
+                                        child: Icon(
+                                          Icons.arrow_forward_ios,
+                                          color: mainColor,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
                       ],
                     ),
                   ),
