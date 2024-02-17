@@ -1,4 +1,3 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
@@ -9,14 +8,11 @@ import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/screens/AuthScreen/register_screen.dart';
 import 'package:research_app/utilities/cache_helper.dart';
-import 'package:toast/toast.dart';
-
 import '../../app_manager/routes_manager.dart';
 import '../../common_widget/create_text_field.dart';
 import '../../common_widget/create_toast.dart';
 import '../../providers/language_provider.dart';
-import '../../utilities/text_style.dart';
-import '../home_screen.dart';
+import '../researcher_screen/researcher_home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -96,6 +92,7 @@ class _LoginScreenState extends State<LoginScreen> {
   //   }
   // }
 
+  @override
   void initState() {
     super.initState();
   }
@@ -109,7 +106,11 @@ class _LoginScreenState extends State<LoginScreen> {
         listener: (context, state) {
           if (state is LoginSuccess) {
             CacheHelper.setData(key: "token", value: state.response['token']);
-            RoutesManager.navigatorAndRemove(context, const HomeScreen());
+            RoutesManager.navigatorAndRemove(
+                context,
+                ResearcherHomeScreen(
+                  name: state.response['name'],
+                ));
           }
 
           if (state is LoginError) {
@@ -125,10 +126,10 @@ class _LoginScreenState extends State<LoginScreen> {
             // backgroundColor: mainColor.withOpacity(0.1),
             body: SafeArea(
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Form(
                   key: formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
                     child: Column(
@@ -138,7 +139,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         Image(
                           height: getSize(context: context).height * 0.30,
                           image: const AssetImage(
-                              'assets/images/istockphoto-1281150061-612x612.jpg'),
+                            'assets/images/istockphoto-1281150061-612x612.jpg',
+                          ),
                         ),
                         const Text(
                           'Login',
@@ -146,6 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
                               fontFamily: 'Cairo'),
+                        ),
+                        const SizedBox(
+                          height: 10,
                         ),
                         Row(
                           children: [
@@ -162,6 +167,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value!.isEmpty) {
                                   return "Email or Mobile is required";
                                 }
+                                return null;
                               },
                               controller: emailController,
                               label: "Email or Mobile",
@@ -189,6 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 if (value!.isEmpty) {
                                   return "Password is required";
                                 }
+                                return null;
                               },
                               obSecureText: cubit.isPassword,
                               keyboardType: TextInputType.visiblePassword,
@@ -220,6 +227,9 @@ class _LoginScreenState extends State<LoginScreen> {
                         //             fontWeight: FontWeight.w700)),
                         //   ),
                         // ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         state is LoginLoading
                             ? const CreatLoading()
                             : CreateButton(

@@ -2,10 +2,11 @@ import 'dart:core';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:research_app/common_widget/create_loading.dart';
 import 'package:research_app/common_widget/step_progress.dart';
 import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
-import 'package:research_app/screens/home_screen.dart';
+import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
 import 'package:toast/toast.dart';
 
 import '../app_manager/local_data.dart';
@@ -66,12 +67,12 @@ class _QuestionScreenState extends State<QuestionScreen> {
   ];
   List<List<String>> answers = [
     ['left', 'right'],
-    ['Hebrew', 'English', 'Arabic'],
-    ['Yes', 'No'],
-    ['Noraml/corrected', 'Not normal'],
-    ['Israeld', 'Usa'],
-    ['Yes', 'No'],
-    ['Yes', 'No']
+    ['arabic', 'english', 'hebrew'],
+    ['normal', 'notNormal'],
+    ['yes', 'no'],
+    ['israel', 'usa'],
+    ['yes', 'no'],
+    ['yes', 'no']
   ];
   List<bool> isAnswerSelected = List.generate(7, (index) => false);
 
@@ -80,7 +81,23 @@ class _QuestionScreenState extends State<QuestionScreen> {
       create: (context) => AuthCubit(),
       child: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {
-          // TODO: implement listener
+          print('AuthCubit State: $state');
+          if (state is RegisterSuccess) {
+            CreatToast().showToast(
+                errorMessage: "Register Successfully",
+                context: context,
+                backgroundColor: mainColor);
+            RoutesManager.navigatorAndRemove(
+                context,
+                ResearcherHomeScreen(
+                  name: state.response['name'],
+                ));
+          } else if (state is RegisterError) {
+            CreatToast().showToast(
+              errorMessage: state.errormessage,
+              context: context,
+            );
+          }
         },
         builder: (context, state) {
           AuthCubit registerCubit = AuthCubit.get(context);
@@ -117,21 +134,6 @@ class _QuestionScreenState extends State<QuestionScreen> {
                           print('Selected Answers: $selectedAnswers');
                         },
                       );
-
-                      //   PageScreen(
-                      //   key: PageStorageKey<String>('page_$index'),
-                      //   question: '${questions[index]}',
-                      //   answers: answers[index],
-                      //   selectedAnswer: selectedAnswers[index] ?? '',
-                      //   onAnswerSelected: (answer, answers) {
-                      //     setState(() {
-                      //       selectedAnswers[index] = answer;
-                      //       isAnswerSelected[index] = true;
-                      //     });
-                      //     print("Question $index answer : $answer");
-                      //     print('Selected Answers: $selectedAnswers');
-                      //   },
-                      // );
                     },
                   ),
                 ),
@@ -141,37 +143,36 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     pageController: pageController,
                   ),
                 ),
-                CreateButton(
-                  onTap: () {
-                    if (isAnswerSelected.every((selected) => selected)) {
-                      print('llllll');
-                      registerCubit
-                          .register(
-                              name: widget.userName,
-                              email: widget.email,
-                              mobile: widget.mobile,
-                              password: widget.password,
-                              userGender: widget.userGender,
-                              birthDate: widget.date,
-                              userType: widget.userType,
-                              answers: selectedAnswers)
-                          .then((value) {
-                        RoutesManager.navigatorAndRemove(context, HomeScreen());
-                      });
-                    } else {
-                      CreatToast().showToast(
-                        errorMessage: "you must  answer all questions",
-                        context: context,
-                      );
-                    }
-                  },
-                  elevation: 0,
-                  radius: 40,
-                  bottomMargin: 0,
-                  height: getSize(context: context).height * 0.05,
-                  width: getSize(context: context).width * 0.9,
-                  title: 'Register',
-                ),
+                state is RegisterLoading
+                    ? CreatLoading()
+                    : CreateButton(
+                        onTap: () {
+                          if (isAnswerSelected.every((selected) => selected)) {
+                            print('llllll');
+                            registerCubit.register(
+                                name: widget.userName,
+                                email: widget.email,
+                                mobile: widget.mobile,
+                                password: widget.password,
+                                userGender: widget.userGender,
+                                birthDate: widget.date,
+                                userType: widget.userType,
+                                answers: selectedAnswers);
+                            print('kkkkkkkkkkkkkkkkkkkkk');
+                          } else {
+                            CreatToast().showToast(
+                              errorMessage: "you must  answer all questions",
+                              context: context,
+                            );
+                          }
+                        },
+                        elevation: 0,
+                        radius: 40,
+                        bottomMargin: 0,
+                        height: getSize(context: context).height * 0.05,
+                        width: getSize(context: context).width * 0.9,
+                        title: 'Register',
+                      ),
                 Spacer(
                   flex: 1,
                 )

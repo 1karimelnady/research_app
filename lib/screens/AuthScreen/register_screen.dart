@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:provider/provider.dart';
 import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/common_widget/create_button.dart';
 import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
@@ -10,7 +9,6 @@ import 'package:research_app/screens/AuthScreen/complete_register_screen.dart';
 import 'package:toast/toast.dart';
 import '../../app_manager/routes_manager.dart';
 import '../../common_widget/create_toast.dart';
-import '../../utilities/cache_helper.dart';
 import '../../utilities/text_style.dart';
 import 'package:research_app/screens/AuthScreen/login_screen.dart';
 
@@ -22,12 +20,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  @override
-  void initState() {
-    CacheHelper.registerClear();
-    super.initState();
-  }
-
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -48,7 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Text('Choose your role and start  today!',
                           style: BlackTitle.display5(context)
                               .copyWith(fontSize: 20)),
-                      SizedBox(
+                      const SizedBox(
                         height: 30,
                       ),
                       Padding(
@@ -76,14 +68,18 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           : Colors.grey[300]),
                                   child: Column(
                                     children: [
-                                      Image.asset(
-                                        'assets/images/Frame.png',
-                                        fit: BoxFit.contain,
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 11.0),
+                                        child: Image.asset(
+                                          'assets/images/Frame.png',
+                                          fit: BoxFit.contain,
+                                        ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5.0,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Student',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
@@ -94,7 +90,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Expanded(
@@ -118,7 +114,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.symmetric(
-                                            vertical: 20.0),
+                                            vertical: 31.0),
                                         child: SvgPicture.asset(
                                           'assets/images/noun-researcher-1923622.svg',
                                           height:
@@ -126,10 +122,10 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                                   0.12,
                                         ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5.0,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Researcher',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
@@ -140,7 +136,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                 ),
                               ),
                             ),
-                            SizedBox(
+                            const SizedBox(
                               width: 3,
                             ),
                             Expanded(
@@ -163,13 +159,17 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           : Colors.grey[300]),
                                   child: Column(
                                     children: [
-                                      SvgPicture.asset(
-                                        'assets/images/Frame.svg',
+                                      Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            vertical: 11.0),
+                                        child: SvgPicture.asset(
+                                          'assets/images/Frame.svg',
+                                        ),
                                       ),
-                                      SizedBox(
+                                      const SizedBox(
                                         height: 5.0,
                                       ),
-                                      Text(
+                                      const Text(
                                         'Professor',
                                         style: TextStyle(
                                             fontWeight: FontWeight.w500,
@@ -183,7 +183,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           ],
                         ),
                       ),
-                      SizedBox(height: 30),
+                      const SizedBox(height: 30),
                       CreateButton(
                         onTap: () {
                           if (context.read<AuthCubit>().userType == null) {

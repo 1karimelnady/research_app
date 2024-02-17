@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'package:research_app/app_manager/local_data.dart';
@@ -9,8 +8,7 @@ import 'package:research_app/common_widget/create_button.dart';
 import 'package:research_app/common_widget/create_loading.dart';
 import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
-import 'package:research_app/screens/AuthScreen/login_screen.dart';
-import 'package:research_app/screens/home_screen.dart';
+import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
 import 'package:research_app/screens/question_screen.dart';
 import '../../app_manager/routes_manager.dart';
 import '../../common_widget/create_text_field.dart';
@@ -18,6 +16,7 @@ import '../../common_widget/create_toast.dart';
 import '../../providers/language_provider.dart';
 import '../../utilities/cache_helper.dart';
 import '../../utilities/text_style.dart';
+import '../professor_screen/professor_home_screen.dart';
 
 class CompleteRegisterScreen extends StatefulWidget {
   final String userType;
@@ -66,18 +65,25 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
   @override
   Widget build(BuildContext context) {
     languageProvider = Provider.of<LanguageProvider>(context, listen: true);
+    String name;
     return BlocProvider(
         create: (context) => AuthCubit(),
         child: BlocConsumer<AuthCubit, AuthStates>(listener: (context, state) {
           print('AuthCubit State: $state');
           if (state is RegisterSuccess) {
+            CreatToast().showToast(
+                errorMessage: "Register Successfully",
+                context: context,
+                backgroundColor: mainColor);
+            name = state.response['name'];
             CacheHelper.setData(key: "type", value: state.response['type']);
             CacheHelper.setData(key: "token", value: state.response['token']);
             String userType = CacheHelper.getData(key: "type") ?? "";
             if (userType == "professor") {
-              RoutesManager.navigatorAndRemove(context, const HomeScreen());
+              RoutesManager.navigatorAndRemove(context, ProfessorHomeSCreen());
             } else if (userType == "researcher") {
-              RoutesManager.navigatorAndRemove(context, const HomeScreen());
+              RoutesManager.navigatorAndRemove(
+                  context, ResearcherHomeScreen(name: name));
             }
           } else if (state is RegisterError) {
             CreatToast().showToast(
@@ -90,10 +96,10 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
           return Scaffold(
             body: SafeArea(
               child: SingleChildScrollView(
-                physics: BouncingScrollPhysics(),
+                physics: const BouncingScrollPhysics(),
                 child: Form(
                   key: formKey,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  autovalidateMode: AutovalidateMode.disabled,
                   child: Padding(
                     padding: const EdgeInsets.all(32.0),
                     child: Column(
@@ -112,7 +118,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Row(
                           children: [
@@ -129,6 +135,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                 if (value!.isEmpty) {
                                   return "Name is required";
                                 }
+                                return null;
                               },
                               controller: nameController,
                               keyboardType: TextInputType.text,
@@ -141,7 +148,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                           ],
                         ),
                         const SizedBox(
-                          height: 5,
+                          height: 10,
                         ),
                         Row(
                           children: [
@@ -159,6 +166,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                 if (value!.isEmpty) {
                                   return "Email is required";
                                 }
+                                return null;
                               },
                               controller: emailController,
                               keyboardType: TextInputType.emailAddress,
@@ -187,6 +195,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                 if (value!.isEmpty) {
                                   return "Password is required";
                                 }
+                                return null;
                               },
                               controller: passwordController,
                               obSecureText: registerCubit.isPassword,
@@ -225,6 +234,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                 if (value!.isEmpty) {
                                   return "Mobile is required";
                                 }
+                                return null;
                               },
                               keyboardType: TextInputType.phone,
                               controller: phoneController,
@@ -234,6 +244,14 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                             ),
                           ],
                         ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        // SvgPicture.asset(
+                        //   "assets/images/family_restroom_FILL0_wght400_GRAD0_opsz24.svg",
+                        //   width: 50,
+                        //   height: 50,
+                        // ),
                         Text(
                           'Gender',
                           style: BlackTitle.display5(context).copyWith(
@@ -310,6 +328,9 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                             )
                           ],
                         ),
+                        const SizedBox(
+                          height: 20,
+                        ),
                         Row(
                           children: [
                             // Icon(Icons.calendar_today_outlined),
@@ -327,6 +348,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                 if (value!.isEmpty) {
                                   return "Birth date is required";
                                 }
+                                return null;
                               },
                               controller: dateController,
                               onSubmit: (value) {
@@ -363,7 +385,6 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                           birthDate: dateController.text,
                                           userType: widget.userType,
                                         );
-
                                         // if (nameController.text.isEmpty) {
                                         //   CreatToast().showToast(
                                         //     errorMessage: "Name is required",
@@ -434,7 +455,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
@@ -449,9 +470,8 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      icon: Padding(
-                                        padding:
-                                            const EdgeInsets.only(left: 10.0),
+                                      icon: const Padding(
+                                        padding: EdgeInsets.only(left: 10.0),
                                         child: Icon(
                                           Icons.arrow_back_ios,
                                           color: mainColor,
@@ -462,24 +482,32 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                   TextButton(
                                       onPressed: () {
                                         if (formKey.currentState!.validate()) {
-                                          RoutesManager.navigatorPush(
-                                              context,
-                                              QuestionScreen(
-                                                userName:
-                                                    nameController.text.trim(),
-                                                email:
-                                                    emailController.text.trim(),
-                                                password: passwordController
-                                                    .text
-                                                    .trim(),
-                                                mobile: phoneController.text,
-                                                userGender: userGender,
-                                                date: dateController.text,
-                                                userType: widget.userType,
-                                              ));
+                                          if (phoneController.text.length < 9) {
+                                            CreatToast().showToast(
+                                              errorMessage:
+                                                  "mobile must not less than 8",
+                                              context: context,
+                                            );
+                                          } else {
+                                            RoutesManager.navigatorPush(
+                                                context,
+                                                QuestionScreen(
+                                                  userName: nameController.text
+                                                      .trim(),
+                                                  email: emailController.text
+                                                      .trim(),
+                                                  password: passwordController
+                                                      .text
+                                                      .trim(),
+                                                  mobile: phoneController.text,
+                                                  userGender: userGender,
+                                                  date: dateController.text,
+                                                  userType: widget.userType,
+                                                ));
+                                          }
                                         }
                                       },
-                                      child: Text(
+                                      child: const Text(
                                         'Next',
                                         style: TextStyle(
                                             color: Colors.blue,
@@ -487,7 +515,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                             fontWeight: FontWeight.bold),
                                       )),
                                   Container(
-                                    decoration: BoxDecoration(
+                                    decoration: const BoxDecoration(
                                       shape: BoxShape.circle,
                                       boxShadow: [
                                         BoxShadow(
@@ -501,24 +529,32 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                     child: IconButton(
                                       onPressed: () {
                                         if (formKey.currentState!.validate()) {
-                                          RoutesManager.navigatorPush(
-                                              context,
-                                              QuestionScreen(
-                                                userName:
-                                                    nameController.text.trim(),
-                                                email:
-                                                    emailController.text.trim(),
-                                                password: passwordController
-                                                    .text
-                                                    .trim(),
-                                                mobile: phoneController.text,
-                                                userType: widget.userType,
-                                                userGender: userGender,
-                                                date: dateController.text,
-                                              ));
+                                          if (phoneController.text.length < 9) {
+                                            CreatToast().showToast(
+                                              errorMessage:
+                                                  "mobile must not less than 8",
+                                              context: context,
+                                            );
+                                          } else {
+                                            RoutesManager.navigatorPush(
+                                                context,
+                                                QuestionScreen(
+                                                  userName: nameController.text
+                                                      .trim(),
+                                                  email: emailController.text
+                                                      .trim(),
+                                                  password: passwordController
+                                                      .text
+                                                      .trim(),
+                                                  mobile: phoneController.text,
+                                                  userType: widget.userType,
+                                                  userGender: userGender,
+                                                  date: dateController.text,
+                                                ));
+                                          }
                                         }
                                       },
-                                      icon: Padding(
+                                      icon: const Padding(
                                         padding: EdgeInsets.only(left: 10.0),
                                         child: Icon(
                                           Icons.arrow_forward_ios,

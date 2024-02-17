@@ -20,8 +20,6 @@ class PageScreen extends StatefulWidget {
 }
 
 class _PageScreenState extends State<PageScreen> {
-  // String selectedAnswer = 'left';
-  // List<String> selectedAnswersList = [];
   late String selectedAnswer;
   List<String> selectedAnswersList = [];
 
@@ -77,6 +75,10 @@ class _PageScreenState extends State<PageScreen> {
                               });
 
                               print("Question answer : ${selectedAnswer}");
+                              if (widget.question == 'dominant hand ?' ||
+                                  widget.question == 'Native Language ?') {
+                                selectedAnswer = selectedAnswer.toLowerCase();
+                              }
                               widget.onAnswerSelected(
                                   selectedAnswer, selectedAnswersList);
                             },
@@ -86,6 +88,13 @@ class _PageScreenState extends State<PageScreen> {
                           onTap: () {
                             setState(() {
                               selectedAnswer = widget.answers[index];
+                              if (widget.question == 'dominant hand ?' ||
+                                  widget.question == 'Native Language ?') {
+                                selectedAnswer = selectedAnswer.toLowerCase();
+                                selectedAnswersList.add(selectedAnswer);
+                              }
+                              widget.onAnswerSelected(
+                                  selectedAnswer, selectedAnswersList);
                             });
                             print("selected answer : $selectedAnswer");
                           },
@@ -101,6 +110,23 @@ class _PageScreenState extends State<PageScreen> {
                 }),
           ]),
     );
+  }
+
+  String formatAnswer(String userType, String question, String? answer) {
+    switch (question) {
+      case 'dominant hand ?':
+      case 'Native Language ?':
+        return answer?.toLowerCase() ?? '';
+      case 'Is the vision  normal?':
+      case 'Is your hearing normal ?':
+      case 'What is your origin':
+        return answer?.toLowerCase() ?? '';
+      case 'Do you suffer from ADHD?':
+      case 'Do you have a musical background?':
+        return answer == 'Yes' ? 'yes' : 'no';
+      default:
+        return answer ?? '';
+    }
   }
 }
 

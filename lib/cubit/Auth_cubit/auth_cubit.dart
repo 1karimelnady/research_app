@@ -48,10 +48,16 @@ class AuthCubit extends Cubit<AuthStates> {
     required String mobile,
     required String password,
     required String birthDate,
-    String? token,
     required String userType,
     required String userGender,
     List<String?>? answers,
+    String? hand,
+    String? language,
+    String? version,
+    String? hearingNormal,
+    String? origin,
+    String? ADHD,
+    String? musicalBackground,
   }) async {
     Map<String, dynamic> parms = {
       "name": name,
@@ -61,14 +67,19 @@ class AuthCubit extends Cubit<AuthStates> {
       "password": password,
       "gender": userGender,
       "birthDate": birthDate,
-      "hand": answers?[0],
-      "language": answers?[1],
-      "version": answers?[2],
-      "hearingNormal": answers?[3],
-      "origin": answers?[4],
-      "ADHD": answers?[5],
-      "musicalBackground": answers?[6],
     };
+
+    if (userType == 'student') {
+      parms.addAll({
+        "hand": answers?[0],
+        "language": answers?[1],
+        "version": answers?[2],
+        "hearingNormal": answers?[3],
+        "origin": answers?[4],
+        "ADHD": answers?[5],
+        "musicalBackground": answers?[6],
+      });
+    }
 
     try {
       emit(RegisterLoading());
@@ -158,5 +169,38 @@ class AuthCubit extends Cubit<AuthStates> {
     isPassword = !isPassword;
     visibleicon = isPassword ? Icons.visibility_off_outlined : Icons.visibility;
     emit(ChangePasswordVisibilty());
+  }
+
+  Map<String, dynamic> formatAnswers(
+      String userType, List<String> questions, List<String?>? answers) {
+    Map<String, dynamic> formattedAnswers = {};
+
+    for (int i = 0; i < questions.length; i++) {
+      String question = questions[i];
+      String? answer = answers?[i];
+
+      // Handle specific formatting based on the user type or question type
+      formattedAnswers[question] = formatAnswer(userType, question, answer);
+    }
+
+    return formattedAnswers;
+  }
+
+// Handle specific formatting based on the user type or question type
+  String formatAnswer(String userType, String question, String? answer) {
+    switch (question) {
+      case 'dominant hand ?':
+      case 'Native Language ?':
+        return answer?.toLowerCase() ?? '';
+      case 'Is the vision  normal?':
+      case 'Is your hearing normal ?':
+      case 'What is your origin':
+        return answer?.toLowerCase() ?? '';
+      case 'Do you suffer from ADHD?':
+      case 'Do you have a musical background?':
+        return answer == 'Yes' ? 'yes' : 'no';
+      default:
+        return answer ?? '';
+    }
   }
 }

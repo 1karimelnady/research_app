@@ -10,6 +10,7 @@ import 'package:research_app/cubit/main_cubit.dart';
 import 'package:research_app/providers/language_provider.dart';
 import 'package:research_app/screens/AuthScreen/login_screen.dart';
 import 'package:research_app/screens/question_screen.dart';
+import 'package:research_app/screens/researcher_screen/researcher_form.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 import 'package:research_app/utilities/dio_helper.dart';
 import 'package:research_app/utilities/text_style.dart';
@@ -57,7 +58,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
-      home: LoginScreen(),
+      home: ResearcherFormScreen(),
     );
   }
 }

@@ -78,7 +78,7 @@ class CreatTextField extends StatelessWidget {
     languageProvider = Provider.of<LanguageProvider>(context, listen: true);
 
     return Container(
-      margin: EdgeInsets.only(top: topMargin ?? 5),
+      margin: EdgeInsets.only(top: topMargin ?? 1),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
@@ -99,7 +99,7 @@ class CreatTextField extends StatelessWidget {
           //       : TextDirection.rtl,
           Container(
             margin: EdgeInsets.only(top: title == null ? 0 : 5.0),
-            height: height ?? getSize(context: context).height * 0.06,
+            // height: height ?? getSize(context: context).height * 0.04,
             width: width ?? getSize(context: context).width * 0.7,
             decoration: BoxDecoration(
               borderRadius: borderRadius ?? BorderRadius.circular(8),
@@ -108,9 +108,10 @@ class CreatTextField extends StatelessWidget {
               onTap: onTap,
               enabled: enable,
               obscureText: obSecureText ?? false,
-              textDirection: languageProvider!.isEnglish == true
-                  ? TextDirection.ltr
-                  : TextDirection.rtl,
+              textDirection: TextDirection.ltr,
+              // languageProvider!.isEnglish == true
+              //     ? TextDirection.ltr
+              //     : TextDirection.rtl,
               textAlign: TextAlign.left //labelDirection == null
               //     ? languageProvider!.isEnglish == true
               // ? TextAlign.left
@@ -120,6 +121,7 @@ class CreatTextField extends StatelessWidget {
               inputFormatters: inputFormatters,
               textAlignVertical: TextAlignVertical.center,
               maxLines: maxLines ?? 1,
+              // maxLines: maxLines,
               onFieldSubmitted: onSubmit,
               onChanged: onChange,
               validator: validator,
@@ -128,9 +130,9 @@ class CreatTextField extends StatelessWidget {
               style: controllerStyle ??
                   BlackTitle.display5(context).copyWith(color: mainColor),
               decoration: InputDecoration(
-                isDense: true,
+                // isDense: true,
                 contentPadding:
-                    EdgeInsets.symmetric(horizontal: 5, vertical: 7),
+                    EdgeInsets.symmetric(horizontal: 5, vertical: 5),
                 // filled: true,
                 // fillColor: fillColor ?? Colors.white,
                 hintText: (label ?? " "),
@@ -139,11 +141,13 @@ class CreatTextField extends StatelessWidget {
                         fontSize: 12, color: mainColor, fontFamily: "Cairo"),
                 errorStyle: errorStyle,
                 suffixIcon: Padding(
-                  padding: const EdgeInsets.only(bottom: 10.0),
+                  padding: const EdgeInsets.only(
+                    bottom: 0.0,
+                  ),
                   child: suffixIcon,
                 ),
                 prefixIcon: prefixIcon,
-                // enabledBorder: OutlineInputBorder(
+                // enabledBorder:  OutlineInputBorder(
                 //     borderSide: BorderSide(
                 //         color: borderColor ?? mainColor,
                 //         width: borderWidth ?? 0.6),
