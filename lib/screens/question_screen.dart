@@ -7,6 +7,7 @@ import 'package:research_app/common_widget/step_progress.dart';
 import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
+import 'package:research_app/screens/studenthomescreen.dart';
 import 'package:toast/toast.dart';
 
 import '../app_manager/local_data.dart';
@@ -89,7 +90,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 backgroundColor: mainColor);
             RoutesManager.navigatorAndRemove(
                 context,
-                ResearcherHomeScreen(
+                StudentHomeScreen(
                   name: state.response['name'],
                 ));
           } else if (state is RegisterError) {
@@ -122,7 +123,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                     itemBuilder: (context, index) {
                       return PageScreen(
                         key: PageStorageKey<String>('page_$index'),
-                        question: '${questions[index]}',
+                        question: questions[index],
                         answers: answers[index],
                         selectedAnswer: selectedAnswers[index] ?? '',
                         onAnswerSelected: (answer, answers) {
@@ -144,11 +145,11 @@ class _QuestionScreenState extends State<QuestionScreen> {
                   ),
                 ),
                 state is RegisterLoading
-                    ? CreatLoading()
+                    ? const CreatLoading()
                     : CreateButton(
                         onTap: () {
                           if (isAnswerSelected.every((selected) => selected)) {
-                            print('llllll');
+                            print('ok');
                             registerCubit.register(
                                 name: widget.userName,
                                 email: widget.email,
@@ -158,7 +159,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                                 birthDate: widget.date,
                                 userType: widget.userType,
                                 answers: selectedAnswers);
-                            print('kkkkkkkkkkkkkkkkkkkkk');
+                            print('ok');
                           } else {
                             CreatToast().showToast(
                               errorMessage: "you must  answer all questions",

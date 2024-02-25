@@ -44,38 +44,38 @@ class DefaultFirebaseOptions {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyBY70p9yc_WT3SKf-GPZCOhP6EUBd5r6FU',
-    appId: '1:644164481831:web:79aad2bb78974d0e8a6f02',
-    messagingSenderId: '644164481831',
-    projectId: 'educationalapp-77694',
-    authDomain: 'educationalapp-77694.firebaseapp.com',
-    storageBucket: 'educationalapp-77694.appspot.com',
-    measurementId: 'G-LMDVP0HS7S',
+    apiKey: 'AIzaSyD308l9WtsnRRFQR3RCDSw-bXGtdfnG6d8',
+    appId: '1:434184537309:web:78a2f1d5d2f6c78830c734',
+    messagingSenderId: '434184537309',
+    projectId: 'handinhand-5cfb5',
+    authDomain: 'handinhand-5cfb5.firebaseapp.com',
+    storageBucket: 'handinhand-5cfb5.appspot.com',
+    measurementId: 'G-147T1SFBYS',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCB_Cw4So5U4f1q-YXlEd4ltrIlB8aiMvk',
-    appId: '1:644164481831:android:2b4e1408862842918a6f02',
-    messagingSenderId: '644164481831',
-    projectId: 'educationalapp-77694',
-    storageBucket: 'educationalapp-77694.appspot.com',
+    apiKey: 'AIzaSyA4zEEQ3dmRkbimbTxB8CFL7g8GVlURKyw',
+    appId: '1:434184537309:android:355199817b61973730c734',
+    messagingSenderId: '434184537309',
+    projectId: 'handinhand-5cfb5',
+    storageBucket: 'handinhand-5cfb5.appspot.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyAXU_FsyWH-HrQxPyS1hmTWfk7jLq-1Gd8',
-    appId: '1:644164481831:ios:0fd292828e1d05a38a6f02',
-    messagingSenderId: '644164481831',
-    projectId: 'educationalapp-77694',
-    storageBucket: 'educationalapp-77694.appspot.com',
+    apiKey: 'AIzaSyAu3a1FHyzg7aavNSQZw9DksPE_ebtY44Q',
+    appId: '1:434184537309:ios:991de362e0db3a1b30c734',
+    messagingSenderId: '434184537309',
+    projectId: 'handinhand-5cfb5',
+    storageBucket: 'handinhand-5cfb5.appspot.com',
     iosBundleId: 'com.example.researchApp',
   );
 
   static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyAXU_FsyWH-HrQxPyS1hmTWfk7jLq-1Gd8',
-    appId: '1:644164481831:ios:6ebe68435472590a8a6f02',
-    messagingSenderId: '644164481831',
-    projectId: 'educationalapp-77694',
-    storageBucket: 'educationalapp-77694.appspot.com',
+    apiKey: 'AIzaSyAu3a1FHyzg7aavNSQZw9DksPE_ebtY44Q',
+    appId: '1:434184537309:ios:fa041abecd0bf1d930c734',
+    messagingSenderId: '434184537309',
+    projectId: 'handinhand-5cfb5',
+    storageBucket: 'handinhand-5cfb5.appspot.com',
     iosBundleId: 'com.example.researchApp.RunnerTests',
   );
 }

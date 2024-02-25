@@ -12,7 +12,9 @@ import '../../app_manager/routes_manager.dart';
 import '../../common_widget/create_text_field.dart';
 import '../../common_widget/create_toast.dart';
 import '../../providers/language_provider.dart';
+import '../professor_screen/professor_home_screen.dart';
 import '../researcher_screen/researcher_home_screen.dart';
+import '../studenthomescreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -28,69 +30,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   var formKey = GlobalKey<FormState>();
   LanguageProvider? languageProvider;
-  // void requestspermission() async {
-  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  //   NotificationSettings notificationSettings =
-  //       await messaging.requestPermission(
-  //           alert: true,
-  //           announcement: true,
-  //           badge: true,
-  //           carPlay: true,
-  //           criticalAlert: true,
-  //           provisional: true,
-  //           sound: true);
-  //   if (notificationSettings.authorizationStatus ==
-  //       AuthorizationStatus.authorized) {
-  //     print('ok authorized');
-  //   } else if (notificationSettings.authorizationStatus ==
-  //       AuthorizationStatus.authorized) {
-  //     print('ok authorized');
-  //   } else {
-  //     print('user denied ');
-  //   }
-  // }
-
-  // void requestNotificationPermission() async {
-  //   // print('karim');
-  //   FirebaseMessaging messaging = FirebaseMessaging.instance;
-  //   await messaging.requestPermission(
-  //     alert: true,
-  //     announcement: false,
-  //     badge: true,
-  //     carPlay: false,
-  //     criticalAlert: false,
-  //     provisional: false,
-  //     sound: true,
-  //   );
-  // }
-  //
-  // @override
-
-  // requestpermission() async {
-  //   await Permission.notification.isDenied.then((value) {
-  //     if (value) {
-  //       ToastContext().init(context);
-  //       Toast.show(
-  //         '${Permission.notification.request()}',
-  //         textStyle: TextStyle(fontSize: 18, color: Colors.white),
-  //         duration: Toast.lengthLong,
-  //         gravity: Toast.center,
-  //         backgroundRadius: 10,
-  //         backgroundColor: mainColor,
-  //       );
-  //
-  //       print("gggggggggggggggggggggggggggggggg$value");
-  //       print("kkkkkkkkkkkkkkkkkkkkkkkkkk");
-  //     }
-  //   });
-  // }
-  // Future<void> requestPermission() async {
-  //   final permission = Permission.accessNotificationPolicy;
-  //
-  //   if (await permission.isDenied) {
-  //     await permission.request();
-  //   }
-  // }
 
   @override
   void initState() {
@@ -105,14 +44,24 @@ class _LoginScreenState extends State<LoginScreen> {
       child: BlocConsumer<AuthCubit, AuthStates>(
         listener: (context, state) {
           if (state is LoginSuccess) {
+            CreatToast().showToast(
+                errorMessage: "LoginSuccessfully",
+                context: context,
+                backgroundColor: mainColor);
+            String name = state.response['name'];
+            CacheHelper.setData(key: "type", value: state.response['type']);
             CacheHelper.setData(key: "token", value: state.response['token']);
-            RoutesManager.navigatorAndRemove(
-                context,
-                ResearcherHomeScreen(
-                  name: state.response['name'],
-                ));
+            String userType = CacheHelper.getData(key: "type") ?? "";
+            if (userType == "professor") {
+              RoutesManager.navigatorAndRemove(
+                  context, ProfessorHomeSCreen(name: name));
+            } else if (userType == "researcher") {
+              RoutesManager.navigatorAndRemove(context, ResearcherHomeScreen());
+            } else if (userType == "student") {
+              RoutesManager.navigatorAndRemove(
+                  context, StudentHomeScreen(name: name));
+            }
           }
-
           if (state is LoginError) {
             CreatToast().showToast(
               errorMessage: state.errormessage,
@@ -216,17 +165,6 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ],
                         ),
-                        // TextButton(
-                        //   onPressed: () {},
-                        //   child: Container(
-                        //     alignment: Alignment.topRight,
-                        //     child: const Text('forget password',
-                        //         style: TextStyle(
-                        //             color: mainColor,
-                        //             fontFamily: 'Cairo',
-                        //             fontWeight: FontWeight.w700)),
-                        //   ),
-                        // ),
                         const SizedBox(
                           height: 20,
                         ),

@@ -1,3 +1,4 @@
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
@@ -130,6 +131,7 @@ class AuthCubit extends Cubit<AuthStates> {
     Map<String, dynamic> params = {
       "value": value,
       "password": password,
+      // "fbToken": await FirebaseMessaging.instance.getToken() ?? ''
     };
 
     try {
@@ -158,7 +160,7 @@ class AuthCubit extends Cubit<AuthStates> {
 
       emit(LoginError(errorMessage));
     } catch (e) {
-      emit(RegisterError('An error occurred.'));
+      emit(LoginError('An error occurred.'));
     }
   }
 

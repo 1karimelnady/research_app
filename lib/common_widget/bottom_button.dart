@@ -21,13 +21,13 @@ class BottomButton extends StatelessWidget {
               height: 50,
               child: Icon(
                 Icons.arrow_back,
-                color: mainColor,
+                color: Colors.white,
               ),
             ),
             style: ElevatedButton.styleFrom(
               elevation: 0,
               shadowColor: Colors.transparent,
-              primary: Colors.white,
+              // primary: Colors.white,
               shape: CircleBorder(side: BorderSide(color: mainColor)),
             ),
           ),
@@ -47,7 +47,7 @@ class BottomButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               elevation: 0,
               shadowColor: Colors.transparent,
-              primary: mainColor,
+              // primary: mainColor,
               shape: CircleBorder(side: BorderSide(color: mainColor)),
             ),
           ),

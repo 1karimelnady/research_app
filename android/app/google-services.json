@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_number": "644164481831",
-    "project_id": "educationalapp-77694",
-    "storage_bucket": "educationalapp-77694.appspot.com"
+    "project_number": "434184537309",
+    "project_id": "handinhand-5cfb5",
+    "storage_bucket": "handinhand-5cfb5.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:644164481831:android:2b4e1408862842918a6f02",
+        "mobilesdk_app_id": "1:434184537309:android:355199817b61973730c734",
         "android_client_info": {
           "package_name": "com.example.research_app"
         }
@@ -15,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyCB_Cw4So5U4f1q-YXlEd4ltrIlB8aiMvk"
+          "current_key": "AIzaSyA4zEEQ3dmRkbimbTxB8CFL7g8GVlURKyw"
         }
       ],
       "services": {

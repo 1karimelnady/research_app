@@ -14,7 +14,7 @@ class CacheHelper {
     return await shared!.setBool(key, value);
   }
 
-  static Future registerClear() async {
+  static Future clear() async {
     await shared!.clear();
   }
 

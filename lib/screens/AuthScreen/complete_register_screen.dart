@@ -80,10 +80,22 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
             CacheHelper.setData(key: "token", value: state.response['token']);
             String userType = CacheHelper.getData(key: "type") ?? "";
             if (userType == "professor") {
-              RoutesManager.navigatorAndRemove(context, ProfessorHomeSCreen());
-            } else if (userType == "researcher") {
               RoutesManager.navigatorAndRemove(
-                  context, ResearcherHomeScreen(name: name));
+                  context, ProfessorHomeSCreen(name: name));
+            } else if (userType == "researcher") {
+              RoutesManager.navigatorAndRemove(context, ResearcherHomeScreen());
+            } else if (userType == "student") {
+              RoutesManager.navigatorAndRemove(
+                  context,
+                  QuestionScreen(
+                    userName: nameController.text.trim(),
+                    email: emailController.text.trim(),
+                    password: passwordController.text.trim(),
+                    mobile: phoneController.text,
+                    userGender: userGender,
+                    date: dateController.text,
+                    userType: widget.userType,
+                  ));
             }
           } else if (state is RegisterError) {
             CreatToast().showToast(
@@ -247,11 +259,6 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                         const SizedBox(
                           height: 10,
                         ),
-                        // SvgPicture.asset(
-                        //   "assets/images/family_restroom_FILL0_wght400_GRAD0_opsz24.svg",
-                        //   width: 50,
-                        //   height: 50,
-                        // ),
                         Text(
                           'Gender',
                           style: BlackTitle.display5(context).copyWith(
@@ -385,58 +392,6 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                           birthDate: dateController.text,
                                           userType: widget.userType,
                                         );
-                                        // if (nameController.text.isEmpty) {
-                                        //   CreatToast().showToast(
-                                        //     errorMessage: "Name is required",
-                                        //     context: context,
-                                        //   );
-                                        // }
-                                        // else if (emailController.text.isEmpty) {
-                                        //   CreatToast().showToast(
-                                        //     errorMessage: "Email is required",
-                                        //     context: context,
-                                        //   );
-                                        // }
-                                        // else if (passwordController.text.isEmpty) {
-                                        //   CreatToast().showToast(
-                                        //     errorMessage: "Password is required",
-                                        //     context: context,
-                                        //   );
-                                        // }
-                                        // else if (passwordController.text.length <
-                                        //     8) {
-                                        //   CreatToast().showToast(
-                                        //     errorMessage:
-                                        //         "Password must not less than 8",
-                                        //     context: context,
-                                        //   );
-                                        // }
-                                        // else if (phoneController.text.isEmpty) {
-                                        //   CreatToast().showToast(
-                                        //     errorMessage: "Mobile is required",
-                                        //     context: context,
-                                        //   );
-                                        // }
-                                        // else if (dateController.text.isEmpty) {
-                                        //   CreatToast().showToast(
-                                        //     errorMessage: "Birth date is required",
-                                        //     context: context,
-                                        //   );
-                                        // } else {
-                                        //   // print(
-                                        //   //     "User Type before registration: ${registerCubit.userType}");
-                                        //   registerCubit.register(
-                                        //     name: nameController.text,
-                                        //     email: emailController.text,
-                                        //     mobile: phoneController.text,
-                                        //     password: passwordController.text,
-                                        //     userGender: userGender,
-                                        //     birthDate: dateController.text,
-                                        //     userType: widget.userType,
-                                        //   );
-                                        //   // print(
-                                        //   //     "User Type after registration${registerCubit.userType}");
-                                        // }
                                       }
                                     },
                                     elevation: 0,
@@ -474,7 +429,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                         padding: EdgeInsets.only(left: 10.0),
                                         child: Icon(
                                           Icons.arrow_back_ios,
-                                          color: mainColor,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -558,7 +513,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                         padding: EdgeInsets.only(left: 10.0),
                                         child: Icon(
                                           Icons.arrow_forward_ios,
-                                          color: mainColor,
+                                          color: Colors.white,
                                         ),
                                       ),
                                     ),
@@ -575,141 +530,3 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
         }));
   }
 }
-// GestureDetector(
-//   onTap: () {
-//     setState(() {
-//       isStrechedDropDown = !isStrechedDropDown;
-//     });
-//   },
-//   child: Container(
-//     width: double.infinity,
-//     padding: const EdgeInsets.symmetric(horizontal: 5),
-//     child: SafeArea(
-//       child: Column(
-//         children: [
-//           Row(
-//             crossAxisAlignment:
-//                 CrossAxisAlignment.start,
-//             children: [
-//               Expanded(
-//                   child: Container(
-//                 decoration: BoxDecoration(
-//                     border:
-//                         Border.all(color: greyColor),
-//                     borderRadius:
-//                         const BorderRadius.all(
-//                             Radius.circular(8))),
-//                 child: Column(
-//                   children: [
-//                     Container(
-//                         // height: 45,
-//                         width: double.infinity,
-//                         padding: const EdgeInsets.only(
-//                           right: 10,
-//                           bottom: 0,
-//                         ),
-//                         decoration: BoxDecoration(
-//                             border: Border.all(
-//                               color: const Color(
-//                                   0xffbbbbbb),
-//                             ),
-//                             borderRadius:
-//                                 const BorderRadius.all(
-//                                     Radius.circular(
-//                                         8))),
-//                         constraints:
-//                             const BoxConstraints(
-//                           minHeight: 35,
-//                           minWidth: double.infinity,
-//                         ),
-//                         alignment: Alignment.center,
-//                         child: Row(
-//                           mainAxisAlignment:
-//                               MainAxisAlignment
-//                                   .spaceBetween,
-//                           children: [
-//                             Expanded(
-//                               child: Padding(
-//                                 padding:
-//                                     const EdgeInsets
-//                                         .symmetric(
-//                                   horizontal: 5,
-//                                 ),
-//                                 child: Text(
-//                                   title,
-//                                 ),
-//                               ),
-//                             ),
-//                             GestureDetector(
-//                                 onTap: () {
-//                                   setState(() {
-//                                     isStrechedDropDown =
-//                                         !isStrechedDropDown;
-//                                   });
-//                                 },
-//                                 child: Icon(
-//                                     isStrechedDropDown
-//                                         ? Icons
-//                                             .arrow_upward
-//                                         : Icons
-//                                             .arrow_downward))
-//                           ],
-//                         )),
-//                     ExpandedSection(
-//                       expand: isStrechedDropDown,
-//                       height: 5,
-//                       child: MyScrollbar(
-//                         builder: (context,
-//                                 scrollController2) =>
-//                             ListView.builder(
-//                                 padding:
-//                                     const EdgeInsets
-//                                         .all(0),
-//                                 controller:
-//                                     scrollController2,
-//                                 shrinkWrap: true,
-//                                 itemCount: _list.length,
-//                                 itemBuilder:
-//                                     (context, index) {
-//                                   return RadioListTile(
-//                                       contentPadding:
-//                                           EdgeInsets
-//                                               .zero,
-//                                       title: Padding(
-//                                         padding:
-//                                             const EdgeInsets
-//                                                 .only(
-//                                                 right:
-//                                                     20.0),
-//                                         child: Text(_list
-//                                             .elementAt(
-//                                                 index)),
-//                                       ),
-//                                       value: index,
-//                                       groupValue:
-//                                           groupValue,
-//                                       onChanged: (val) {
-//                                         setState(() {
-//                                           groupValue =
-//                                               val;
-//                                           title = _list
-//                                               .elementAt(
-//                                                   index);
-//                                         });
-//                                         print(title);
-//                                       });
-//                                 }),
-//                         scrollController:
-//                             _scrollController,
-//                       ),
-//                     )
-//                   ],
-//                 ),
-//               )),
-//             ],
-//           )
-//         ],
-//       ),
-//     ),
-//   ),
-// ),
