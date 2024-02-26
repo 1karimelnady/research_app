@@ -389,7 +389,6 @@
 // }
 
 import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
@@ -402,16 +401,10 @@ import 'package:research_app/common_widget/create_toast.dart';
 import 'package:research_app/cubit/application_states/main_states.dart';
 import 'package:research_app/cubit/main_cubit.dart';
 import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
-import 'package:research_app/utilities/cache_helper.dart';
 import 'package:research_app/utilities/text_style.dart';
-import 'package:signature/signature.dart';
-import 'package:http/http.dart' as http;
-import 'package:image/image.dart' as img;
-import 'package:path/path.dart' as path;
 import 'package:signature/signature.dart';
 
 import '../../app_manager/local_data.dart';
-import '../../common_widget/create_check_box.dart';
 import '../../common_widget/create_loading.dart';
 
 class ResearcherFormScreen extends StatefulWidget {
@@ -440,9 +433,9 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
         listener: (context, state) {
           if (state is CreateResearchSuccessState) {
             CreatToast().showToast(
-              errorMessage: "Research Created Successfully",
-              context: context,
-            );
+                errorMessage: "Research Created Successfully",
+                context: context,
+                backgroundColor: mainColor);
             RoutesManager.navigatorAndRemove(context, ResearcherHomeScreen());
           } else if (state is CreateResearchErrorState) {
             CreatToast().showToast(
@@ -1101,7 +1094,7 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
                                 width: 50,
                                 height: 50,
                                 image: AssetImage(
-                                  "images/signature.png",
+                                  "assets/images/signature.png",
                                 ),
                               ),
                           ],

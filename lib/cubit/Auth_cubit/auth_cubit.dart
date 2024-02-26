@@ -131,7 +131,7 @@ class AuthCubit extends Cubit<AuthStates> {
     Map<String, dynamic> params = {
       "value": value,
       "password": password,
-      "fbToken": NotificationsServices.getToken()
+      "fbToken": await NotificationsServices.getToken()
     };
 
     try {

@@ -30,7 +30,7 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
           body: MainCubit.get(context).researchesList.isEmpty
               ? CreatLoading()
               : Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 16.0),
+                  padding: const EdgeInsets.symmetric(vertical: 24.0),
                   child: ListView.builder(
                       padding: EdgeInsets.symmetric(vertical: 10),
                       physics: BouncingScrollPhysics(),
@@ -154,50 +154,46 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
                                       ],
                                     ),
                                   ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: Row(
-                                      children: [
-                                        Icon(
-                                          Icons.new_releases,
+                                  Row(
+                                    children: [
+                                      Icon(
+                                        Icons.new_releases,
+                                        color: mainColor,
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Text(
+                                        'New Requests : ',
+                                        style: BlackTitle.display5(context),
+                                      ),
+                                      SizedBox(
+                                        width: 5,
+                                      ),
+                                      Container(
+                                        width: 20,
+                                        height: 20,
+                                        decoration: BoxDecoration(
+                                          border: Border.all(
+                                            color: mainColor,
+                                            width: 2,
+                                          ),
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Text(
+                                          '${research.studentsStatus?.length ?? 0}',
+                                          style: BlackLabel.display5(context),
+                                          textAlign: TextAlign.center,
+                                        ),
+                                      ),
+                                      IconButton(
+                                        onPressed: () {},
+                                        icon: const Icon(
+                                          Icons.arrow_circle_right_outlined,
                                           color: mainColor,
                                         ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'New Requests',
-                                          style: BlackTitle.display5(context),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Container(
-                                          width: 20,
-                                          height: 20,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color: mainColor,
-                                              width: 2,
-                                            ),
-                                            shape: BoxShape.circle,
-                                          ),
-                                          child: Text(
-                                            '${research.studentsStatus?.length ?? 0}',
-                                            style: BlackLabel.display5(context),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        ),
-                                        IconButton(
-                                          onPressed: () {},
-                                          icon: const Icon(
-                                            Icons.arrow_circle_right_outlined,
-                                            color: mainColor,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
