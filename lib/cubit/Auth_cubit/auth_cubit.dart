@@ -1,13 +1,12 @@
-import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/model/user_model.dart';
-import 'package:dio/dio.dart';
-import 'package:research_app/screens/notfications/notfications_services.dart';
 import 'package:research_app/utilities/cache_helper.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../screens/notfications/notfications_services.dart';
 
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
@@ -132,7 +131,7 @@ class AuthCubit extends Cubit<AuthStates> {
     Map<String, dynamic> params = {
       "value": value,
       "password": password,
-      "fbToken": await NotificationsServices.getToken()
+      "fbToken": NotificationsServices.getToken()
     };
 
     try {
