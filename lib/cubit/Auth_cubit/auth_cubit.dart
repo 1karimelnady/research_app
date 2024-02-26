@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
@@ -131,7 +132,7 @@ class AuthCubit extends Cubit<AuthStates> {
     Map<String, dynamic> params = {
       "value": value,
       "password": password,
-      "fbToken": await NotificationsServices.getToken()
+      "fbToken": await FirebaseMessaging.instance.getToken()
     };
 
     try {
@@ -142,10 +143,12 @@ class AuthCubit extends Cubit<AuthStates> {
         String token = response.data['token'];
         String value = response.data?['value'] ?? '';
         String password = response.data?['password'] ?? '';
+        String name = response.data?['name'] ?? '';
 
         CacheHelper.setData(key: "token", value: token);
         CacheHelper.setData(key: "value", value: value);
         CacheHelper.setData(key: "password", value: password);
+        CacheHelper.setData(key: "name", value: name);
         emit(LoginSuccess(response: response.data));
         print(CacheHelper.getData(key: "value"));
       }

@@ -7,15 +7,15 @@ import 'package:research_app/common_widget/step_progress.dart';
 import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
-import 'package:research_app/screens/studenthomescreen.dart';
+import 'package:research_app/screens/student_screen/studenthomescreen.dart';
 import 'package:toast/toast.dart';
 
-import '../app_manager/local_data.dart';
-import '../app_manager/routes_manager.dart';
-import '../common_widget/bottom_button.dart';
-import '../common_widget/create_button.dart';
-import '../common_widget/create_toast.dart';
-import '../common_widget/page_screen.dart';
+import '../../app_manager/local_data.dart';
+import '../../app_manager/routes_manager.dart';
+import '../../common_widget/bottom_button.dart';
+import '../../common_widget/create_button.dart';
+import '../../common_widget/create_toast.dart';
+import '../../common_widget/page_screen.dart';
 
 class QuestionScreen extends StatefulWidget {
   final String userType;
@@ -88,11 +88,7 @@ class _QuestionScreenState extends State<QuestionScreen> {
                 errorMessage: "Register Successfully",
                 context: context,
                 backgroundColor: mainColor);
-            RoutesManager.navigatorAndRemove(
-                context,
-                StudentHomeScreen(
-                  name: state.response['name'],
-                ));
+            RoutesManager.navigatorAndRemove(context, StudentHomeScreen());
           } else if (state is RegisterError) {
             CreatToast().showToast(
               errorMessage: state.errormessage,

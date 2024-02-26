@@ -8,6 +8,7 @@ import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 
 import '../model/researches_model.dart';
+import '../model/student_researches_model.dart';
 import '../screens/researcher_screen/researcher_form.dart';
 import 'application_states/main_states.dart';
 
@@ -249,6 +250,7 @@ class MainCubit extends Cubit<MainStates> {
     required String researchQuestion,
     required String credits,
     required Uint8List approvment,
+    required String description,
   }) async {
     Map<String, dynamic> params = {
       "researchQuestion": researchQuestion,
@@ -260,6 +262,7 @@ class MainCubit extends Cubit<MainStates> {
       "hearingNormal": hearingArray,
       "origin": originArray,
       "ADHD": ADHDArray,
+      "description": description,
       "musicalBackground": musicalBackgroundArray,
     };
     print("handArray: $handArray");
@@ -296,11 +299,11 @@ class MainCubit extends Cubit<MainStates> {
     }
   }
 
-///////////////////////////////////////////  get my researches     ///////////////////////////////////////////////////////
+///////////////////////////////////////////  get researcher researches     ///////////////////////////////////////////////////////
 
   List<Researches> researchesList = [];
 
-  Future<void> fetchResearches() async {
+  Future<void> getResearcherResearches() async {
     researchesList.clear();
 
     try {
@@ -315,6 +318,7 @@ class MainCubit extends Cubit<MainStates> {
         List<dynamic> data = response.data['researches'];
 
         researchesList = data.map((json) => Researches.fromJson(json)).toList();
+
         emit(GetResearchesSuccessState());
       }
     } on DioException catch (e) {
@@ -326,6 +330,72 @@ class MainCubit extends Cubit<MainStates> {
       emit(GetResearchesErrorState(errorMessage.toString()));
     } on Exception catch (e) {
       emit(GetResearchesErrorState(e.toString()));
+      print(e.toString());
+    }
+  }
+
+//////////////////////////////////////////////////////// get student researches ////////////////////////////////////////////
+
+  List<StudentResearchesModel> studentResearchesList = [];
+
+  Future<void> getStudentResearches() async {
+    print("kkkkkkkkkk");
+
+    studentResearchesList.clear();
+    try {
+      dio.options.headers = {
+        "Authorization": "Bearer ${CacheHelper.getData(key: "token")}"
+      };
+
+      var response = await dio.get(baseUrl + "/researchers/researchs/filter");
+      if (response.statusCode == 200) {
+        (response.data as List).forEach((element) {
+          studentResearchesList.add(StudentResearchesModel.fromJson(element));
+        });
+        if (studentResearchesList.isNotEmpty) {
+          for (int i = 0; i < studentResearchesList.length; i++) {
+            CacheHelper.setData(
+                key: "_id", value: studentResearchesList[i].sId);
+          }
+        }
+        emit(GetStudentResearchesSuccessState());
+      }
+    } on DioException catch (e) {
+      String errorMessage = "";
+      if (e.response != null) {
+        errorMessage = e.response?.data['message'] ?? '';
+        print(errorMessage.toString());
+      }
+      emit(GetStudentResearchesErrorState(errorMessage.toString()));
+    } on Exception catch (e) {
+      emit(GetStudentResearchesErrorState(e.toString()));
+      print(e.toString());
+    }
+  }
+
+///////////////////////////////////////////////////// registration research ///////////////////////////
+
+  Future<void> registerResearch() async {
+    try {
+      emit(StudentRegisterResearchLoadingState());
+      dio.options.headers = {
+        "Authorization": "Bearer ${CacheHelper.getData(key: "token")}"
+      };
+
+      var response = await dio.put(baseUrl + "/students/research/register",
+          data: {"research": "${CacheHelper.getData(key: "_id")}"});
+      if (response.statusCode == 200) {
+        emit(StudentRegisterResearchSuccessState());
+      }
+    } on DioException catch (e) {
+      String errorMessage = "";
+      if (e.response != null) {
+        errorMessage = e.response?.data['message'] ?? '';
+        print(errorMessage.toString());
+      }
+      emit(StudentRegisterResearchErrorState(errorMessage.toString()));
+    } on Exception catch (e) {
+      emit(StudentRegisterResearchErrorState(e.toString()));
       print(e.toString());
     }
   }

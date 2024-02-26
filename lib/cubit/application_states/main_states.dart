@@ -29,7 +29,7 @@ class ADHDState extends MainStates {}
 
 class MusicalBackgroundState extends MainStates {}
 
-/////////////////////////// Get Researches States /////////////////////////////////////////////////////////////////////////
+/////////////////////////// Get  Researcher Researches States /////////////////////////////////////////////////////////////////////////
 
 class GetResearchesLoadingState extends MainStates {}
 
@@ -39,4 +39,26 @@ class GetResearchesErrorState extends MainStates {
   final String errorMessage;
 
   GetResearchesErrorState(this.errorMessage);
+}
+
+/////////////////////////// Get  Student Researches States /////////////////////////////////////////////////////////////////////////
+class GetStudentResearchesLoadingState extends MainStates {}
+
+class GetStudentResearchesSuccessState extends MainStates {}
+
+class GetStudentResearchesErrorState extends MainStates {
+  final String errorMessage;
+
+  GetStudentResearchesErrorState(this.errorMessage);
+}
+///////////////////////////////// Register Research /////////////////////////////////////////////////////////////
+
+class StudentRegisterResearchLoadingState extends MainStates {}
+
+class StudentRegisterResearchSuccessState extends MainStates {}
+
+class StudentRegisterResearchErrorState extends MainStates {
+  final String errorMessage;
+
+  StudentRegisterResearchErrorState(this.errorMessage);
 }

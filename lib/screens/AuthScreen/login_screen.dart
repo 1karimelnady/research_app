@@ -14,7 +14,7 @@ import '../../common_widget/create_toast.dart';
 import '../../providers/language_provider.dart';
 import '../professor_screen/professor_home_screen.dart';
 import '../researcher_screen/researcher_home_screen.dart';
-import '../studenthomescreen.dart';
+import '../student_screen/studenthomescreen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -58,8 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
             } else if (userType == "researcher") {
               RoutesManager.navigatorAndRemove(context, ResearcherHomeScreen());
             } else if (userType == "student") {
-              RoutesManager.navigatorAndRemove(
-                  context, StudentHomeScreen(name: name));
+              RoutesManager.navigatorAndRemove(context, StudentHomeScreen());
             }
           }
           if (state is LoginError) {

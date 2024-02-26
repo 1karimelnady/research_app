@@ -9,7 +9,7 @@ import 'package:research_app/common_widget/create_loading.dart';
 import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
-import 'package:research_app/screens/question_screen.dart';
+import 'package:research_app/screens/student_screen/question_screen.dart';
 import '../../app_manager/routes_manager.dart';
 import '../../common_widget/create_text_field.dart';
 import '../../common_widget/create_toast.dart';
@@ -351,6 +351,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                               ),
                             ),
                             CreatTextField(
+                              width: getSize(context: context).width * 0.67,
                               validator: (value) {
                                 if (value!.isEmpty) {
                                   return "Birth date is required";
@@ -410,27 +411,20 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                     MainAxisAlignment.spaceBetween,
                                 children: [
                                   Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            blurRadius: 0.3,
-                                            blurStyle: BlurStyle.outer,
-                                            spreadRadius: 2,
-                                            offset: Offset(3, 3),
-                                            color: mainColor)
-                                      ],
-                                    ),
+                                    alignment: Alignment.center,
+                                    height: 45,
+                                    width: 45,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                        border: Border.all(color: mainColor)),
                                     child: IconButton(
                                       onPressed: () {
                                         Navigator.pop(context);
                                       },
-                                      icon: const Padding(
-                                        padding: EdgeInsets.only(left: 10.0),
-                                        child: Icon(
-                                          Icons.arrow_back_ios,
-                                          color: Colors.white,
-                                        ),
+                                      icon: Icon(
+                                        Icons.arrow_back,
+                                        color: mainColor,
                                       ),
                                     ),
                                   ),
@@ -470,17 +464,12 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                             fontWeight: FontWeight.bold),
                                       )),
                                   Container(
-                                    decoration: const BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      boxShadow: [
-                                        BoxShadow(
-                                            blurRadius: 0.2,
-                                            blurStyle: BlurStyle.outer,
-                                            spreadRadius: 2,
-                                            offset: Offset(3, 3),
-                                            color: mainColor)
-                                      ],
-                                    ),
+                                    height: 45,
+                                    width: 45,
+                                    decoration: BoxDecoration(
+                                        shape: BoxShape.circle,
+                                        color: Colors.white,
+                                        border: Border.all(color: mainColor)),
                                     child: IconButton(
                                       onPressed: () {
                                         if (formKey.currentState!.validate()) {
@@ -510,10 +499,10 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                         }
                                       },
                                       icon: const Padding(
-                                        padding: EdgeInsets.only(left: 10.0),
+                                        padding: EdgeInsets.only(left: 0.0),
                                         child: Icon(
-                                          Icons.arrow_forward_ios,
-                                          color: Colors.white,
+                                          Icons.arrow_forward,
+                                          color: mainColor,
                                         ),
                                       ),
                                     ),

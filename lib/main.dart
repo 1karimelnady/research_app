@@ -21,6 +21,15 @@ import 'package:research_app/utilities/providers.dart';
 import 'cubit/main_cubit.dart';
 import 'firebase_options.dart';
 
+@pragma('vm:entry-point')
+Future<void> messagingOnBackgroundHandler(RemoteMessage message) async {
+  await Firebase.initializeApp();
+  print("message");
+  print(message.notification!.title.toString());
+  print(message.notification!.body.toString());
+  print(message.data.toString());
+}
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
@@ -28,9 +37,9 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
   FirebaseMessaging.onBackgroundMessage(messagingOnBackgroundHandler);
-  NotificationsServices.foregroundMessage();
+  await NotificationsServices.foregroundMessage();
   NotificationsServices.getper();
-  NotificationsServices.getToken();
+  await NotificationsServices.getToken();
   DioHelper.init();
 
   NotificationsServices.getper();
@@ -44,14 +53,6 @@ void main() async {
       child: MyApp(),
     ),
   );
-}
-
-@pragma('vm:entry-point')
-Future<void> messagingOnBackgroundHandler(RemoteMessage message) async {
-  await Firebase.initializeApp();
-  print(message.notification!.title.toString());
-  print(message.notification!.body.toString());
-  print(message.data.toString());
 }
 
 class MyApp extends StatelessWidget {

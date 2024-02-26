@@ -1195,18 +1195,12 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
                                         backgroundColor: Colors.red,
                                       );
                                     } else {
-                                      // final String timestamp = DateTime.now()
-                                      //     .millisecondsSinceEpoch
-                                      //     .toString();
-                                      // final String filename =
-                                      //     'signature_$timestamp'; // Generate filename
-                                      // final File imageFile = await saveImage(
-                                      //     exportedImage!, filename);
                                       cubit.createResearch(
                                         credits: creditController.text,
                                         approvment: exportedImage!,
                                         researchQuestion:
                                             researchController.text,
+                                        description: descriptionController.text,
                                       );
                                     }
                                   }

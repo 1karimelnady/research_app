@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:research_app/screens/AuthScreen/login_screen.dart';
 import 'package:research_app/screens/professor_screen/professor_home_screen.dart';
 import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
-import 'package:research_app/screens/studenthomescreen.dart';
+import 'package:research_app/screens/student_screen/studenthomescreen.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 
 import '../app_manager/routes_manager.dart';
@@ -26,8 +26,7 @@ class _SplashScreenState extends State<SplashScreen> {
       if (token != null && type == "researcher") {
         RoutesManager.navigatorAndRemove(context, ResearcherHomeScreen());
       } else if (token != null && type == "student") {
-        RoutesManager.navigatorAndRemove(
-            context, StudentHomeScreen(name: name!));
+        RoutesManager.navigatorAndRemove(context, StudentHomeScreen());
       } else if (token != null && type == "professor") {
         RoutesManager.navigatorAndRemove(
             context, ProfessorHomeSCreen(name: name!));

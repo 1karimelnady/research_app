@@ -19,9 +19,10 @@ class BottomButton extends StatelessWidget {
             child: Container(
               width: 50,
               height: 50,
+              color: Colors.white,
               child: Icon(
                 Icons.arrow_back,
-                color: Colors.white,
+                color: mainColor,
               ),
             ),
             style: ElevatedButton.styleFrom(
@@ -39,9 +40,10 @@ class BottomButton extends StatelessWidget {
             child: Container(
               height: 50,
               width: 50,
+              color: Colors.white,
               child: Icon(
                 Icons.arrow_forward,
-                color: Colors.white,
+                color: mainColor,
               ),
             ),
             style: ElevatedButton.styleFrom(
