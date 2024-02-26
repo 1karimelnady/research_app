@@ -420,7 +420,6 @@ class RequestsDetails extends StatelessWidget {
                                       ),
                                       Text(
                                         '${research.description != null ? research.description : 'des'}',
-                                        // '${research.description}',
                                         style: BlackLabel.display5(context),
                                       ),
                                     ],
