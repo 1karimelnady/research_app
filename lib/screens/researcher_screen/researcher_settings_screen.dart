@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:research_app/app_manager/routes_manager.dart';
+import 'package:research_app/screens/AuthScreen/login_screen.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 
 class ResearcherSettingsScreen extends StatefulWidget {
@@ -22,6 +24,7 @@ class _ResearcherSettingsScreenState extends State<ResearcherSettingsScreen> {
             child: TextButton(
               onPressed: () {
                 CacheHelper.clear();
+                RoutesManager.navigatorAndRemove(context, LoginScreen());
               },
               child: Text('Log out'),
             ),
