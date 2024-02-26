@@ -4,7 +4,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:research_app/app_manager/routes_manager.dart';
 import 'package:research_app/common_widget/create_button.dart';
-import 'package:research_app/common_widget/create_loading.dart';
 import 'package:research_app/cubit/application_states/main_states.dart';
 import 'package:research_app/model/researches_model.dart';
 import 'package:research_app/screens/student_screen/studenthomescreen.dart';
@@ -12,10 +11,7 @@ import 'package:research_app/screens/student_screen/studenthomescreen.dart';
 import '../../app_manager/local_data.dart';
 import '../../common_widget/create_toast.dart';
 import '../../cubit/main_cubit.dart';
-import '../../model/student_researches_model.dart';
-import '../../utilities/cache_helper.dart';
 import '../../utilities/text_style.dart';
-import '../AuthScreen/login_screen.dart';
 
 class RequestsDetails extends StatelessWidget {
   final Researches research;
