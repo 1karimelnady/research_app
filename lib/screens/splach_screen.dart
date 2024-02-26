@@ -22,10 +22,9 @@ class _SplashScreenState extends State<SplashScreen> {
     name = CacheHelper.getData(key: "name");
 
     print("token : ${token}  type : ${type} ");
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(Duration(seconds: 2), () {
       if (token != null && type == "researcher") {
-        RoutesManager.navigatorAndRemove(
-            context, ResearcherHomeScreen());
+        RoutesManager.navigatorAndRemove(context, ResearcherHomeScreen());
       } else if (token != null && type == "student") {
         RoutesManager.navigatorAndRemove(
             context, StudentHomeScreen(name: name!));
@@ -51,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
           height: double.infinity,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/Frame.png"),
+                  image: AssetImage("assets/images/logo.jpeg"),
                   fit: BoxFit.contain)),
         ),
       ),
