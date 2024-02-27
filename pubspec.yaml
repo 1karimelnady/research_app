@@ -54,9 +54,19 @@ dependencies:
   google_nav_bar: ^5.0.6
   http: ^1.1.0
   path_provider: ^2.1.2
+  flutter_screenutil: ^5.9.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons: ^0.13.1
+  unique_identifier:
+
+
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/images/logo.jpeg"
 
 
 

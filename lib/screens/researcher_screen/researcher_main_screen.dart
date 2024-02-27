@@ -16,7 +16,6 @@ class _ResearcherMainScreenState extends State<ResearcherMainScreen> {
   @override
   void initState() {
     NotificationsServices().firebaseInit(context);
-    // NotificationsServices().handleMessage(context, message);
     super.initState();
   }
 

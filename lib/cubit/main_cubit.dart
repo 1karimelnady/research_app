@@ -1,15 +1,14 @@
 import 'dart:core';
-import 'dart:io';
 import 'dart:typed_data';
-import 'dart:ui';
+
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 
 import '../model/researches_model.dart';
+import '../model/researches_student_status_model.dart';
 import '../model/student_researches_model.dart';
-import '../screens/researcher_screen/researcher_form.dart';
 import 'application_states/main_states.dart';
 
 class MainCubit extends Cubit<MainStates> {
@@ -396,6 +395,53 @@ class MainCubit extends Cubit<MainStates> {
       emit(StudentRegisterResearchErrorState(errorMessage.toString()));
     } on Exception catch (e) {
       emit(StudentRegisterResearchErrorState(e.toString()));
+      print(e.toString());
+    }
+  }
+
+  /////////////////////////////////// StudentChangeTabBarState ///////////////////
+
+  void changeTabBar(int index) {
+    index = index;
+    emit(StudentChangeTabBarState());
+  }
+
+  ///////////////////////////////////////////// get student researches status /////////////////////
+
+  List<ResearchesStatus> studentResearchesStatusList = [];
+  Future<void> getStudentResearchesStatus({required String status}) async {
+    emit(GetStudentResearchesLoadingState());
+    studentResearchesStatusList.clear();
+
+    try {
+      emit(GetStudentResearchesLoadingState());
+      dio.options.headers = {
+        "Authorization": "Bearer ${CacheHelper.getData(key: "token")}"
+      };
+
+      var response = await dio
+          .get(baseUrl + "/students/student/researches?status=$status");
+
+      if (response.statusCode == 201) {
+        List<dynamic> data = response.data['researches'];
+
+        studentResearchesStatusList =
+            data.map((json) => ResearchesStatus.fromJson(json)).toList();
+
+        // (response as List<dynamic>).forEach((element) {
+        //   studentResearchesStatusList.add(ResearchesStatus.fromJson(element));
+        // });
+        emit(GetStudentResearchesSuccessStatusState());
+      }
+    } on DioException catch (e) {
+      String errorMessage = "";
+      if (e.response != null) {
+        errorMessage = e.response?.data['message'] ?? '';
+        print(errorMessage.toString());
+      }
+      emit(GetStudentResearchesErrorStatusState(errorMessage.toString()));
+    } on Exception catch (e) {
+      emit(GetStudentResearchesErrorStatusState(e.toString()));
       print(e.toString());
     }
   }

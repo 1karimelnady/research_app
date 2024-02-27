@@ -62,3 +62,18 @@ class StudentRegisterResearchErrorState extends MainStates {
 
   StudentRegisterResearchErrorState(this.errorMessage);
 }
+
+////////////////////////////// change tabbar state /////////////////////////
+class StudentChangeTabBarState extends MainStates {}
+
+////////////////////////////////////// get student researchese based on status ////////////////////
+
+class GetStudentResearchesStatusLoadingState extends MainStates {}
+
+class GetStudentResearchesSuccessStatusState extends MainStates {}
+
+class GetStudentResearchesErrorStatusState extends MainStates {
+  final String errorMessage;
+
+  GetStudentResearchesErrorStatusState(this.errorMessage);
+}

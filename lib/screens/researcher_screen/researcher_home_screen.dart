@@ -1,15 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:google_nav_bar/google_nav_bar.dart';
-import 'package:research_app/app_manager/local_data.dart';
-import 'package:research_app/app_manager/routes_manager.dart';
-import 'package:research_app/common_widget/create_button.dart';
-import 'package:research_app/screens/researcher_screen/researcher_form.dart';
 import 'package:research_app/screens/researcher_screen/researcher_main_screen.dart';
 import 'package:research_app/screens/researcher_screen/researcher_settings_screen.dart';
 import 'package:research_app/screens/researcher_screen/researches_screen.dart';
-import 'package:research_app/utilities/text_style.dart';
-
-import 'ResarcherNotficationScreen.dart';
 
 class ResearcherHomeScreen extends StatefulWidget {
   ResearcherHomeScreen({super.key});
