@@ -451,8 +451,6 @@ class MainCubit extends Cubit<MainStates> {
   List<StudentResearchesModel> studentResearchesList = [];
 
   Future<void> getStudentResearches() async {
-    print("kkkkkkkkkk");
-
     studentResearchesList.clear();
     try {
       dio.options.headers = {
@@ -609,7 +607,6 @@ class MainCubit extends Cubit<MainStates> {
     } on DioException catch (e) {
       String errorMessage = "";
       if (e.response!.data != null) {
-        // errorMessage = e.response!.data['message'] as String? ?? '';
         print(errorMessage.toString());
       }
       if (status == "accepted") {

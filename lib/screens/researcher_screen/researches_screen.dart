@@ -23,6 +23,8 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
     MainCubit.get(context).getResearcherResearches();
   }
 
+  List<StudentsStatus>? studentsStatus;
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<MainCubit, MainStates>(
@@ -44,13 +46,63 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
                         DateTime dateTime = DateTime.parse(Time!);
                         String formattedDate =
                             DateFormat('yyyy-MM-dd').format(dateTime);
-
+                        int status = index;
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: GestureDetector(
                             onTap: () {
-                              RoutesManager.navigatorPush(context,
-                                  ResearchesRequests(researcher: research));
+                              print(index);
+                              List<StudentsStatus> pendingStudentsStatus =
+                                  research.studentsStatus
+                                          ?.where((status) =>
+                                              status.status == "pending")
+                                          .toList() ??
+                                      [];
+                              int status = index;
+                              if (pendingStudentsStatus.isNotEmpty) {
+                                RoutesManager.navigatorPush(
+                                  context,
+                                  ResearchesRequests(
+                                    researcher: research,
+                                    pendingStudentsStatus:
+                                        pendingStudentsStatus,
+                                    status: status,
+                                  ),
+                                );
+                              } else {
+                                RoutesManager.navigatorPush(
+                                  context,
+                                  ResearchesRequests(
+                                    researcher: research,
+                                    pendingStudentsStatus: [], // Pass an empty list
+                                    status: status,
+                                  ),
+                                );
+                              }
+
+                              // if (pendingStudentsStatus.isNotEmpty) {
+                              //   RoutesManager.navigatorPush(
+                              //     context,
+                              //     ResearchesRequests(
+                              //       researcher: research,
+                              //       pendingStudentsStatus:
+                              //           pendingStudentsStatus,
+                              //       status: status,
+                              //     ),
+                              //   );
+                              // } else {
+                              //   Navigator.push(
+                              //     context,
+                              //     MaterialPageRoute(
+                              //       builder: (context) => ResearchesRequests(
+                              //         researcher: research,
+                              //         pendingStudentsStatus:
+                              //             pendingStudentsStatus,
+                              //         status: status,
+                              //       ),
+                              //     ),
+                              //   );
+                              // }
                             },
                             child: Card(
                               elevation: 0.4,
@@ -193,17 +245,38 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
                                             shape: BoxShape.circle,
                                           ),
                                           child: Text(
-                                            '${research.newRequest}',
+                                            ' ${research.newRequest}',
                                             style: BlackLabel.display5(context),
                                             textAlign: TextAlign.start,
                                           ),
                                         ),
                                         IconButton(
                                           onPressed: () {
-                                            RoutesManager.navigatorPush(
+                                            List<StudentsStatus>
+                                                pendingStudentsStatus = research
+                                                        .studentsStatus
+                                                        ?.where((status) =>
+                                                            status.status ==
+                                                            "pending")
+                                                        .toList() ??
+                                                    [];
+                                            int status = index;
+
+                                            if (pendingStudentsStatus
+                                                .isNotEmpty) {
+                                              Navigator.push(
                                                 context,
-                                                ResearchesRequests(
-                                                    researcher: research));
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      ResearchesRequests(
+                                                    researcher: research,
+                                                    pendingStudentsStatus:
+                                                        pendingStudentsStatus,
+                                                    status: status,
+                                                  ),
+                                                ),
+                                              );
+                                            }
                                           },
                                           icon: const Icon(
                                             Icons.arrow_circle_right_outlined,
@@ -225,3 +298,15 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
     );
   }
 }
+// else if (pendingStudentsStatus
+//     .isEmpty) {
+//   RoutesManager.navigatorPush(
+//     context,
+//     ResearchesRequests(
+//       researcher: research,
+//       pendingStudentsStatus:
+//           pendingStudentsStatus,
+//       status: status,
+//     ),
+//   );
+// }
