@@ -79,30 +79,6 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
                                   ),
                                 );
                               }
-
-                              // if (pendingStudentsStatus.isNotEmpty) {
-                              //   RoutesManager.navigatorPush(
-                              //     context,
-                              //     ResearchesRequests(
-                              //       researcher: research,
-                              //       pendingStudentsStatus:
-                              //           pendingStudentsStatus,
-                              //       status: status,
-                              //     ),
-                              //   );
-                              // } else {
-                              //   Navigator.push(
-                              //     context,
-                              //     MaterialPageRoute(
-                              //       builder: (context) => ResearchesRequests(
-                              //         researcher: research,
-                              //         pendingStudentsStatus:
-                              //             pendingStudentsStatus,
-                              //         status: status,
-                              //       ),
-                              //     ),
-                              //   );
-                              // }
                             },
                             child: Card(
                               elevation: 0.4,
@@ -264,16 +240,22 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
 
                                             if (pendingStudentsStatus
                                                 .isNotEmpty) {
-                                              Navigator.push(
+                                              RoutesManager.navigatorPush(
                                                 context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      ResearchesRequests(
-                                                    researcher: research,
-                                                    pendingStudentsStatus:
-                                                        pendingStudentsStatus,
-                                                    status: status,
-                                                  ),
+                                                ResearchesRequests(
+                                                  researcher: research,
+                                                  pendingStudentsStatus:
+                                                      pendingStudentsStatus,
+                                                  status: status,
+                                                ),
+                                              );
+                                            } else {
+                                              RoutesManager.navigatorPush(
+                                                context,
+                                                ResearchesRequests(
+                                                  researcher: research,
+                                                  pendingStudentsStatus: [], // Pass an empty list
+                                                  status: status,
                                                 ),
                                               );
                                             }
