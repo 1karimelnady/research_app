@@ -58,7 +58,6 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
 
   @override
   void initState() {
-    // CacheHelper.registerClear();
     super.initState();
   }
 
@@ -126,7 +125,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                           'Sign Up',
                           style: TextStyle(
                               fontSize: 22,
-                              fontFamily: 'Cairo',
+                              fontFamily: 'Opensans',
                               fontWeight: FontWeight.bold),
                         ),
                         const SizedBox(
@@ -153,7 +152,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                               keyboardType: TextInputType.text,
                               label: "Name",
                               labelStyle: const TextStyle(
-                                fontFamily: 'Cairo',
+                                fontFamily: 'Opensans',
                                 color: greyColor,
                               ),
                             ),
@@ -184,7 +183,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                               keyboardType: TextInputType.emailAddress,
                               label: "Email",
                               labelStyle: const TextStyle(
-                                  color: greyColor, fontFamily: 'Cairo'),
+                                  color: greyColor, fontFamily: 'Opensans'),
                             ),
                           ],
                         ),
@@ -223,7 +222,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                                 ),
                               ),
                               labelStyle: TextStyle(
-                                  fontFamily: 'Cairo',
+                                  fontFamily: 'Opensans',
                                   color: Colors.grey.withOpacity(0.5)),
                             ),
                           ],
@@ -252,7 +251,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                               controller: phoneController,
                               label: "Mobile",
                               labelStyle: const TextStyle(
-                                  color: greyColor, fontFamily: 'Cairo'),
+                                  color: greyColor, fontFamily: 'Opensans'),
                             ),
                           ],
                         ),
@@ -340,7 +339,6 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                         ),
                         Row(
                           children: [
-                            // Icon(Icons.calendar_today_outlined),
                             IconButton(
                               onPressed: () {
                                 _selectDate(context);
@@ -364,7 +362,7 @@ class _CompleteRegisterScreenState extends State<CompleteRegisterScreen> {
                               },
                               label: 'Select Date',
                               labelStyle: TextStyle(
-                                  fontFamily: 'Cairo',
+                                  fontFamily: 'Opensans',
                                   color: Colors.grey.withOpacity(0.5)),
                               keyboardType: TextInputType.datetime,
                               onTap: () {

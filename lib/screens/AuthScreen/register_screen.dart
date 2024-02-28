@@ -215,7 +215,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               'Already have an account',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
-                                  fontFamily: 'Cairo'),
+                                  fontFamily: 'Opensans'),
                             ),
                             const SizedBox(
                               width: 5,
@@ -236,7 +236,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   style: TextStyle(
                                       fontWeight: FontWeight.bold,
                                       color: mainColor,
-                                      fontFamily: 'Cairo'),
+                                      fontFamily: 'Opensans'),
                                 ))
                           ],
                         ),

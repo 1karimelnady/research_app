@@ -77,7 +77,6 @@ class NotificationsServices {
     });
   }
 
-//in main
   static void getper() async {
     NotificationSettings notificationSettings = await FirebaseMessaging.instance
         .requestPermission(
@@ -106,21 +105,17 @@ class NotificationsServices {
   }
 
   Future<void> InteractMessage(BuildContext context) async {
-    //when app is terminated
-
     RemoteMessage? initialMessage =
         await FirebaseMessaging.instance.getInitialMessage();
     if (initialMessage != null) {
       handleMessage(context, initialMessage);
     }
-    // when app is in background
 
     FirebaseMessaging.onMessageOpenedApp.listen((event) {
       handleMessage(context, event);
     });
   }
 
-  // in main
   static Future foregroundMessage() async {
     await FirebaseMessaging.instance
         .setForegroundNotificationPresentationOptions(
@@ -136,7 +131,6 @@ class NotificationsServices {
     }
   }
 
-// in main
   @pragma('vm:entry-point')
   Future<void> messagingOnBackgroundHandler(RemoteMessage message) async {
     await Firebase.initializeApp();

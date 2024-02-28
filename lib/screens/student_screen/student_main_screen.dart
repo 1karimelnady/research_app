@@ -58,143 +58,151 @@ class _StudentMainScreenState extends State<StudentMainScreen> {
 
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
-                          child: Card(
-                            elevation: 0.4,
-                            color: mainColor.withOpacity(0.1),
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Container(
-                                    alignment: Alignment.center,
-                                    child: CircleAvatar(
-                                      maxRadius: 30,
-                                      backgroundColor: Colors.white,
-                                      backgroundImage:
-                                          AssetImage("assets/images/Frame.png"),
+                          child: GestureDetector(
+                            onTap: () {
+                              RoutesManager.navigatorPush(
+                                context,
+                                ResearchesDetails(research: research),
+                              );
+                            },
+                            child: Card(
+                              elevation: 0.4,
+                              color: mainColor.withOpacity(0.1),
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Container(
+                                      alignment: Alignment.center,
+                                      child: CircleAvatar(
+                                        maxRadius: 30,
+                                        backgroundColor: Colors.white,
+                                        backgroundImage: AssetImage(
+                                            "assets/images/Frame.png"),
+                                      ),
                                     ),
-                                  ),
-                                  Center(
-                                    child: Text(
-                                      "${CacheHelper.getData(key: "name")}",
-                                      style: BlackLabel.display5(context),
+                                    Center(
+                                      child: Text(
+                                        "${CacheHelper.getData(key: "name")}",
+                                        style: BlackLabel.display5(context),
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Wrap(
-                                          children: [
-                                            Icon(
-                                              Icons.question_answer_rounded,
-                                              color: mainColor,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'Research Question :',
-                                              style:
-                                                  BlackTitle.display5(context),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                  top: 0.0),
-                                              child: Text(
-                                                "${research.researchQuestion}",
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Wrap(
+                                            children: [
+                                              Icon(
+                                                Icons.question_answer_rounded,
+                                                color: mainColor,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                'Research Question :',
                                                 style: BlackTitle.display5(
                                                     context),
                                               ),
-                                            )
-                                          ],
-                                        ),
-                                      ],
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 0.0),
+                                                child: Text(
+                                                  "${research.researchQuestion}",
+                                                  style: BlackTitle.display5(
+                                                      context),
+                                                ),
+                                              )
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.symmetric(
-                                        vertical: 8.0),
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Wrap(
-                                          children: [
-                                            Icon(
-                                              Icons.credit_score,
-                                              color: mainColor,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'Research Credits : ',
-                                              style:
-                                                  BlackTitle.display5(context),
-                                            ),
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.only(top: 0),
-                                              child: Text(
-                                                '${research.credits}',
+                                    Padding(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 8.0),
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Wrap(
+                                            children: [
+                                              Icon(
+                                                Icons.credit_score,
+                                                color: mainColor,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                'Research Credits : ',
                                                 style: BlackTitle.display5(
                                                     context),
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 0),
+                                                child: Text(
+                                                  '${research.credits}',
+                                                  style: BlackTitle.display5(
+                                                      context),
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  Padding(
-                                    padding: const EdgeInsets.only(top: 8.0),
-                                    child: Row(
-                                      children: [
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.schedule,
-                                              color: mainColor,
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            Text(
-                                              'Research Date : ',
-                                              style:
-                                                  BlackTitle.display5(context),
-                                            ),
-                                          ],
-                                        ),
-                                        Text(
-                                          '$formattedDate',
-                                          style: BlackLabel.display5(context),
-                                        ),
-                                      ],
+                                    Padding(
+                                      padding: const EdgeInsets.only(top: 8.0),
+                                      child: Row(
+                                        children: [
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.schedule,
+                                                color: mainColor,
+                                              ),
+                                              SizedBox(
+                                                width: 5,
+                                              ),
+                                              Text(
+                                                'Research Date : ',
+                                                style: BlackTitle.display5(
+                                                    context),
+                                              ),
+                                            ],
+                                          ),
+                                          Text(
+                                            '$formattedDate',
+                                            style: BlackLabel.display5(context),
+                                          ),
+                                        ],
+                                      ),
                                     ),
-                                  ),
-                                  TextButton(
-                                    onPressed: () {
-                                      RoutesManager.navigatorPush(
-                                        context,
-                                        ResearchesDetails(research: research),
-                                      );
-                                    },
-                                    child: Text(
-                                      'More details',
-                                      style: BlackLabel.display5(context)
-                                          .copyWith(color: mainColor),
+                                    TextButton(
+                                      onPressed: () {
+                                        RoutesManager.navigatorPush(
+                                          context,
+                                          ResearchesDetails(research: research),
+                                        );
+                                      },
+                                      child: Text(
+                                        'More details',
+                                        style: BlackLabel.display5(context)
+                                            .copyWith(color: mainColor),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               ),
                             ),
                           ),

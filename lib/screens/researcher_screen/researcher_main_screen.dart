@@ -22,20 +22,19 @@ class _ResearcherMainScreenState extends State<ResearcherMainScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(),
         body: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: CreateButton(
-                title: 'Create Research',
-                onTap: () {
-                  RoutesManager.navigatorPush(context, ResearcherFormScreen());
-                },
-              ),
-            ),
-            // BottomNavigationBar(),
-          ],
-        ));
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        Center(
+          child: CreateButton(
+            title: 'Create Research',
+            onTap: () {
+              RoutesManager.navigatorPush(context, ResearcherFormScreen());
+            },
+          ),
+        ),
+        // BottomNavigationBar(),
+      ],
+    ));
   }
 }

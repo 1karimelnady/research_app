@@ -33,11 +33,6 @@ class AuthCubit extends Cubit<AuthStates> {
     }
   }
 
-  // void saveUserType({required String type}) {
-  //   userType = type;
-  //   emit(SavedType());
-  // }
-
   String? userGender;
   void saveUserGender({required String gender}) {
     userGender = gender;
@@ -85,8 +80,6 @@ class AuthCubit extends Cubit<AuthStates> {
 
     try {
       emit(RegisterLoading());
-      String? userType = this.userType;
-      String? userGender = this.userGender;
 
       var response = await dio.post(baseUrl + "/users/register", data: parms);
 
@@ -184,14 +177,12 @@ class AuthCubit extends Cubit<AuthStates> {
       String question = questions[i];
       String? answer = answers?[i];
 
-      // Handle specific formatting based on the user type or question type
       formattedAnswers[question] = formatAnswer(userType, question, answer);
     }
 
     return formattedAnswers;
   }
 
-// Handle specific formatting based on the user type or question type
   String formatAnswer(String userType, String question, String? answer) {
     switch (question) {
       case 'dominant hand ?':

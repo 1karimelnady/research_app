@@ -6,9 +6,7 @@ import 'package:research_app/common_widget/create_loading.dart';
 import 'package:research_app/common_widget/step_progress.dart';
 import 'package:research_app/cubit/Auth_cubit/auth_cubit.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
-import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
 import 'package:research_app/screens/student_screen/studenthomescreen.dart';
-import 'package:toast/toast.dart';
 
 import '../../app_manager/local_data.dart';
 import '../../app_manager/routes_manager.dart';

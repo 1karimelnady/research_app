@@ -28,7 +28,6 @@ class BottomButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               elevation: 0,
               shadowColor: Colors.transparent,
-              // primary: Colors.white,
               shape: CircleBorder(side: BorderSide(color: mainColor)),
             ),
           ),
@@ -49,7 +48,6 @@ class BottomButton extends StatelessWidget {
             style: ElevatedButton.styleFrom(
               elevation: 0,
               shadowColor: Colors.transparent,
-              // primary: mainColor,
               shape: CircleBorder(side: BorderSide(color: mainColor)),
             ),
           ),

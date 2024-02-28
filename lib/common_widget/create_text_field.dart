@@ -82,9 +82,6 @@ class CreatTextField extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         mainAxisAlignment: MainAxisAlignment.start,
-        // textDirection: languageProvider!.isEnglish == true
-        //     ? TextDirection.ltr
-        //     : TextDirection.rtl,
         children: [
           title == null
               ? SizedBox()
@@ -93,13 +90,8 @@ class CreatTextField extends StatelessWidget {
                   style: titleStyle ??
                       MainTitle.display5(context).copyWith(color: Colors.black),
                 ),
-          // Directionality(
-          //   textDirection: languageProvider!.isEnglish == true
-          //       ? TextDirection.ltr
-          //       : TextDirection.rtl,
           Container(
             margin: EdgeInsets.only(top: title == null ? 0 : 5.0),
-            // height: height ?? getSize(context: context).height * 0.04,
             width: width ?? getSize(context: context).width * 0.7,
             decoration: BoxDecoration(
               borderRadius: borderRadius ?? BorderRadius.circular(8),
@@ -109,15 +101,8 @@ class CreatTextField extends StatelessWidget {
               enabled: enable,
               obscureText: obSecureText ?? false,
               textDirection: TextDirection.ltr,
-              // languageProvider!.isEnglish == true
-              //     ? TextDirection.ltr
-              //     : TextDirection.rtl,
-              textAlign: TextAlign.left //labelDirection == null
-              //     ? languageProvider!.isEnglish == true
-              // ? TextAlign.left
-              // : TextAlign.right
-              //: labelDirection!,
-              ,
+
+              textAlign: TextAlign.left,
               inputFormatters: inputFormatters,
               textAlignVertical: TextAlignVertical.center,
               maxLines: maxLines ?? 1,
@@ -130,11 +115,8 @@ class CreatTextField extends StatelessWidget {
               style: controllerStyle ??
                   BlackTitle.display5(context).copyWith(color: mainColor),
               decoration: InputDecoration(
-                // isDense: true,
                 contentPadding:
                     EdgeInsets.symmetric(horizontal: 5, vertical: 5),
-                // filled: true,
-                // fillColor: fillColor ?? Colors.white,
                 hintText: (label ?? " "),
                 hintStyle: labelStyle ??
                     TextStyle(
@@ -147,24 +129,6 @@ class CreatTextField extends StatelessWidget {
                   child: suffixIcon,
                 ),
                 prefixIcon: prefixIcon,
-                // enabledBorder:  OutlineInputBorder(
-                //     borderSide: BorderSide(
-                //         color: borderColor ?? mainColor,
-                //         width: borderWidth ?? 0.6),
-                //     borderRadius:
-                //         borderRadius ?? BorderRadius.all(Radius.circular(8))),
-                // disabledBorder: OutlineInputBorder(
-                //     borderSide: BorderSide(
-                //         color: borderColor ?? mainColor,
-                //         width: borderWidth ?? 0.6),
-                //     borderRadius:
-                //         borderRadius ?? BorderRadius.all(Radius.circular(8))),
-                // focusedBorder: OutlineInputBorder(
-                //     borderSide: BorderSide(
-                //         color: borderColor ?? mainColor,
-                //         width: borderWidth ?? 1.0),
-                //     borderRadius:
-                //         borderRadius ?? BorderRadius.all(Radius.circular(8.0))),
               ),
             ),
           ),

@@ -1,8 +1,6 @@
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:provider/provider.dart';
 import '../app_manager/local_data.dart';
 import '../cubit/Auth_cubit/auth_cubit.dart';
-import '../cubit/main_cubit.dart';
 import '../providers/language_provider.dart';
 import '../utilities/cache_helper.dart';
 import '../utilities/text_style.dart';
@@ -38,8 +36,6 @@ class _CreateDropDownSmallState extends State<CreateDropDownSmall> {
 
   @override
   Widget build(BuildContext context) {
-    //  languageProvider = Provider.of<LanguageProvider>(context, listen: true);
-
     return Container(
       width: double.infinity,
       child: Column(
@@ -120,7 +116,8 @@ class _CreateDropDownSmallState extends State<CreateDropDownSmall> {
                                       startedItem = usertype[index];
                                     }
                                   });
-                                  widget.authCubit.saveUserGender(gender: usertype[index]);
+                                  widget.authCubit
+                                      .saveUserGender(gender: usertype[index]);
                                 },
                                 child: Padding(
                                   padding: EdgeInsets.symmetric(vertical: 5),

@@ -12,9 +12,6 @@ class CreatLoading extends StatelessWidget {
     return Center(
         child: Container(
             height: height ?? 120,
-
-            /// متزودش الارتفاع علشان مستخدمها علي زوار
-
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,

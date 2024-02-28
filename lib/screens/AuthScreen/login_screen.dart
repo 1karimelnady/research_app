@@ -71,7 +71,6 @@ class _LoginScreenState extends State<LoginScreen> {
         builder: (context, state) {
           AuthCubit cubit = AuthCubit.get(context);
           return Scaffold(
-            // backgroundColor: mainColor.withOpacity(0.1),
             body: SafeArea(
               child: SingleChildScrollView(
                 physics: const BouncingScrollPhysics(),
@@ -95,7 +94,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           style: TextStyle(
                               fontSize: 22,
                               fontWeight: FontWeight.bold,
-                              fontFamily: 'Cairo'),
+                              fontFamily: 'Opensans'),
                         ),
                         const SizedBox(
                           height: 10,
@@ -176,31 +175,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                     cubit.login(
                                         value: emailController.text,
                                         password: passwordController.text);
-
-                                    // if (emailController.text.isEmpty) {
-                                    //   CreatToast().showToast(
-                                    //     errorMessage:
-                                    //         "Email or Mobile is required",
-                                    //     context: context,
-                                    //   );
-                                    // } else if (passwordController
-                                    //     .text.isEmpty) {
-                                    //   CreatToast().showToast(
-                                    //     errorMessage: "Password is required",
-                                    //     context: context,
-                                    //   );
-                                    // } else if (passwordController.text.length <
-                                    //     8) {
-                                    //   CreatToast().showToast(
-                                    //     errorMessage:
-                                    //         "Password must not less than 8",
-                                    //     context: context,
-                                    //   );
-                                    // } else {
-                                    //   cubit.login(
-                                    //       value: emailController.text,
-                                    //       password: passwordController.text);
-                                    // }
                                   }
                                 },
                                 elevation: 0,
@@ -221,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             const Text(
                               'Don`t have an account?',
-                              style: TextStyle(fontFamily: 'Cairo'),
+                              style: TextStyle(fontFamily: 'Opensans'),
                             ),
                             const SizedBox(
                               width: 5,
@@ -240,7 +214,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 child: const Text(
                                   'Register',
                                   style: TextStyle(
-                                      fontFamily: 'Cairo',
+                                      fontFamily: 'Opensans',
                                       fontWeight: FontWeight.bold,
                                       color: mainColor),
                                 ))

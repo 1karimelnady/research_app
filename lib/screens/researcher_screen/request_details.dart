@@ -4,8 +4,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:research_app/app_manager/routes_manager.dart';
 import 'package:research_app/common_widget/create_button.dart';
+import 'package:research_app/common_widget/create_loading.dart';
 import 'package:research_app/cubit/application_states/main_states.dart';
 import 'package:research_app/model/researches_model.dart';
+import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
+import 'package:research_app/screens/researcher_screen/researches_screen.dart';
 import 'package:research_app/screens/student_screen/studenthomescreen.dart';
 
 import '../../app_manager/local_data.dart';
@@ -24,15 +27,36 @@ class RequestsDetails extends StatelessWidget {
       create: (context) => MainCubit(),
       child: BlocConsumer<MainCubit, MainStates>(
         listener: (context, state) {
-          if (state is StudentRegisterResearchSuccessState) {
+          if (state is AcceptSuccessStatusState) {
             CreatToast().showToast(
-                errorMessage: "Registration successfully you are pending",
+                errorMessage: "Research Accepted successfully ",
                 backgroundColor: mainColor,
                 context: context);
+            RoutesManager.navigatorPush(context, ResearchesScreen());
             RoutesManager.navigatorAndRemove(context, StudentHomeScreen());
-          } else if (state is StudentRegisterResearchErrorState) {
-            CreatToast()
-                .showToast(errorMessage: state.errorMessage, context: context);
+          } else if (state is RefusedSuccessStatusState) {
+            CreatToast().showToast(
+                errorMessage: "Research Rejected successfully ",
+                backgroundColor: mainColor,
+                context: context);
+            RoutesManager.navigatorPush(context, ResearchesScreen());
+          } else if (state is AcceptLoadingState) {
+            CreatLoading();
+          } else if (state is RefuseLoadingState) {
+            CreatLoading();
+          } else if (state is AcceptErrorStatusState) {
+            CreatToast().showToast(
+                errorMessage: state.errorMessage,
+                backgroundColor: mainColor,
+                context: context);
+            print("errrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrrr");
+          } else if (state is RefusedErrorStatusState) {
+            CreatToast().showToast(
+                errorMessage: state.errorMessage,
+                backgroundColor: mainColor,
+                context: context);
+
+            print("reffffffffffffffffffffffffffffffffff");
           }
         },
         builder: (context, state) {
@@ -427,7 +451,17 @@ class RequestsDetails extends StatelessWidget {
                                       title: 'Accept',
                                       width:
                                           getSize(context: context).width * 0.4,
-                                      onTap: () async {},
+                                      onTap: () async {
+                                        await MainCubit.get(context)
+                                            .AcceptOrRefuse(
+                                                status: "accepted",
+                                                student:
+                                                    research.researher!.sId!,
+                                                id: research.sId!);
+
+                                        print(research.sId);
+                                        print(research.researher!.sId);
+                                      },
                                     ),
                                     SizedBox(
                                       width: 10,
@@ -436,9 +470,14 @@ class RequestsDetails extends StatelessWidget {
                                       width:
                                           getSize(context: context).width * 0.4,
                                       title: 'Refuse',
-                                      onTap: () {
-                                        RoutesManager.navigatorPush(
-                                            context, StudentHomeScreen());
+                                      onTap: () async {
+                                        await MainCubit.get(context)
+                                            .AcceptOrRefuse(
+                                                status: "rejected",
+                                                student: research.sId!,
+                                                id: research.researher!.sId!);
+                                        // RoutesManager.navigatorPush(
+                                        //     context, ResearchesScreen());
                                       },
                                       backGround: Colors.red,
                                       colorBorder: Colors.red,

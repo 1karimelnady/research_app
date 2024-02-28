@@ -77,3 +77,26 @@ class GetStudentResearchesErrorStatusState extends MainStates {
 
   GetStudentResearchesErrorStatusState(this.errorMessage);
 }
+
+///////////////////////////////////// Accept or Reject student Research ////////////////////////////////////
+// class AcceptOrRefuseLoadingState extends MainStates {}
+
+class AcceptLoadingState extends MainStates {}
+
+class RefuseLoadingState extends MainStates {}
+
+class AcceptSuccessStatusState extends MainStates {}
+
+class AcceptErrorStatusState extends MainStates {
+  final String errorMessage;
+
+  AcceptErrorStatusState(this.errorMessage);
+}
+
+class RefusedSuccessStatusState extends MainStates {}
+
+class RefusedErrorStatusState extends MainStates {
+  final String errorMessage;
+
+  RefusedErrorStatusState(this.errorMessage);
+}
