@@ -108,3 +108,11 @@ class NotificationLoading extends MainStates {}
 class NotificationSuccess extends MainStates {}
 
 class NotificationError extends MainStates {}
+
+////////////////// get accepted student ///////////////////////////////////
+
+class GetStudentAcceptLoadingState extends MainStates {}
+
+class GetStudentAcceptedErrorState extends MainStates {}
+
+class GetStudentAcceptSuccessState extends MainStates {}

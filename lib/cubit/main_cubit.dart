@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 
+import '../model/accepted_student_researcher_model.dart';
 import '../model/notfication_model.dart';
 import '../model/researches_model.dart';
 import '../model/researches_student_status_model.dart';
@@ -659,6 +660,38 @@ class MainCubit extends Cubit<MainStates> {
       emit(NotificationError());
     } on Exception catch (e) {
       emit(NotificationError());
+      print(e.toString());
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////// get accepted student /////////////////////
+
+  List<ResearchesAccepted> acceptedStudentList = [];
+
+  Future<void> getAcceptedStudentResearcher() async {
+    acceptedStudentList.clear();
+    emit(GetStudentAcceptLoadingState());
+    try {
+      dio.options.headers = {
+        "Authorization": "Bearer ${CacheHelper.getData(key: "token")}"
+      };
+
+      var response = await dio.get(baseUrl + "/researchers/students/accepted");
+      if (response.statusCode == 200) {
+        (response.data as List).forEach((element) {
+          acceptedStudentList.add(ResearchesAccepted.fromJson(element));
+        });
+        emit(GetStudentAcceptSuccessState());
+      }
+    } on DioException catch (e) {
+      String errorMessage = "";
+      if (e.response != null) {
+        errorMessage = e.response?.data['message'] ?? '';
+        print(errorMessage.toString());
+      }
+      emit(GetStudentAcceptedErrorState());
+    } on Exception catch (e) {
+      emit(GetStudentAcceptedErrorState());
       print(e.toString());
     }
   }
