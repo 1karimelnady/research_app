@@ -100,3 +100,11 @@ class RefusedErrorStatusState extends MainStates {
 
   RefusedErrorStatusState(this.errorMessage);
 }
+
+///////////////////////////////////////// notification //////////////////////////////
+
+class NotificationLoading extends MainStates {}
+
+class NotificationSuccess extends MainStates {}
+
+class NotificationError extends MainStates {}

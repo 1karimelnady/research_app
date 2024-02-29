@@ -41,10 +41,6 @@ class RequestsDetails extends StatelessWidget {
                 backgroundColor: mainColor,
                 context: context);
             RoutesManager.navigatorPush(context, ResearchesScreen());
-          } else if (state is AcceptLoadingState) {
-            CreatLoading();
-          } else if (state is RefuseLoadingState) {
-            CreatLoading();
           } else if (state is AcceptErrorStatusState) {
             CreatToast().showToast(
                 errorMessage: state.errorMessage,
@@ -58,7 +54,6 @@ class RequestsDetails extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          MainCubit cubit = MainCubit.get(context);
           return SafeArea(
             child: Scaffold(
                 body: Padding(
@@ -475,7 +470,7 @@ class RequestsDetails extends StatelessWidget {
                                               width: getSize(context: context)
                                                       .width *
                                                   0.4,
-                                              title: 'Refuse',
+                                              title: 'Reject',
                                               onTap: () async {
                                                 await MainCubit.get(context)
                                                     .AcceptOrRefuse(

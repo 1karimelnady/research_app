@@ -22,7 +22,7 @@ class StudentMainScreen extends StatefulWidget {
 class _StudentMainScreenState extends State<StudentMainScreen> {
   @override
   void initState() {
-    MainCubit.get(context).getStudentResearches();
+    // MainCubit.get(context).getStudentResearches();
     NotificationsServices().firebaseInit(context);
     NotificationsServices.foregroundMessage();
     super.initState();

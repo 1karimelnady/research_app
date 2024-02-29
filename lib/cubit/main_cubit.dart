@@ -6,6 +6,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 
+import '../model/notfication_model.dart';
 import '../model/researches_model.dart';
 import '../model/researches_student_status_model.dart';
 import '../model/student_researches_model.dart';
@@ -417,6 +418,7 @@ class MainCubit extends Cubit<MainStates> {
 
   Future<void> getResearcherResearches() async {
     researchesList.clear();
+    emit(GetResearchesLoadingState());
 
     try {
       dio.options.headers = {
@@ -430,6 +432,7 @@ class MainCubit extends Cubit<MainStates> {
         List<dynamic> data = response.data['researches'];
 
         researchesList = data.map((json) => Researches.fromJson(json)).toList();
+        print("researchesList  : ${researchesList.length}");
 
         emit(GetResearchesSuccessState());
       }
@@ -620,6 +623,42 @@ class MainCubit extends Cubit<MainStates> {
       } else if (status == "rejected") {
         emit(RefusedErrorStatusState(e.toString()));
       }
+      print(e.toString());
+    }
+  }
+
+  //////////////////////////////////////////////////////////////////////////// get Notification ////////////////////////
+
+  List<NotificationModel> notificationList = [];
+
+  Future<void> getNotification() async {
+    notificationList.clear();
+    emit(NotificationLoading());
+    dio.options.headers = {
+      "Authorization": "Bearer ${CacheHelper.getData(key: "token")}"
+    };
+    try {
+      var response = await dio.get(
+        baseUrl + "/users/notifications",
+      );
+
+      if (response.statusCode == 200) {
+        (response.data as List).forEach((element) {
+          notificationList.add(NotificationModel.fromJson(element));
+        });
+
+        print("notificationList : ${notificationList.length}");
+        emit(NotificationSuccess());
+      }
+    } on DioException catch (e) {
+      String errorMessage = "";
+      if (e.response != null) {
+        errorMessage = e.response?.data['message'] ?? '';
+        print(errorMessage.toString());
+      }
+      emit(NotificationError());
+    } on Exception catch (e) {
+      emit(NotificationError());
       print(e.toString());
     }
   }
