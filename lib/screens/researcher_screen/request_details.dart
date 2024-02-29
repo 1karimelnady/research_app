@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
 import 'package:research_app/app_manager/routes_manager.dart';
-import 'package:research_app/common_widget/create_loading.dart';
 import 'package:research_app/cubit/application_states/main_states.dart';
 import 'package:research_app/model/researches_model.dart';
+import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
 import 'package:research_app/screens/researcher_screen/researches_screen.dart';
 
 import '../../app_manager/local_data.dart';
@@ -13,7 +13,7 @@ import '../../common_widget/create_toast.dart';
 import '../../cubit/main_cubit.dart';
 import '../../utilities/text_style.dart';
 
-class RequestsDetails extends StatelessWidget {
+class RequestsDetails extends StatefulWidget {
   final Researches researcher;
   final int studentStatus;
   const RequestsDetails({
@@ -21,10 +21,18 @@ class RequestsDetails extends StatelessWidget {
     required this.researcher,
     required this.studentStatus,
   }) : super(key: key);
+
+  @override
+  State<RequestsDetails> createState() => _RequestsDetailsState();
+}
+
+class _RequestsDetailsState extends State<RequestsDetails> {
+  bool isAcceptLoading = false;
+  bool isRejectLoading = false;
   @override
   Widget build(BuildContext context) {
     StudentsStatus selectedStudentStatus =
-        researcher.studentsStatus![studentStatus];
+        widget.researcher.studentsStatus![widget.studentStatus];
     return BlocProvider(
       create: (context) => MainCubit(),
       child: BlocConsumer<MainCubit, MainStates>(
@@ -72,8 +80,8 @@ class RequestsDetails extends StatelessWidget {
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Card(
-                        elevation: 0.4,
-                        color: mainColor.withOpacity(0.1),
+                        elevation: 2,
+                        shadowColor: thirdColor,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -409,7 +417,7 @@ class RequestsDetails extends StatelessWidget {
                               Padding(
                                 padding:
                                     const EdgeInsets.symmetric(vertical: 8.0),
-                                child: Row(
+                                child: Wrap(
                                   children: [
                                     Row(
                                       children: [
@@ -427,7 +435,7 @@ class RequestsDetails extends StatelessWidget {
                                       ],
                                     ),
                                     Text(
-                                      '${researcher.description != null ? researcher.description : 'des'}',
+                                      '${widget.researcher.description != null ? widget.researcher.description : 'des'}',
                                       style: BlackLabel.display5(context),
                                     ),
                                   ],
@@ -435,55 +443,35 @@ class RequestsDetails extends StatelessWidget {
                               ),
                               Row(
                                 children: [
-                                  state is AcceptLoadingState
-                                      ? CreatLoading()
-                                      : Row(
-                                          children: [
-                                            CreateButton(
-                                              title: 'Accept',
-                                              width: getSize(context: context)
-                                                      .width *
-                                                  0.4,
-                                              onTap: () async {
-                                                await MainCubit.get(context)
-                                                    .AcceptOrRefuse(
-                                                        status: "accepted",
-                                                        id: researcher.sId!,
-                                                        student: researcher
-                                                            .researher!.sId!);
-
-                                                print(researcher.sId);
-                                                print(
-                                                    researcher.researher!.sId);
-                                              },
-                                            ),
-                                          ],
-                                        ),
+                                  Row(
+                                    children: [
+                                      CreateButton(
+                                        title: 'Accept',
+                                        width: getSize(context: context).width *
+                                            0.4,
+                                        onTap: () async {
+                                          _showAcceptDialog(context);
+                                        },
+                                      ),
+                                    ],
+                                  ),
                                   SizedBox(
                                     width: 10,
                                   ),
-                                  state is RefuseLoadingState
-                                      ? CreatLoading()
-                                      : Row(
-                                          children: [
-                                            CreateButton(
-                                              width: getSize(context: context)
-                                                      .width *
-                                                  0.4,
-                                              title: 'Reject',
-                                              onTap: () async {
-                                                await MainCubit.get(context)
-                                                    .AcceptOrRefuse(
-                                                        status: "rejected",
-                                                        id: researcher.sId!,
-                                                        student: researcher
-                                                            .researher!.sId!);
-                                              },
-                                              backGround: Colors.red,
-                                              colorBorder: Colors.red,
-                                            ),
-                                          ],
-                                        ),
+                                  Row(
+                                    children: [
+                                      CreateButton(
+                                        width: getSize(context: context).width *
+                                            0.4,
+                                        title: 'Reject',
+                                        onTap: () async {
+                                          _showRejectDialog(context);
+                                        },
+                                        backGround: Colors.red,
+                                        colorBorder: Colors.red,
+                                      ),
+                                    ],
+                                  ),
                                 ],
                               ),
                             ],
@@ -496,6 +484,90 @@ class RequestsDetails extends StatelessWidget {
           );
         },
       ),
+    );
+  }
+
+  _showAcceptDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Accept'),
+              content: Text(
+                "Are you sure you want to Accept this research",
+                style: BlackLabel.display5(context).copyWith(
+                  color: mainColor.withOpacity(0.4),
+                ),
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () async {
+                    setState(() {
+                      isAcceptLoading = true;
+                    });
+                    await MainCubit.get(context).AcceptOrRefuse(
+                        status: "accepted",
+                        id: widget.researcher.sId!,
+                        student: widget.researcher.researher!.sId!);
+                    setState(() {
+                      isAcceptLoading = false;
+                    });
+                    RoutesManager.navigatorPush(
+                        context, ResearcherHomeScreen());
+                  },
+                  child: isAcceptLoading
+                      ? CircularProgressIndicator()
+                      : Text('Accept'),
+                ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  _showRejectDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              backgroundColor: thirdColor,
+              title: Text('Reject'),
+              content: Text(
+                "Are you sure you want to Reject this research",
+                style: BlackLabel.display5(context).copyWith(
+                  color: mainColor.withOpacity(0.4),
+                ),
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: () async {
+                    setState(() {
+                      isRejectLoading = true;
+                    });
+                    await MainCubit.get(context).AcceptOrRefuse(
+                        status: "rejected",
+                        id: widget.researcher.sId!,
+                        student: widget.researcher.researher!.sId!);
+                    setState(() {
+                      isRejectLoading = false;
+                    });
+                    Navigator.pop(context);
+                  },
+                  child: isRejectLoading
+                      ? CircularProgressIndicator()
+                      : Text('Reject'),
+                ),
+              ],
+            );
+          },
+        );
+      },
     );
   }
 }

@@ -116,3 +116,14 @@ class GetStudentAcceptLoadingState extends MainStates {}
 class GetStudentAcceptedErrorState extends MainStates {}
 
 class GetStudentAcceptSuccessState extends MainStates {}
+
+/////////////////////////////////////// send notification ///////////////////////
+
+class SendNotificationLoading extends MainStates {}
+
+class SendNotificationSuccess extends MainStates {
+  var response;
+  SendNotificationSuccess({this.response});
+}
+
+class SendNotificationError extends MainStates {}

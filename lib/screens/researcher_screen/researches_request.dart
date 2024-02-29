@@ -43,8 +43,8 @@ class ResearchesRequests extends StatelessWidget {
                         );
                       },
                       child: Card(
-                        elevation: 0.4,
-                        color: mainColor.withOpacity(0.1),
+                        elevation: 2,
+                        shadowColor: thirdColor,
                         child: Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(

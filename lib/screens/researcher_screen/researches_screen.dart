@@ -89,8 +89,8 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
                                   }
                                 },
                                 child: Card(
-                                  elevation: 0.4,
-                                  color: mainColor.withOpacity(0.2),
+                                  elevation: 2,
+                                  shadowColor: thirdColor,
                                   child: Padding(
                                     padding: const EdgeInsets.all(8.0),
                                     child: Column(
