@@ -456,6 +456,7 @@ class MainCubit extends Cubit<MainStates> {
 
   Future<void> getStudentResearches() async {
     studentResearchesList.clear();
+    emit(GetStudentResearchesLoadingState());
     try {
       dio.options.headers = {
         "Authorization": "Bearer ${CacheHelper.getData(key: "token")}"
@@ -466,6 +467,7 @@ class MainCubit extends Cubit<MainStates> {
         (response.data as List).forEach((element) {
           studentResearchesList.add(StudentResearchesModel.fromJson(element));
         });
+        print(" studentResearchesList :  ${studentResearchesList.length}");
         if (studentResearchesList.isNotEmpty) {
           for (int i = 0; i < studentResearchesList.length; i++) {
             CacheHelper.setData(

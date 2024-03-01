@@ -30,6 +30,7 @@ class ResearchesRequests extends StatelessWidget {
                 itemCount: pendingStudentsStatus.length,
                 itemBuilder: (context, index) {
                   StudentsStatus studentStatus = pendingStudentsStatus[index];
+
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: GestureDetector(

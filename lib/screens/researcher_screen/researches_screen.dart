@@ -24,6 +24,7 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
   }
 
   List<StudentsStatus>? studentsStatus;
+  StudentsStatus? studentsStatuss;
 
   @override
   Widget build(BuildContext context) {
@@ -36,7 +37,7 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
               : MainCubit.get(context).researchesList.isEmpty
                   ? Center(
                       child: Text(
-                      "No Notification",
+                      "No Researches",
                       style: BlackTitle.display5(context)
                           .copyWith(color: Colors.red),
                     ))

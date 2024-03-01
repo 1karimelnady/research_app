@@ -77,7 +77,7 @@ class NotificationsServices {
     });
   }
 
-  static void getper() async {
+  static getper() async {
     NotificationSettings notificationSettings = await FirebaseMessaging.instance
         .requestPermission(
             alert: true,

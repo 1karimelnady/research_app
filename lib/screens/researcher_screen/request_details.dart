@@ -29,10 +29,16 @@ class RequestsDetails extends StatefulWidget {
 class _RequestsDetailsState extends State<RequestsDetails> {
   bool isAcceptLoading = false;
   bool isRejectLoading = false;
+  StudentsStatus? selectedStudentStatus;
+  @override
+  void initState() {
+    selectedStudentStatus =
+        widget.researcher.studentsStatus![widget.studentStatus];
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
-    StudentsStatus selectedStudentStatus =
-        widget.researcher.studentsStatus![widget.studentStatus];
     return BlocProvider(
       create: (context) => MainCubit(),
       child: BlocConsumer<MainCubit, MainStates>(
@@ -72,7 +78,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                   itemCount: 1,
                   itemBuilder: (context, index) {
                     String? Time =
-                        selectedStudentStatus.student?.createdAt ?? '';
+                        selectedStudentStatus!.student?.createdAt ?? '';
                     DateTime dateTime = DateTime.parse(Time);
                     String formattedDate =
                         DateFormat('yyyy-MM-dd').format(dateTime);
@@ -99,7 +105,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                               ),
                               Center(
                                 child: Text(
-                                  "${selectedStudentStatus.student?.name ?? ''}",
+                                  "${selectedStudentStatus!.student?.name ?? ''}",
                                   style: BlackLabel.display5(context),
                                 ),
                               ),
@@ -129,7 +135,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                           padding:
                                               const EdgeInsets.only(top: 0.0),
                                           child: Text(
-                                            "${selectedStudentStatus.student?.email ?? ''}",
+                                            "${selectedStudentStatus!.student?.email ?? ''}",
                                             style: BlackLabel.display5(context),
                                           ),
                                         )
@@ -161,7 +167,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                           padding:
                                               const EdgeInsets.only(top: 0),
                                           child: Text(
-                                            '${selectedStudentStatus.student?.gender ?? ''}',
+                                            '${selectedStudentStatus!.student?.gender ?? ''}',
                                             style: BlackLabel.display5(context),
                                           ),
                                         ),
@@ -218,7 +224,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                       ],
                                     ),
                                     Text(
-                                      '${selectedStudentStatus.student?.mobile}'
+                                      '${selectedStudentStatus!.student?.mobile}'
                                       ' ',
                                       style: BlackLabel.display5(context),
                                     ),
@@ -246,7 +252,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                       ],
                                     ),
                                     Text(
-                                      '${selectedStudentStatus.student?.hand ?? ''}',
+                                      '${selectedStudentStatus!.student?.hand ?? ''}',
                                       style: BlackLabel.display5(context),
                                     ),
                                   ],
@@ -273,7 +279,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                       ],
                                     ),
                                     Text(
-                                      '${selectedStudentStatus.student?.language ?? ''}',
+                                      '${selectedStudentStatus!.student?.language ?? ''}',
                                       style: BlackLabel.display5(context),
                                     ),
                                   ],
@@ -300,7 +306,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                       ],
                                     ),
                                     Text(
-                                      '${selectedStudentStatus.student?.version ?? ''}',
+                                      '${selectedStudentStatus!.student?.version ?? ''}',
                                       style: BlackLabel.display5(context),
                                     ),
                                   ],
@@ -327,7 +333,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                       ],
                                     ),
                                     Text(
-                                      '${selectedStudentStatus.student?.hearingNormal}',
+                                      '${selectedStudentStatus!.student?.hearingNormal}',
                                       style: BlackLabel.display5(context),
                                     ),
                                   ],
@@ -354,7 +360,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                       ],
                                     ),
                                     Text(
-                                      '${selectedStudentStatus.student?.origin}',
+                                      '${selectedStudentStatus!.student?.origin}',
                                       style: BlackLabel.display5(context),
                                     ),
                                   ],
@@ -381,7 +387,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                       ],
                                     ),
                                     Text(
-                                      '${selectedStudentStatus.student?.aDHD}',
+                                      '${selectedStudentStatus!.student?.aDHD}',
                                       style: BlackLabel.display5(context),
                                     ),
                                   ],
@@ -408,7 +414,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                       ],
                                     ),
                                     Text(
-                                      '${selectedStudentStatus.student?.musicalBackground ?? ''}',
+                                      '${selectedStudentStatus!.student?.musicalBackground ?? ''}',
                                       style: BlackLabel.display5(context),
                                     ),
                                   ],
@@ -496,7 +502,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
             return AlertDialog(
               title: Text('Accept'),
               content: Text(
-                "Are you sure you want to Accept this research",
+                "Are you sure you want to Accept this student",
                 style: BlackLabel.display5(context).copyWith(
                   color: mainColor.withOpacity(0.4),
                 ),
@@ -510,7 +516,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                     await MainCubit.get(context).AcceptOrRefuse(
                         status: "accepted",
                         id: widget.researcher.sId!,
-                        student: widget.researcher.researher!.sId!);
+                        student: selectedStudentStatus!.student!.sId!);
                     setState(() {
                       isAcceptLoading = false;
                     });
@@ -539,7 +545,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
               backgroundColor: thirdColor,
               title: Text('Reject'),
               content: Text(
-                "Are you sure you want to Reject this research",
+                "Are you sure you want to Reject this student",
                 style: BlackLabel.display5(context).copyWith(
                   color: mainColor.withOpacity(0.4),
                 ),
@@ -553,7 +559,7 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                     await MainCubit.get(context).AcceptOrRefuse(
                         status: "rejected",
                         id: widget.researcher.sId!,
-                        student: widget.researcher.researher!.sId!);
+                        student: selectedStudentStatus!.student!.sId!);
                     setState(() {
                       isRejectLoading = false;
                     });

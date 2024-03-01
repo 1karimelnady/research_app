@@ -32,7 +32,7 @@ void main() async {
   );
   FirebaseMessaging.onBackgroundMessage(messagingOnBackgroundHandler);
   await NotificationsServices.foregroundMessage();
-  NotificationsServices.getper();
+  await NotificationsServices.getper();
   await NotificationsServices.getToken();
   DioHelper.init();
 
