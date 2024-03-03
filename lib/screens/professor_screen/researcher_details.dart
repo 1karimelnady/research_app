@@ -449,12 +449,86 @@ class _ResearcherDetailScreenState extends State<ResearcherDetailScreen> {
                                                 ],
                                               ),
                                             ),
+                                            Center(
+                                              child: CreateButton(
+                                                title: 'Send Feedback',
+                                                onTap: () {
+                                                  _showFeedBackDialog(
+                                                      context, index);
+                                                },
+                                              ),
+                                            ),
                                           ],
                                         ),
                                       ),
                                     ),
                                   );
                                 }))));
+      },
+    );
+  }
+
+  void _showFeedBackDialog(BuildContext context, index) {
+    String title = '';
+    String body = '';
+
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Send Feedback'),
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        title = value.trim();
+                      });
+                    },
+                    decoration: InputDecoration(labelText: 'Title'),
+                  ),
+                  TextField(
+                    onChanged: (value) {
+                      setState(() {
+                        body = value.trim();
+                      });
+                    },
+                    decoration: InputDecoration(labelText: 'Body'),
+                    maxLines: null,
+                  ),
+                ],
+              ),
+              actions: [
+                ElevatedButton(
+                  onPressed: (title.trim().isEmpty || body.trim().isEmpty)
+                      ? null
+                      : () async {
+                          MainCubit cubit = BlocProvider.of<MainCubit>(context);
+                          setState(() {
+                            isLoading = true;
+                          });
+                          await cubit.sendNotification(
+                              title: title,
+                              body: body,
+                              id: cubit.researchesOfResearchersList[index].sId!,
+                              user_id: widget.id);
+                          setState(() {
+                            isLoading = false;
+                          });
+
+                          Navigator.pop(context);
+                        },
+                  child: isLoading
+                      ? CircularProgressIndicator()
+                      : Text('Send FeedBack'),
+                ),
+              ],
+            );
+          },
+        );
       },
     );
   }
