@@ -126,7 +126,7 @@ class NotificationsServices {
   }
 
   void handleMessage(BuildContext context, RemoteMessage message) {
-    if (message.data['type'] == 'علي حسب نوع الرساله') {
+    if (message.data['type'] == 'news') {
       RoutesManager.navigatorPush(context, Widget);
     }
   }
