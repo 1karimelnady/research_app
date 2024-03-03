@@ -1,13 +1,13 @@
 class ResearchesOfResearcherModle {
-  List<Researches>? researches;
+  List<ResearchesOfResearchers>? researches;
 
   ResearchesOfResearcherModle({this.researches});
 
   ResearchesOfResearcherModle.fromJson(Map<String, dynamic> json) {
     if (json['researches'] != null) {
-      researches = <Researches>[];
+      researches = <ResearchesOfResearchers>[];
       json['researches'].forEach((v) {
-        researches!.add(new Researches.fromJson(v));
+        researches!.add(new ResearchesOfResearchers.fromJson(v));
       });
     }
   }
@@ -21,7 +21,7 @@ class ResearchesOfResearcherModle {
   }
 }
 
-class Researches {
+class ResearchesOfResearchers {
   String? sId;
   Researherr? researher;
   String? researchQuestion;
@@ -41,7 +41,7 @@ class Researches {
   int? iV;
   int? newRequest;
 
-  Researches(
+  ResearchesOfResearchers(
       {this.sId,
       this.researher,
       this.researchQuestion,
@@ -61,7 +61,7 @@ class Researches {
       this.iV,
       this.newRequest});
 
-  Researches.fromJson(Map<String, dynamic> json) {
+  ResearchesOfResearchers.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
     researher = json['researher'] != null
         ? new Researherr.fromJson(json['researher'])

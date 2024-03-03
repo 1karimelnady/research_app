@@ -6,9 +6,6 @@ import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/model/user_model.dart';
 import 'package:research_app/utilities/cache_helper.dart';
-
-import '../../screens/notfications/notfications_services.dart';
-
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
   static AuthCubit get(context) => BlocProvider.of(context);

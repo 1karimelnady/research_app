@@ -21,7 +21,6 @@ class _ProfessorHomeSCreenState extends State<ProfessorHomeSCreen> {
   void initState() {
     MainCubit cubit = BlocProvider.of<MainCubit>(context);
     cubit.getAllreseracher();
-    // MainCubit.get(context).getAllreseracher();
     super.initState();
   }
 

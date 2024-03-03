@@ -1,10 +1,9 @@
-import 'dart:io';
+import 'dart:convert';
 
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:research_app/app_manager/routes_manager.dart';
 import 'package:research_app/common_widget/create_button.dart';
 import 'package:research_app/common_widget/create_toast.dart';
@@ -28,8 +27,11 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
   TextEditingController researchController = TextEditingController();
   TextEditingController descriptionController = TextEditingController();
   TextEditingController creditController = TextEditingController();
-  SignatureController signatureController = SignatureController(
-      penStrokeWidth: 3, penColor: mainColor, exportBackgroundColor: greyColor);
+  final SignatureController _controller = SignatureController(
+    penStrokeWidth: 5,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
   Uint8List? exportedImage;
   var formKey = GlobalKey<FormState>();
 
@@ -883,15 +885,14 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
                                   });
                                 },
                                 child: Signature(
-                                  controller: signatureController,
-                                  width: getSize(context: context).width * 0.9,
+                                  controller: _controller,
                                   height:
-                                      getSize(context: context).height * 0.18,
-                                  backgroundColor: greyColor.withOpacity(0.5),
+                                      MediaQuery.of(context).size.height - 200,
+                                  backgroundColor: Colors.white,
                                 ),
                               ),
                             ),
-                            if (!signatureController.isNotEmpty)
+                            if (!_controller.isNotEmpty)
                               Image(
                                 width: 50,
                                 height: 50,
@@ -909,9 +910,7 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
                               topMargin: 5,
                               bottomMargin: 0,
                               onTap: () async {
-                                exportedImage =
-                                    await signatureController.toPngBytes();
-
+                                exportedImage = await _controller.toPngBytes();
                                 setState(() {});
                               },
                             ),
@@ -924,7 +923,7 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
                               topMargin: 5,
                               bottomMargin: 0,
                               onTap: () async {
-                                signatureController.clear();
+                                _controller.clear();
                                 setState(() {});
                               },
                             ),
@@ -983,7 +982,8 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
                                     } else {
                                       cubit.createResearch(
                                         credits: creditController.text,
-                                        approvment: exportedImage!,
+                                        approvment:
+                                            base64Encode(exportedImage!),
                                         researchQuestion:
                                             researchController.text,
                                         description: descriptionController.text,
@@ -1007,14 +1007,39 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
       ),
     );
   }
+}
 
-  Future<File> saveImage(Uint8List imageData, String filename) async {
-    final Directory appDirectory = await getApplicationDocumentsDirectory();
-    final String imagePath = '${appDirectory.path}/$filename.png';
+class SignatureScreen extends StatefulWidget {
+  @override
+  _SignatureScreenState createState() => _SignatureScreenState();
+}
 
-    final File imageFile = File(imagePath);
-    await imageFile.writeAsBytes(imageData);
+class _SignatureScreenState extends State<SignatureScreen> {
+  final SignatureController _controller = SignatureController(
+    penStrokeWidth: 5,
+    penColor: Colors.black,
+    exportBackgroundColor: Colors.white,
+  );
 
-    return imageFile;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Draw Your Signature'),
+      ),
+      body: Column(
+        children: <Widget>[
+          Expanded(
+            child: Signature(
+              controller: _controller,
+              height: MediaQuery.of(context).size.height - 200,
+              backgroundColor: Colors.white,
+            ),
+          ),
+          SizedBox(height: 20),
+        ],
+      ),
+    );
   }
+
 }

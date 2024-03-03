@@ -299,15 +299,4 @@ class _ResearchesScreenState extends State<ResearchesScreen> {
     );
   }
 }
-// else if (pendingStudentsStatus
-//     .isEmpty) {
-//   RoutesManager.navigatorPush(
-//     context,
-//     ResearchesRequests(
-//       researcher: research,
-//       pendingStudentsStatus:
-//           pendingStudentsStatus,
-//       status: status,
-//     ),
-//   );
-// }
+
