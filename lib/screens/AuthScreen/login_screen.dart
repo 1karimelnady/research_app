@@ -53,8 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
             CacheHelper.setData(key: "token", value: state.response['token']);
             String userType = CacheHelper.getData(key: "type") ?? "";
             if (userType == "professor") {
-              RoutesManager.navigatorAndRemove(
-                  context, ProfessorHomeSCreen(name: name));
+              RoutesManager.navigatorAndRemove(context, ProfessorHomeSCreen());
             } else if (userType == "researcher") {
               RoutesManager.navigatorAndRemove(context, ResearcherHomeScreen());
             } else if (userType == "student") {

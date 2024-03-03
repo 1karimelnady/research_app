@@ -28,8 +28,7 @@ class _SplashScreenState extends State<SplashScreen> {
       } else if (token != null && type == "student") {
         RoutesManager.navigatorAndRemove(context, StudentHomeScreen());
       } else if (token != null && type == "professor") {
-        RoutesManager.navigatorAndRemove(
-            context, ProfessorHomeSCreen(name: name!));
+        RoutesManager.navigatorAndRemove(context, ProfessorHomeSCreen());
       } else {
         RoutesManager.navigatorAndRemove(context, LoginScreen());
       }

@@ -63,25 +63,6 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
             ],
           )
 
-          // NavigationBar(
-          //   height: 80,
-          //   elevation: 0,
-          //   onDestinationSelected: (index) {
-          //     setState(() {
-          //       selectedIndex = index;
-          //     });
-          //   },
-          //   selectedIndex: selectedIndex,
-          //   destinations: [
-          //     NavigationDestination(icon: Icon(Icons.home), label: 'Home'),
-          //     NavigationDestination(
-          //         icon: Icon(Icons.manage_search_rounded), label: 'Researches'),
-          //     NavigationDestination(
-          //         icon: Icon(Icons.notification_add), label: 'Notification'),
-          //     NavigationDestination(
-          //         icon: Icon(Icons.settings), label: 'Settings'),
-          //   ],
-          // ),
           ,
           body: screens[selectedIndex],
         );

@@ -127,3 +127,19 @@ class SendNotificationSuccess extends MainStates {
 }
 
 class SendNotificationError extends MainStates {}
+
+///////////////////////////////////////////////////   Get All Researcher              /////////////////////////////////
+
+class GetAllResearcherLoading extends MainStates {}
+
+class GetAllResearcherSuccess extends MainStates {}
+
+class GetAllResearcherError extends MainStates {}
+
+////////////////////////////////////////////////////// get researches of researchers //////////////////
+
+class GetAllResearchesLoading extends MainStates {}
+
+class GetAllResearchesSuccess extends MainStates {}
+
+class GetAllResearchesError extends MainStates {}

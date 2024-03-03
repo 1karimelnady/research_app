@@ -4,6 +4,7 @@ import 'package:research_app/screens/researcher_screen/researcher_form.dart';
 
 import '../../app_manager/routes_manager.dart';
 import '../../common_widget/create_button.dart';
+import 'active_student_screen.dart';
 
 class ResearcherMainScreen extends StatefulWidget {
   const ResearcherMainScreen({Key? key}) : super(key: key);
@@ -25,13 +26,22 @@ class _ResearcherMainScreenState extends State<ResearcherMainScreen> {
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Center(
-          child: CreateButton(
-            title: 'Create Research',
-            onTap: () {
-              RoutesManager.navigatorPush(context, ResearcherFormScreen());
-            },
-          ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            CreateButton(
+              title: 'Create Research',
+              onTap: () {
+                RoutesManager.navigatorPush(context, ResearcherFormScreen());
+              },
+            ),
+            CreateButton(
+              title: 'Active Participent Research',
+              onTap: () {
+                RoutesManager.navigatorPush(context, ActiveStudentScreen());
+              },
+            ),
+          ],
         ),
         // BottomNavigationBar(),
       ],
