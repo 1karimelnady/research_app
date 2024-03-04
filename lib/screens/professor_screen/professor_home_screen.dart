@@ -293,7 +293,7 @@ class _ProfessorHomeSCreenState extends State<ProfessorHomeSCreen> {
                                                             width: 5,
                                                           ),
                                                           Text(
-                                                            'Researcher Date : ',
+                                                            'Join Date : ',
                                                             style: BlackTitle
                                                                 .display5(
                                                                     context),

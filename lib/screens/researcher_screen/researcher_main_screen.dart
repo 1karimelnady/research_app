@@ -26,22 +26,33 @@ class _ResearcherMainScreenState extends State<ResearcherMainScreen> {
         body: Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            CreateButton(
-              title: 'Create Research',
-              onTap: () {
-                RoutesManager.navigatorPush(context, ResearcherFormScreen());
-              },
-            ),
-            CreateButton(
-              title: 'Active Participent Research',
-              onTap: () {
-                RoutesManager.navigatorPush(context, ActiveStudentScreen());
-              },
-            ),
-          ],
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 8.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Expanded(
+                child: CreateButton(
+                  title: 'Create Research',
+                  onTap: () {
+                    RoutesManager.navigatorPush(
+                        context, ResearcherFormScreen());
+                  },
+                ),
+              ),
+              SizedBox(
+                width: 5,
+              ),
+              Expanded(
+                child: CreateButton(
+                  title: 'Active Participent',
+                  onTap: () {
+                    RoutesManager.navigatorPush(context, ActiveStudentScreen());
+                  },
+                ),
+              ),
+            ],
+          ),
         ),
         // BottomNavigationBar(),
       ],
