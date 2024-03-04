@@ -29,7 +29,7 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
   TextEditingController creditController = TextEditingController();
   final SignatureController _controller = SignatureController(
     penStrokeWidth: 5,
-    penColor: Colors.black,
+    penColor: mainColor,
     exportBackgroundColor: Colors.white,
   );
   Uint8List? exportedImage;
@@ -887,7 +887,7 @@ class _ResearcherFormScreenState extends State<ResearcherFormScreen> {
                                 child: Signature(
                                   controller: _controller,
                                   height:
-                                      MediaQuery.of(context).size.height - 200,
+                                      MediaQuery.of(context).size.height - 600,
                                   backgroundColor: Colors.white,
                                 ),
                               ),
@@ -1041,5 +1041,4 @@ class _SignatureScreenState extends State<SignatureScreen> {
       ),
     );
   }
-
 }
