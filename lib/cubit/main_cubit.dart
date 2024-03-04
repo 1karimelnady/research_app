@@ -811,4 +811,41 @@ class MainCubit extends Cubit<MainStates> {
       print(e.toString());
     }
   }
+
+  ////////////////////////////////////////////////////////// send grade /////////////////////////////
+
+  Future<void> sendGrade({
+    required String student,
+    required String research,
+    required bool status,
+  }) async {
+    Map<String, dynamic> params = {
+      "student": student,
+      "research": research,
+      "status": status,
+    };
+    try {
+      emit(SendGradeLoading());
+      dio.options.headers = {
+        "Authorization": "Bearer ${CacheHelper.getData(key: 'token')}"
+      };
+      var response = await dio.post(baseUrl + "/grads/user", data: params);
+
+      if (response.statusCode! >= 200 && response.statusCode! < 300) {
+        emit(SendGradeSuccess(response: response.data));
+      }
+    } on DioException catch (e) {
+      String errorMessage = "";
+
+      if (e.response != null) {
+        errorMessage = e.response!.data['message'] ?? 'An error occurred.';
+      } else {
+        errorMessage = 'An error occurred.';
+      }
+
+      emit(SendGradeError(errorMessage.toString()));
+    } catch (e) {
+      emit(SendGradeError(e.toString()));
+    }
+  }
 }

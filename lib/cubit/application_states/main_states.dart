@@ -143,3 +143,18 @@ class GetAllResearchesLoading extends MainStates {}
 class GetAllResearchesSuccess extends MainStates {}
 
 class GetAllResearchesError extends MainStates {}
+
+////////////////////////////////////////////////////////////// send grade ///////////////////////////////
+
+class SendGradeLoading extends MainStates {}
+
+class SendGradeSuccess extends MainStates {
+  var response;
+  SendGradeSuccess({this.response});
+}
+
+class SendGradeError extends MainStates {
+  final String errorMessage;
+
+  SendGradeError(this.errorMessage);
+}

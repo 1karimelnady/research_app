@@ -17,7 +17,9 @@ class ActiveStudentScreen extends StatefulWidget {
 }
 
 class _ActiveStudentScreenState extends State<ActiveStudentScreen> {
-  bool isLoading = false;
+  bool isLoadingYes = false;
+  bool isLoadingNo = false;
+  bool isLoadingnotification = false;
   @override
   void initState() {
     super.initState();
@@ -34,16 +36,23 @@ class _ActiveStudentScreenState extends State<ActiveStudentScreen> {
               errorMessage: "sending notification success",
               backgroundColor: mainColor,
               context: context);
+        } else if (state is SendGradeSuccess) {
+          CreatToast().showToast(
+              errorMessage: " Grades Added Successfully",
+              backgroundColor: mainColor,
+              context: context);
+        } else if (state is SendGradeError) {
+          CreatToast().showToast(
+              errorMessage: " Grades Added before", context: context);
         }
       },
       builder: (context, state) {
-        // Access the cubit instance
         MainCubit cubit = BlocProvider.of<MainCubit>(context);
         return SafeArea(
           child: Scaffold(
             body: state is GetStudentAcceptLoadingState
                 ? CreatLoading()
-                : cubit.acceptedStudentList.isEmpty // Use cubit instance
+                : cubit.acceptedStudentList.isEmpty
                     ? Center(
                         child: Text(
                           "No Active Student",
@@ -422,8 +431,11 @@ class _ActiveStudentScreenState extends State<ActiveStudentScreen> {
                                             ),
                                             Expanded(
                                               child: CreateButton(
-                                                title: 'Add Credits',
-                                                onTap: () {},
+                                                title: 'Add Grades',
+                                                onTap: () {
+                                                  _showGradeDialog(
+                                                      context, index);
+                                                },
                                               ),
                                             ),
                                           ],
@@ -476,37 +488,108 @@ class _ActiveStudentScreenState extends State<ActiveStudentScreen> {
                 ],
               ),
               actions: [
-                ElevatedButton(
-                  onPressed: (title.trim().isEmpty || body.trim().isEmpty)
-                      ? null
-                      : () async {
+                isLoadingnotification
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: (title.trim().isEmpty || body.trim().isEmpty)
+                            ? null
+                            : () async {
+                                MainCubit cubit =
+                                    BlocProvider.of<MainCubit>(context);
+                                setState(() {
+                                  isLoadingnotification = true;
+                                });
+                                await cubit.sendNotification(
+                                    title: title,
+                                    body: body,
+                                    id: cubit
+                                        .acceptedStudentList[index].researchId!,
+                                    user_id: cubit.acceptedStudentList[index]
+                                        .student!.sId!);
+                                setState(() {
+                                  isLoadingnotification = false;
+                                });
+                                print(
+                                    "${cubit.acceptedStudentList[index].researchId!}");
+                                Navigator.pop(context);
+                              },
+                        child: isLoadingnotification
+                            ? CircularProgressIndicator()
+                            : Text('Send Notification'),
+                      ),
+              ],
+            );
+          },
+        );
+      },
+    );
+  }
+
+  void _showGradeDialog(BuildContext context, index) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return StatefulBuilder(
+          builder: (context, setState) {
+            return AlertDialog(
+              title: Text('Add Grades'),
+              content: Column(mainAxisSize: MainAxisSize.min, children: [
+                Text(
+                  "Have the student attend all meetings ?",
+                  style: BlackLabel.display5(context).copyWith(fontSize: 11),
+                )
+              ]),
+              actions: [
+                isLoadingYes
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () async {
                           MainCubit cubit = BlocProvider.of<MainCubit>(context);
                           setState(() {
-                            isLoading = true;
+                            isLoadingYes = true;
                           });
-                          await cubit.sendNotification(
-                              title: title,
-                              body: body,
-                              id: cubit.acceptedStudentList[index].researchId!,
-                              user_id: cubit
+                          await cubit.sendGrade(
+                              status: true,
+                              research:
+                                  cubit.acceptedStudentList[index].researchId!,
+                              student: cubit
                                   .acceptedStudentList[index].student!.sId!);
                           setState(() {
-                            isLoading = false;
+                            isLoadingYes = false;
                           });
                           print(
-                              "iddddddddddddddddddddddddddd${cubit.acceptedStudentList[index].researchId!}");
+                              "${cubit.acceptedStudentList[index].researchId!}");
                           Navigator.pop(context);
                         },
-                  child: isLoading
-                      ? CircularProgressIndicator()
-                      : Text('Send Notification'),
-                ),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                  child: Text('Cancel'),
-                ),
+                        child: isLoadingYes
+                            ? CircularProgressIndicator()
+                            : Text('Yes'),
+                      ),
+                isLoadingNo
+                    ? CircularProgressIndicator()
+                    : ElevatedButton(
+                        onPressed: () async {
+                          MainCubit cubit = BlocProvider.of<MainCubit>(context);
+                          setState(() {
+                            isLoadingNo = true;
+                          });
+                          await cubit.sendGrade(
+                              status: false,
+                              research:
+                                  cubit.acceptedStudentList[index].researchId!,
+                              student: cubit
+                                  .acceptedStudentList[index].student!.sId!);
+                          setState(() {
+                            isLoadingNo = false;
+                          });
+                          print(
+                              "${cubit.acceptedStudentList[index].researchId!}");
+                          Navigator.pop(context);
+                        },
+                        child: isLoadingNo
+                            ? CircularProgressIndicator()
+                            : Text('No'),
+                      ),
               ],
             );
           },
