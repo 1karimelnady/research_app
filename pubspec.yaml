@@ -69,6 +69,8 @@ flutter_launcher_icons:
   android: "launcher_icon"
   ios: true
   image_path: "assets/images/logo.jpeg"
+  background_color: "#ffffff"
+
 
 
 

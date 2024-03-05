@@ -26,11 +26,12 @@ Future<void> messagingOnBackgroundHandler(RemoteMessage message) async {
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  FirebaseMessaging.onBackgroundMessage(messagingOnBackgroundHandler);
   await CacheHelper.init();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  FirebaseMessaging.onBackgroundMessage(messagingOnBackgroundHandler);
+
   await NotificationsServices.foregroundMessage();
   await NotificationsServices.getper();
   await NotificationsServices.getToken();

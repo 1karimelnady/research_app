@@ -40,6 +40,7 @@ class _SplashScreenState extends State<SplashScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       body: FadeInDown(
         duration: Duration(seconds: 1),
         animate: true,
@@ -47,6 +48,7 @@ class _SplashScreenState extends State<SplashScreen> {
           margin: EdgeInsets.symmetric(horizontal: 50),
           height: double.infinity,
           decoration: BoxDecoration(
+              // color: Colors.white,
               image: DecorationImage(
                   image: AssetImage("assets/images/logo.jpeg"),
                   fit: BoxFit.contain)),

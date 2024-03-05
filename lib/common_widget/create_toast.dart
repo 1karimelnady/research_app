@@ -1,7 +1,8 @@
-import '../app_manager/local_data.dart';
 import 'package:flutter/material.dart';
-import '../utilities/text_style.dart';
 import 'package:toast/toast.dart';
+
+import '../app_manager/local_data.dart';
+import '../utilities/text_style.dart';
 
 class CreatToast {
   void showToast(
@@ -15,7 +16,7 @@ class CreatToast {
     Toast.show(
       errorMessage,
       textStyle: labelStyle ?? WhiteLabel.display5(context),
-      duration: duration ?? Toast.lengthLong,
+      duration: duration ?? Toast.lengthShort,
       gravity: gravity ?? Toast.center,
       backgroundRadius: 10,
       backgroundColor: backgroundColor ?? Colors.red,
