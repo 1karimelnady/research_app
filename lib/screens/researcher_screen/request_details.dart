@@ -48,13 +48,13 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                 errorMessage: "Research Accepted successfully ",
                 backgroundColor: mainColor,
                 context: context);
-            RoutesManager.navigatorPush(context, ResearchesScreen());
+            RoutesManager.navigatorPush(context, ResearcherHomeScreen());
           } else if (state is RefusedSuccessStatusState) {
             CreatToast().showToast(
                 errorMessage: "Research Rejected successfully ",
                 backgroundColor: mainColor,
                 context: context);
-            RoutesManager.navigatorPush(context, ResearchesScreen());
+            RoutesManager.navigatorPush(context, ResearcherHomeScreen());
           } else if (state is AcceptErrorStatusState) {
             CreatToast().showToast(
                 errorMessage: state.errorMessage,
@@ -520,6 +520,10 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                     setState(() {
                       isAcceptLoading = false;
                     });
+                    CreatToast().showToast(
+                        errorMessage: "Research Accepted successfully ",
+                        backgroundColor: mainColor,
+                        context: context);
                     RoutesManager.navigatorPush(
                         context, ResearcherHomeScreen());
                   },
@@ -563,7 +567,12 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                     setState(() {
                       isRejectLoading = false;
                     });
-                    Navigator.pop(context);
+                    CreatToast().showToast(
+                        errorMessage: "Research Rejected successfully ",
+                        backgroundColor: mainColor,
+                        context: context);
+                    RoutesManager.navigatorPush(
+                        context, ResearcherHomeScreen());
                   },
                   child: isRejectLoading
                       ? CircularProgressIndicator()

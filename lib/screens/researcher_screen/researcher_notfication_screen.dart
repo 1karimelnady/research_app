@@ -143,6 +143,14 @@ class _ResearcherNotificationScreenState
                                   ),
                                   Padding(
                                     padding: const EdgeInsets.symmetric(
+                                        horizontal: 12.0),
+                                    child: Text(
+                                      "${mainCubit.notificationList[index].user!.name ?? ''}",
+                                      style: BlackLabel.display5(context),
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.symmetric(
                                         horizontal: 16.0, vertical: 8),
                                     child: Text(
                                       "${mainCubit.notificationList[index].body}",
