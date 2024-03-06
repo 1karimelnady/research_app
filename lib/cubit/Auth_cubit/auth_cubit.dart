@@ -6,6 +6,7 @@ import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/cubit/application_states/auth_states.dart';
 import 'package:research_app/model/user_model.dart';
 import 'package:research_app/utilities/cache_helper.dart';
+
 class AuthCubit extends Cubit<AuthStates> {
   AuthCubit() : super(AuthInitialState());
   static AuthCubit get(context) => BlocProvider.of(context);
@@ -89,6 +90,7 @@ class AuthCubit extends Cubit<AuthStates> {
         String mobile = response.data?['mobile'] ?? '';
         String gender = response.data?['gender'] ?? '';
         String token = response.data?['token'] ?? '';
+        String id = response.data?['_id'] ?? '';
 
         CacheHelper.setData(key: "message", value: user?.message);
         CacheHelper.setData(key: "type", value: response.data?["type"]);
@@ -97,6 +99,7 @@ class AuthCubit extends Cubit<AuthStates> {
         CacheHelper.setData(key: "mobile", value: mobile);
         CacheHelper.setData(key: "gender", value: gender);
         CacheHelper.setData(key: "token", value: token);
+        CacheHelper.setData(key: "id", value: id);
         emit(RegisterSuccess(response: response.data));
         print(response.data['name']);
       }
@@ -134,11 +137,13 @@ class AuthCubit extends Cubit<AuthStates> {
         String value = response.data?['value'] ?? '';
         String password = response.data?['password'] ?? '';
         String name = response.data?['name'] ?? '';
+        String id = response.data?['_id'] ?? '';
 
         CacheHelper.setData(key: "token", value: token);
         CacheHelper.setData(key: "value", value: value);
         CacheHelper.setData(key: "password", value: password);
         CacheHelper.setData(key: "name", value: name);
+        CacheHelper.setData(key: "id", value: id);
         emit(LoginSuccess(response: response.data));
         print(CacheHelper.getData(key: "value"));
       }

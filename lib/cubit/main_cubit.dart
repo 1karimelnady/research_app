@@ -1,5 +1,4 @@
 import 'dart:core';
-import 'dart:typed_data';
 
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -455,9 +454,11 @@ class MainCubit extends Cubit<MainStates> {
 //////////////////////////////////////////////////////// get student researches ////////////////////////////////////////////
 
   List<StudentResearchesModel> studentResearchesList = [];
+  List<StudentsStatusss> StudentsStatussslist = [];
 
   Future<void> getStudentResearches() async {
     studentResearchesList.clear();
+    StudentsStatussslist.clear();
     emit(GetStudentResearchesLoadingState());
     try {
       dio.options.headers = {
@@ -468,6 +469,18 @@ class MainCubit extends Cubit<MainStates> {
       if (response.statusCode == 200) {
         (response.data as List).forEach((element) {
           studentResearchesList.add(StudentResearchesModel.fromJson(element));
+
+          var studentStatuses = element['studentsStatus'] as List;
+          if (studentStatuses.isNotEmpty) {
+            studentStatuses.forEach((statusElement) {
+              var studentStatus = StudentsStatusss.fromJson(statusElement);
+              StudentsStatussslist.add(studentStatus);
+              CacheHelper.setData(key: "student", value: studentStatus.student);
+            });
+          } else {
+            // If studentsStatus is empty, store null or any default value you prefer
+            CacheHelper.setData(key: "student", value: null);
+          }
         });
         print(" studentResearchesList :  ${studentResearchesList.length}");
         if (studentResearchesList.isNotEmpty) {
@@ -494,7 +507,6 @@ class MainCubit extends Cubit<MainStates> {
 ///////////////////////////////////////////////////// registration research ///////////////////////////
 
   Future<void> registerResearch() async {
-    print("${CacheHelper.getData(key: "_id")}");
     try {
       emit(StudentRegisterResearchLoadingState());
       dio.options.headers = {

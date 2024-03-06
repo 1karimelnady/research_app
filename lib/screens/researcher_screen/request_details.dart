@@ -5,7 +5,6 @@ import 'package:research_app/app_manager/routes_manager.dart';
 import 'package:research_app/cubit/application_states/main_states.dart';
 import 'package:research_app/model/researches_model.dart';
 import 'package:research_app/screens/researcher_screen/researcher_home_screen.dart';
-import 'package:research_app/screens/researcher_screen/researches_screen.dart';
 
 import '../../app_manager/local_data.dart';
 import '../../common_widget/create_button.dart';
@@ -425,20 +424,16 @@ class _RequestsDetailsState extends State<RequestsDetails> {
                                     const EdgeInsets.symmetric(vertical: 8.0),
                                 child: Wrap(
                                   children: [
-                                    Row(
-                                      children: [
-                                        Icon(
-                                          Icons.description,
-                                          color: mainColor,
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        Text(
-                                          'description : ',
-                                          style: BlackTitle.display5(context),
-                                        ),
-                                      ],
+                                    Icon(
+                                      Icons.description,
+                                      color: mainColor,
+                                    ),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    Text(
+                                      'description : ',
+                                      style: BlackTitle.display5(context),
                                     ),
                                     Text(
                                       '${widget.researcher.description != null ? widget.researcher.description : 'des'}',
