@@ -158,3 +158,30 @@ class SendGradeError extends MainStates {
 
   SendGradeError(this.errorMessage);
 }
+//////////////////////////////////////////////////////////// get user data /////////////////////////////////
+
+class GetUserDataLoading extends MainStates {}
+
+class GetUserDataSuccess extends MainStates {}
+
+class GetUserDataError extends MainStates {}
+
+///////////////////////////////////////////////////////////// update user //////////////////////////////
+
+class UpdateUserLoading extends MainStates {}
+
+class UpdateUserSuccess extends MainStates {}
+
+class UpdateUserError extends MainStates {
+  final String errorMessage;
+
+  UpdateUserError(this.errorMessage);
+}
+
+////////////////////////////////////////////////////////////// get grades ////////////////////////
+
+class GetGradesLoading extends MainStates {}
+
+class GetGradesSuccess extends MainStates {}
+
+class GetGradesError extends MainStates {}

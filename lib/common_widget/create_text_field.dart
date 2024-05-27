@@ -9,6 +9,7 @@ import '../utilities/text_style.dart';
 class CreatTextField extends StatelessWidget {
   final String? label, title, isBlueHintLabel, priceUnit;
   final Function(String val)? onChange;
+  bool? readOnly;
   final Function(String? val)? onSubmit;
   final String? Function(String? val)? validator;
   final void Function()? onTap;
@@ -69,6 +70,7 @@ class CreatTextField extends StatelessWidget {
     this.isContact,
     this.inputFormatters,
     this.onTap,
+    this.readOnly,
   });
 
   LanguageProvider? languageProvider;
@@ -112,6 +114,7 @@ class CreatTextField extends StatelessWidget {
               validator: validator,
               keyboardType: keyboardType,
               controller: controller,
+              readOnly: readOnly ?? false,
               style: controllerStyle ??
                   BlackTitle.display5(context).copyWith(color: mainColor),
               decoration: InputDecoration(

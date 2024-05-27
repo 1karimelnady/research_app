@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
 import 'package:research_app/cubit/application_states/main_states.dart';
 import 'package:research_app/cubit/main_cubit.dart';
+import 'package:research_app/screens/student_screen/grades_screen.dart';
 import 'package:research_app/screens/student_screen/student_main_screen.dart';
 import 'package:research_app/screens/student_screen/student_notfication_screen.dart';
 import 'package:research_app/screens/student_screen/student_researches_screen.dart';
@@ -29,6 +30,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     StudentMainScreen(),
     StudentResearchesScreen(),
     StudentNotificationScreen(),
+    GradesScreen(),
     StudentSettingsScreen(),
   ];
   int selectedIndex = 0;
@@ -58,12 +60,11 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                   icon: Icon(Icons.manage_search_rounded), label: 'Researches'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.notification_add), label: 'Notification'),
+              BottomNavigationBarItem(icon: Icon(Icons.grade), label: 'Grades'),
               BottomNavigationBarItem(
                   icon: Icon(Icons.settings), label: 'Settings'),
             ],
-          )
-
-          ,
+          ),
           body: screens[selectedIndex],
         );
       },

@@ -1,37 +1,59 @@
-class NotificationModel {
+class GradeModel {
+  List<AllGrades>? allGrades;
+
+  GradeModel({this.allGrades});
+
+  GradeModel.fromJson(Map<String, dynamic> json) {
+    if (json['allGrades'] != null) {
+      allGrades = <AllGrades>[];
+      json['allGrades'].forEach((v) {
+        allGrades!.add(new AllGrades.fromJson(v));
+      });
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    if (this.allGrades != null) {
+      data['allGrades'] = this.allGrades!.map((v) => v.toJson()).toList();
+    }
+    return data;
+  }
+}
+
+class AllGrades {
   String? sId;
-  User? user;
+  String? student;
   Research? research;
-  String? title;
-  String? body;
-  Null? image;
-  String? type;
+  Researcher? researcher;
+  bool? isSuccess;
+  String? status;
   String? createdAt;
   String? updatedAt;
   int? iV;
 
-  NotificationModel(
+  AllGrades(
       {this.sId,
-      this.user,
+      this.student,
       this.research,
-      this.title,
-      this.body,
-      this.image,
-      this.type,
+      this.researcher,
+      this.isSuccess,
+      this.status,
       this.createdAt,
       this.updatedAt,
       this.iV});
 
-  NotificationModel.fromJson(Map<String, dynamic> json) {
+  AllGrades.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
-    user = json['user'] != null ? new User.fromJson(json['user']) : null;
+    student = json['student'];
     research = json['research'] != null
         ? new Research.fromJson(json['research'])
         : null;
-    title = json['title'];
-    body = json['body'];
-    image = json['image'];
-    type = json['type'];
+    researcher = json['researcher'] != null
+        ? new Researcher.fromJson(json['researcher'])
+        : null;
+    isSuccess = json['isSuccess'];
+    status = json['status'];
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
@@ -40,88 +62,18 @@ class NotificationModel {
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['_id'] = this.sId;
-    if (this.user != null) {
-      data['user'] = this.user!.toJson();
-    }
+    data['student'] = this.student;
     if (this.research != null) {
       data['research'] = this.research!.toJson();
     }
-    data['title'] = this.title;
-    data['body'] = this.body;
-    data['image'] = this.image;
-    data['type'] = this.type;
-    data['createdAt'] = this.createdAt;
-    data['updatedAt'] = this.updatedAt;
-    data['__v'] = this.iV;
-    return data;
-  }
-}
-
-class User {
-  String? sId;
-  String? name;
-  String? mobile;
-  String? email;
-  String? type;
-  String? image;
-  String? status;
-  String? birthDate;
-  String? gender;
-  String? password;
-  String? createdAt;
-  String? updatedAt;
-  int? iV;
-  String? fbToken;
-
-  User(
-      {this.sId,
-      this.name,
-      this.mobile,
-      this.email,
-      this.type,
-      this.image,
-      this.status,
-      this.birthDate,
-      this.gender,
-      this.password,
-      this.createdAt,
-      this.updatedAt,
-      this.iV,
-      this.fbToken});
-
-  User.fromJson(Map<String, dynamic> json) {
-    sId = json['_id'] ?? '';
-    name = json['name'] ?? '';
-    mobile = json['mobile'] ?? '';
-    email = json['email'] ?? '';
-    type = json['type'] ?? '';
-    image = json['image'] ?? '';
-    status = json['status'] ?? '';
-    birthDate = json['birthDate'] ?? '';
-    gender = json['gender'] ?? '';
-    password = json['password'] ?? '';
-    createdAt = json['createdAt'] ?? '';
-    updatedAt = json['updatedAt'] ?? '';
-    iV = json['__v'] ?? '';
-    fbToken = json['fbToken'] ?? '';
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['_id'] = this.sId;
-    data['name'] = this.name;
-    data['mobile'] = this.mobile;
-    data['email'] = this.email;
-    data['type'] = this.type;
-    data['image'] = this.image;
+    if (this.researcher != null) {
+      data['researcher'] = this.researcher!.toJson();
+    }
+    data['isSuccess'] = this.isSuccess;
     data['status'] = this.status;
-    data['birthDate'] = this.birthDate;
-    data['gender'] = this.gender;
-    data['password'] = this.password;
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
-    data['fbToken'] = this.fbToken;
     return data;
   }
 }
@@ -139,12 +91,13 @@ class Research {
   List<String>? musicalBackground;
   int? credits;
   String? status;
+  String? approvment;
+  String? description;
+  int? newRequest;
   List<StudentsStatus>? studentsStatus;
   String? createdAt;
   String? updatedAt;
   int? iV;
-  String? description;
-  int? newRequest;
 
   Research(
       {this.sId,
@@ -159,12 +112,13 @@ class Research {
       this.musicalBackground,
       this.credits,
       this.status,
+      this.approvment,
+      this.description,
+      this.newRequest,
       this.studentsStatus,
       this.createdAt,
       this.updatedAt,
-      this.iV,
-      this.description,
-      this.newRequest});
+      this.iV});
 
   Research.fromJson(Map<String, dynamic> json) {
     sId = json['_id'];
@@ -179,6 +133,9 @@ class Research {
     musicalBackground = json['musicalBackground'].cast<String>();
     credits = json['Credits'];
     status = json['status'];
+    approvment = json['approvment'];
+    description = json['description'];
+    newRequest = json['newRequest'];
     if (json['studentsStatus'] != null) {
       studentsStatus = <StudentsStatus>[];
       json['studentsStatus'].forEach((v) {
@@ -188,8 +145,6 @@ class Research {
     createdAt = json['createdAt'];
     updatedAt = json['updatedAt'];
     iV = json['__v'];
-    description = json['description'];
-    newRequest = json['newRequest'];
   }
 
   Map<String, dynamic> toJson() {
@@ -206,6 +161,9 @@ class Research {
     data['musicalBackground'] = this.musicalBackground;
     data['Credits'] = this.credits;
     data['status'] = this.status;
+    data['approvment'] = this.approvment;
+    data['description'] = this.description;
+    data['newRequest'] = this.newRequest;
     if (this.studentsStatus != null) {
       data['studentsStatus'] =
           this.studentsStatus!.map((v) => v.toJson()).toList();
@@ -213,8 +171,6 @@ class Research {
     data['createdAt'] = this.createdAt;
     data['updatedAt'] = this.updatedAt;
     data['__v'] = this.iV;
-    data['description'] = this.description;
-    data['newRequest'] = this.newRequest;
     return data;
   }
 }
@@ -240,6 +196,75 @@ class StudentsStatus {
     data['student'] = this.student;
     data['updateTime'] = this.updateTime;
     data['_id'] = this.sId;
+    return data;
+  }
+}
+
+class Researcher {
+  String? sId;
+  String? name;
+  String? mobile;
+  String? email;
+  String? type;
+  Null? image;
+  String? fbToken;
+  String? status;
+  String? birthDate;
+  String? gender;
+  String? password;
+  String? createdAt;
+  String? updatedAt;
+  int? iV;
+
+  Researcher(
+      {this.sId,
+      this.name,
+      this.mobile,
+      this.email,
+      this.type,
+      this.image,
+      this.fbToken,
+      this.status,
+      this.birthDate,
+      this.gender,
+      this.password,
+      this.createdAt,
+      this.updatedAt,
+      this.iV});
+
+  Researcher.fromJson(Map<String, dynamic> json) {
+    sId = json['_id'];
+    name = json['name'];
+    mobile = json['mobile'];
+    email = json['email'];
+    type = json['type'];
+    image = json['image'];
+    fbToken = json['fbToken'];
+    status = json['status'];
+    birthDate = json['birthDate'];
+    gender = json['gender'];
+    password = json['password'];
+    createdAt = json['createdAt'];
+    updatedAt = json['updatedAt'];
+    iV = json['__v'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['_id'] = this.sId;
+    data['name'] = this.name;
+    data['mobile'] = this.mobile;
+    data['email'] = this.email;
+    data['type'] = this.type;
+    data['image'] = this.image;
+    data['fbToken'] = this.fbToken;
+    data['status'] = this.status;
+    data['birthDate'] = this.birthDate;
+    data['gender'] = this.gender;
+    data['password'] = this.password;
+    data['createdAt'] = this.createdAt;
+    data['updatedAt'] = this.updatedAt;
+    data['__v'] = this.iV;
     return data;
   }
 }

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:research_app/app_manager/routes_manager.dart';
 import 'package:research_app/cubit/application_states/main_states.dart';
 import 'package:research_app/cubit/main_cubit.dart';
+import 'package:research_app/screens/professor_screen/edit_professor_profile.dart';
 import 'package:research_app/screens/professor_screen/researcher_details.dart';
 
 import '../../app_manager/local_data.dart';
@@ -37,6 +38,16 @@ class _ProfessorHomeSCreenState extends State<ProfessorHomeSCreen> {
                   Row(
                     children: [
                       TextButton(
+                        onPressed: () {
+                          RoutesManager.navigatorPush(
+                              context, EditProfessorProfile());
+                        },
+                        child: Text(
+                          'Edit profile',
+                          style: TextStyle(color: Colors.white),
+                        ),
+                      ),
+                      TextButton(
                           style: TextButton.styleFrom(padding: EdgeInsets.zero),
                           onPressed: () {
                             CacheHelper.clear();
@@ -45,8 +56,7 @@ class _ProfessorHomeSCreenState extends State<ProfessorHomeSCreen> {
                           },
                           child: Text(
                             "Logout",
-                            style: BlackLabel.display5(context)
-                                .copyWith(color: thirdColor),
+                            style: TextStyle(color: Colors.white),
                           )),
                       IconButton(
                           padding: EdgeInsets.zero,

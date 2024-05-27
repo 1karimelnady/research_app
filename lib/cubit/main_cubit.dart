@@ -1,5 +1,7 @@
+import 'dart:convert';
 import 'dart:core';
-
+import 'dart:io';
+import 'package:http/http.dart' as http;
 import 'package:dio/dio.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:research_app/app_manager/local_data.dart';
@@ -7,11 +9,13 @@ import 'package:research_app/utilities/cache_helper.dart';
 
 import '../model/accepted_student_researcher_model.dart';
 import '../model/all_researcher_model.dart';
+import '../model/grade_model.dart';
 import '../model/notfication_model.dart';
 import '../model/researches_model.dart';
 import '../model/researches_of_researcher_model.dart';
 import '../model/researches_student_status_model.dart';
 import '../model/student_researches_model.dart';
+import '../model/user_data.dart';
 import 'application_states/main_states.dart';
 
 class MainCubit extends Cubit<MainStates> {
@@ -494,7 +498,7 @@ class MainCubit extends Cubit<MainStates> {
     } on DioException catch (e) {
       String errorMessage = "";
       if (e.response != null) {
-        errorMessage = e.response?.data['message'] ?? '';
+        errorMessage = e.response?.data['message'].toString() ?? '';
         print(errorMessage.toString());
       }
       emit(GetStudentResearchesErrorState(errorMessage.toString()));
@@ -858,6 +862,115 @@ class MainCubit extends Cubit<MainStates> {
       emit(SendGradeError(errorMessage.toString()));
     } catch (e) {
       emit(SendGradeError(e.toString()));
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////// get user data //////////////
+
+  List<UserDataModel> userList = [];
+
+  Future<void> getUserData() async {
+    userList.clear();
+    emit(GetUserDataLoading());
+
+    try {
+      dio.options.headers = {
+        "Authorization": "Bearer ${CacheHelper.getData(key: 'token')}"
+      };
+
+      Response response = await dio.get(baseUrl + "/users/token/user");
+
+      if (response.statusCode == 200) {
+        Map<String, dynamic> jsonData = response.data;
+        userList.add(UserDataModel.fromJson(jsonData));
+        emit(GetUserDataSuccess());
+      }
+    } on DioException catch (e) {
+      String errorMessage = "";
+      if (e.response != null) {
+        errorMessage = e.response?.data['message'] ?? '';
+        print(errorMessage.toString());
+      }
+      emit(GetUserDataError());
+    } on Exception catch (e) {
+      emit(GetUserDataError());
+      print(e.toString());
+    }
+  }
+
+  /////////////////////////////////////////////////////////////// update user //////////////////////////////
+
+  Future<void> updateUser({
+    required String name,
+    required String email,
+    required String mobile,
+    File? image,
+  }) async {
+    try {
+      emit(UpdateUserLoading());
+
+      var formData = http.MultipartRequest(
+          'PUT', Uri.parse(baseUrl + "/users/profile/edit"));
+      formData.headers['Authorization'] =
+          "Bearer ${CacheHelper.getData(key: 'token')}";
+      formData.fields['name'] = name;
+      formData.fields['email'] = email;
+      formData.fields['mobile'] = mobile;
+
+      if (image != null) {
+        formData.files
+            .add(await http.MultipartFile.fromPath('image', image.path));
+      }
+
+      var response = await formData.send();
+      String errorMessage = "";
+      if (response.statusCode == 200) {
+        emit(UpdateUserSuccess());
+      } else {
+        String errorMessage = '';
+        if (response.headers['content-type']!.startsWith('application/json')) {
+          errorMessage =
+              json.decode(await response.stream.bytesToString())['message'];
+        } else {
+          errorMessage = 'An error occurred.';
+        }
+        emit(UpdateUserError(errorMessage));
+      }
+    } catch (e) {
+      emit(UpdateUserError('An unexpected error occurred.'));
+    }
+  }
+
+  ///////////////////////////////////////////////////////////////// get grades ///////////////
+
+  List<AllGrades> getGradesList = [];
+  Future<void> getGrades() async {
+    getGradesList.clear();
+
+    try {
+      emit(GetGradesLoading());
+      dio.options.headers = {
+        "Authorization": "Bearer ${CacheHelper.getData(key: "token")}"
+      };
+
+      var response = await dio.get(baseUrl + "/grads/student");
+      if (response.statusCode == 200) {
+        List<dynamic> data = response.data['allGrades'];
+        getGradesList = data.map((json) => AllGrades.fromJson(json)).toList();
+        print("success");
+        print("grades list :${getGradesList.length}");
+        emit(GetGradesSuccess());
+      }
+    } on DioException catch (e) {
+      String errorMessage = "";
+      if (e.response != null) {
+        errorMessage = e.response?.data['message'] ?? '';
+        print(errorMessage.toString());
+      }
+      emit(GetGradesError());
+    } on Exception catch (e) {
+      emit(GetGradesError());
+      print(e.toString());
     }
   }
 }

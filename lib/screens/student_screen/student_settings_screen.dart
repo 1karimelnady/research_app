@@ -3,6 +3,8 @@ import 'package:research_app/app_manager/routes_manager.dart';
 import 'package:research_app/screens/AuthScreen/login_screen.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 
+import 'edit_student_profile.dart';
+
 class StudentSettingsScreen extends StatefulWidget {
   const StudentSettingsScreen({Key? key}) : super(key: key);
 
@@ -25,6 +27,14 @@ class _StudentSettingsScreenState extends State<StudentSettingsScreen> {
                 RoutesManager.navigatorAndRemove(context, LoginScreen());
               },
               child: Text('Log out'),
+            ),
+          ),
+          Center(
+            child: TextButton(
+              onPressed: () {
+                RoutesManager.navigatorPush(context, EditProfile());
+              },
+              child: Text('Edit profile'),
             ),
           ),
         ],

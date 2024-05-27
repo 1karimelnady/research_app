@@ -18,7 +18,6 @@ class ResearcherHomeScreen extends StatefulWidget {
 class _ResearcherHomeScreenState extends State<ResearcherHomeScreen> {
   @override
   void initState() {
-    // TODO: implement initState
     NotificationsServices().firebaseInit(context);
     NotificationsServices.foregroundMessage();
     super.initState();

@@ -8,6 +8,8 @@ import 'package:provider/provider.dart';
 import 'package:research_app/providers/language_provider.dart';
 import 'package:research_app/screens/notfications/notfications_services.dart';
 import 'package:research_app/screens/splach_screen.dart';
+import 'package:research_app/screens/student_screen/edit_student_profile.dart';
+import 'package:research_app/screens/student_screen/grades_screen.dart';
 import 'package:research_app/utilities/cache_helper.dart';
 import 'package:research_app/utilities/dio_helper.dart';
 import 'package:research_app/utilities/providers.dart';
@@ -37,7 +39,6 @@ void main() async {
   await NotificationsServices.getToken();
   DioHelper.init();
 
-  NotificationsServices.getper();
   SystemChrome.setPreferredOrientations(
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(

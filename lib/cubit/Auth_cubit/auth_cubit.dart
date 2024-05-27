@@ -88,6 +88,7 @@ class AuthCubit extends Cubit<AuthStates> {
         String name = response.data?['name'] ?? '';
         String email = response.data?['email'] ?? '';
         String mobile = response.data?['mobile'] ?? '';
+        String date = response.data?['birthdate'] ?? '';
         String gender = response.data?['gender'] ?? '';
         String token = response.data?['token'] ?? '';
         String id = response.data?['_id'] ?? '';
@@ -97,6 +98,7 @@ class AuthCubit extends Cubit<AuthStates> {
         CacheHelper.setData(key: "name", value: name);
         CacheHelper.setData(key: "email", value: email);
         CacheHelper.setData(key: "mobile", value: mobile);
+        CacheHelper.setData(key: "date", value: mobile);
         CacheHelper.setData(key: "gender", value: gender);
         CacheHelper.setData(key: "token", value: token);
         CacheHelper.setData(key: "id", value: id);
